@@ -1,0 +1,686 @@
+<div class="mx-1 text-sm">
+    <h2 class="mt-5 2xl:text-2xl text-xl font-bold text-gray-600">Generar Catálogo de Productos</h2>
+
+    <div class="w-full mt-4">
+        <!-- Sección 1: Filtros de búsqueda -->
+        <h4 class="mb-2 text-sm font-semibold text-gray-600 ml-4">1. Filtros de Búsqueda</h4>
+
+        <div class="border border-gray-200 rounded-md shadow-md mt-2 bg-gray-200 p-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-4">
+                <!-- Grupo -->
+                <div class="lg:col-span-1">
+                    <label class="block text-xs font-medium text-gray-700 mb-1">Grupo</label>
+                    <select
+                        class="w-full px-3 py-2 text-xs border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent bg-white"
+                        (change)="getSubGroups2($event)">
+                        @for(g of groups; track g.idgrupo) {
+                        <option value="{{g.idgrupo}}">{{g.nombre}}</option>
+                        }
+                    </select>
+                </div>
+
+                <!-- Subgrupo -->
+                @if(catalogue.subGrupos.length > 0) {
+                <div class="lg:col-span-1">
+                    <label class="block text-xs font-medium text-gray-700 mb-1">Subgrupo</label>
+                    <select
+                        class="w-full px-3 py-2 text-xs border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent bg-white"
+                        (change)="getProductsGrupoSubgrupo2($event)">
+                        @for(s of catalogue.subGrupos; track s.id_sub) {
+                        <option value="{{s.id_sub}}">{{s.nombre}}</option>
+                        }
+                    </select>
+                </div>
+                }
+
+                <!-- Origen -->
+                <div class="lg:col-span-1">
+                    <label class="block text-xs font-medium text-gray-700 mb-1">Origen</label>
+                    <select
+                        class="w-full px-3 py-2 text-xs border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent bg-white"
+                        [(ngModel)]="this.catalogue.origen_select" (change)="filterProductForOrigin($event)">
+                        @for(o of catalogue.origen_arr; track o.id) {
+                        <option value="{{o.id}}">{{o.nombre}}</option>
+                        }
+                    </select>
+                </div>
+
+                <!-- Marca -->
+                <div class="lg:col-span-1">
+                    <label class="block text-xs font-medium text-gray-700 mb-1">Marca</label>
+                    <select
+                        class="w-full px-3 py-2 text-xs border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent bg-white"
+                        [(ngModel)]="this.catalogue.marca_select" (change)="filterProductForMarca2($event)">
+                        <option value="0">* TODAS </option>
+                        @for(m of catalogue.marcas; track m.id) {
+                        <option value="{{m.id}}">{{m.nombre}}</option>
+                        }
+                    </select>
+                </div>
+
+                <!-- Buscador -->
+                <div class="lg:col-span-2">
+                    <label class="block text-xs font-medium text-gray-700 mb-1">Buscar Productos</label>
+                    <div class="flex gap-2">
+                        <input type="text"
+                            class="flex-1 px-3 py-2 text-xs border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                            placeholder="Buscar productos..." [(ngModel)]="catalogue.search">
+                        <button type="button"
+                            class="text-white bg-green-500 hover:bg-green-600 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-xs px-4 py-2 transition transform hover:scale-105"
+                            (click)="searchProductsCatalogue(catalogue.search)">
+                            <i class="bi bi-search"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sección 2: Configuración de atributos -->
+        @if(catalogue.view_products) {
+        <h4 class="mt-5 mb-2 text-sm font-semibold text-gray-600 ml-4">2. Seleccione los atributos que desea visualizar
+        </h4>
+
+        <div class="border border-gray-200 rounded-md shadow-md mt-2 bg-gray-200 p-4">
+            <div class="overflow-x-auto">
+                <div
+                    class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 2xl:grid-cols-9 gap-1 min-w-max">
+                    <!-- Tipo de precio -->
+                    <div class="bg-white p-2 rounded-lg border border-gray-300">
+                        <div class="flex " style="justify-content: space-between;">
+                            <label class="block text-xs font-medium text-gray-700 mb-2">T. Precio</label>
+
+                            <div class="flex items-center">
+                                <input type="checkbox" id="show_price" value="show_price" checked
+                                    (change)="viewAttributes($event)"
+                                    class="w-4 h-4 text-green-600 bg-gray-100 border-gray-300 rounded focus:ring-green-500">
+                                <label for="show_price" class="ml-2 text-xs text-gray-700">Mostrar</label>
+                            </div>
+                        </div>
+                        <select
+                            class="w-full px-2 py-1 text-xs border border-gray-300 rounded mb-2 focus:outline-none focus:ring-1 focus:ring-green-500"
+                            (change)="selectTypePrice($event)">
+                            @for(t of pricesTypes; track t.tipoprecio) {
+                            <option value="{{t.tipoprecio}}">{{t.tipoprecio}}</option>
+                            }
+                        </select>
+
+                    </div>
+
+                    <!-- Stock -->
+                    <div class="bg-white p-3 rounded-lg border border-gray-300">
+                        <label class="block text-xs font-medium text-gray-700 mb-4">Stock</label>
+                        <div class="flex items-center">
+                            <input type="checkbox" id="stock" value="stock" checked (change)="viewAttributes($event)"
+                                class="w-4 h-4 text-green-600 bg-gray-100 border-gray-300 rounded focus:ring-green-500">
+                            <label for="stock" class="ml-2 text-xs text-gray-700">Mostrar</label>
+                        </div>
+                    </div>
+
+                    <!-- Descripción -->
+                    <div class="bg-white p-3 rounded-lg border border-gray-300">
+                        <label class="block text-xs font-medium text-gray-700 mb-4">Descripción</label>
+                        <div class="flex items-center">
+                            <input type="checkbox" id="description" value="description" checked
+                                (change)="viewAttributes($event)"
+                                class="w-4 h-4 text-green-600 bg-gray-100 border-gray-300 rounded focus:ring-green-500">
+                            <label for="description" class="ml-2 text-xs text-gray-700">Mostrar</label>
+                        </div>
+                    </div>
+
+                    <!-- Marca -->
+                    <div class="bg-white p-3 rounded-lg border border-gray-300">
+                        <label class="block text-xs font-medium text-gray-700 mb-4">Marca</label>
+                        <div class="flex items-center">
+                            <input type="checkbox" id="marca" value="marca" checked (change)="viewAttributes($event)"
+                                class="w-4 h-4 text-green-600 bg-gray-100 border-gray-300 rounded focus:ring-green-500">
+                            <label for="marca" class="ml-2 text-xs text-gray-700">Mostrar</label>
+                        </div>
+                    </div>
+
+                    <!-- Peso -->
+                    <div class="bg-white p-3 rounded-lg border border-gray-300">
+                        <label class="block text-xs font-medium text-gray-700 mb-4">Peso</label>
+                        <div class="flex items-center">
+                            <input type="checkbox" id="peso" value="peso" checked (change)="viewAttributes($event)"
+                                class="w-4 h-4 text-green-600 bg-gray-100 border-gray-300 rounded focus:ring-green-500">
+                            <label for="peso" class="ml-2 text-xs text-gray-700">Mostrar</label>
+                        </div>
+                    </div>
+
+                    <!-- Medida -->
+                    <div class="bg-white p-3 rounded-lg border border-gray-300">
+                        <label class="block text-xs font-medium text-gray-700 mb-4">Medida</label>
+                        <div class="flex items-center">
+                            <input type="checkbox" id="medida" value="medida" checked (change)="viewAttributes($event)"
+                                class="w-4 h-4 text-green-600 bg-gray-100 border-gray-300 rounded focus:ring-green-500">
+                            <label for="medida" class="ml-2 text-xs text-gray-700">Mostrar</label>
+                        </div>
+                    </div>
+
+                    <!-- Ubicación -->
+                    <div class="bg-white p-3 rounded-lg border border-gray-300">
+                        <label class="block text-xs font-medium text-gray-700 mb-4">Ubicación</label>
+                        <div class="flex items-center">
+                            <input type="checkbox" id="ubicacion" value="ubicacion" checked
+                                (change)="viewAttributes($event)"
+                                class="w-4 h-4 text-green-600 bg-gray-100 border-gray-300 rounded focus:ring-green-500">
+                            <label for="ubicacion" class="ml-2 text-xs text-gray-700">Mostrar</label>
+                        </div>
+                    </div>
+
+                    <!-- Origen -->
+                    <div class="bg-white p-3 rounded-lg border border-gray-300">
+                        <label class="block text-xs font-medium text-gray-700 mb-4">Origen</label>
+                        <div class="flex items-center">
+                            <input type="checkbox" id="origen" value="origen" checked (change)="viewAttributes($event)"
+                                class="w-4 h-4 text-green-600 bg-gray-100 border-gray-300 rounded focus:ring-green-500">
+                            <label for="origen" class="ml-2 text-xs text-gray-700">Mostrar</label>
+                        </div>
+                    </div>
+
+                    <!-- Cantidad por bulto -->
+                    <div class="bg-white p-3 rounded-lg border border-gray-300">
+                        <label class="block text-xs font-medium text-gray-700 mb-4">Cant. por bulto</label>
+                        <div class="flex items-center">
+                            <input type="checkbox" id="cant_bulto" value="cant_bulto" checked
+                                (change)="viewAttributes($event)"
+                                class="w-4 h-4 text-green-600 bg-gray-100 border-gray-300 rounded focus:ring-green-500">
+                            <label for="cant_bulto" class="ml-2 text-xs text-gray-700">Mostrar</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        }
+
+        <!-- Sección 3: Generar catálogo -->
+        @if(catalogue.view_products) {
+        <h4 class="mt-4 mb-2 text-sm font-semibold text-gray-600 ml-4">3. Generar Catálogo PDF</h4>
+
+        <div class="border border-gray-200 rounded-md shadow-md mt-2 bg-gray-200 p-4">
+            <div class="w-full text-center">
+                <button type="button" printSectionId="section-pdf" ngxPrint
+                    class="text-white bg-red-500 hover:bg-red-600 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-6 py-3 transition transform hover:scale-105">
+                    <i class="far fa-file-pdf mr-2"></i>
+                    Generar Catálogo PDF
+                </button>
+            </div>
+        </div>
+        }
+
+        <!-- Sección de vista previa del catálogo -->
+        @if(catalogue.view_products) {
+        <div class="mt-6">
+            <div class="w-full  rounded-lg  text-center p-4" style="text-align: center;">
+                <img class="" [src]="urlBase+configuracion?.imgLogo+'?alt=media'"
+                    style="width: 200px; height: auto; margin: auto; text-align: center; ">
+            </div>
+
+            <div class="w-full  rounded-lg bg-gray-50 text-center mt-4 p-4" style="text-align: center;">
+                <h4 class="text-md font-bold text-gray-600 bg-white px-4 rounded-lg  inline-block">
+                    CATÁLOGO DE PRODUCTOS
+                </h4>
+            </div>
+
+            <div class="w-full rounded-lg bg-gray-50  mt-4">
+                @for(p of catalogue.products; track p.id_producto) {
+                <div class="mb-4">
+                    @if(p.id_producto < 0 && p.view==true) { <table
+                        class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 p-2">
+                        <thead
+                            class="text-xs text-gray-200 uppercase bg-gray-500  dark:bg-gray-700 dark:text-gray-400 text-center">
+                            <tr class="text-center" colspan="2">
+                                <th scope="col" colspan="1" class="px-6 py-3 font-medium">
+                                    <div><strong>GRUPO:</strong> {{p.nombre_grupo}}</div>
+                                </th>
+                                <th scope="col" colspan="1" class="px-6 py-3 font-medium">
+                                    <div><strong>SUBGRUPO:</strong> {{p.nombre_subgrupo}}</div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if(p.id_producto > 0) {
+                            <tr colspan="2">
+                                <td colspan="1">
+                                    <div class="w-52 flex-shrink-0">
+                                        @if(p.imagenPrincipal != '1bW4FHKxVF0tHzYbiYTu1iEh4BaSYbRm2') {
+                                        <img class="w-full h-52 object-contain "
+                                            [src]="urlBase+p.imagenPrincipal+'?alt=media'" [alt]="p.pro_nom">
+                                        } @else {
+                                        <img class="w-full h-52 object-cover  opacity-50"
+                                            src="../../../../assets/img/imgDefault/sinProd.png" alt="Sin imagen">
+                                        }
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="flex-1 space-y-1">
+                                        <div class="text-sm font-medium text-gray-900">
+                                            {{p.id_producto}} / {{p.pro_nom}}
+                                        </div>
+
+                                        @if(catalogue.show_price) {
+                                        <div class="text-sm text-green-600 font-semibold">
+                                            <strong>PVP:</strong> ${{p.precioReal | number: '1.2'}}
+                                        </div>
+                                        }
+
+                                        @if(catalogue.stock) {
+                                        <div class="text-xs text-gray-600">
+                                            <strong>Stock:</strong> {{p.stockactual}}
+                                        </div>
+                                        }
+
+                                        @if(catalogue.description) {
+                                        <div class="text-xs text-gray-600">
+                                            <strong>Descripción:</strong> {{p.descripcion}}
+                                        </div>
+                                        }
+
+                                        @if(catalogue.marca) {
+                                        <div class="text-xs text-gray-600">
+                                            <strong>Marca:</strong> {{p.marca_nombre}}
+                                        </div>
+                                        }
+
+                                        @if(catalogue.peso) {
+                                        <div class="text-xs text-gray-600">
+                                            <strong>Peso/Piezas:</strong> {{p.peso}}
+                                        </div>
+                                        }
+
+                                        @if(catalogue.medida) {
+                                        <div class="text-xs text-gray-600">
+                                            <strong>Medida:</strong> {{p.valor_medida}} {{p.unidad_medida}}
+                                        </div>
+                                        }
+
+                                        @if(catalogue.ubicacion) {
+                                        <div class="text-xs text-gray-600">
+                                            <strong>Ubicación:</strong> {{p.ubicacion}}
+                                        </div>
+                                        }
+
+                                        @if(catalogue.origen) {
+                                        <div class="text-xs text-gray-600">
+                                            <strong>Origen:</strong>
+                                            @if(p.origen == 1) {
+                                            <span>Nacional</span>
+                                            }
+                                            @if(p.origen == 2) {
+                                            <span>Importado</span>
+                                            }
+                                        </div>
+                                        }
+
+                                        @if(catalogue.cant_bulto) {
+                                        <div class="text-xs text-gray-600">
+                                            <strong>Cantidad por bulto:</strong> {{p.cant_bulto}}
+                                        </div>
+                                        }
+                                    </div>
+                                </td>
+                            </tr>
+                            }
+                        </tbody>
+                        </table>
+                        }
+
+                        @if(p.id_producto > 0) {
+                        <div class="w-full border border-gray-300 rounded-lg bg-white p-4 flex gap-4">
+                            <!-- Imagen del producto -->
+                            <div class="w-52 flex-shrink-0">
+                                @if(p.imagenPrincipal != '1bW4FHKxVF0tHzYbiYTu1iEh4BaSYbRm2') {
+                                <img class="w-full h-52 object-contain " [src]="urlBase+p.imagenPrincipal+'?alt=media'"
+                                    [alt]="p.pro_nom">
+                                } @else {
+                                <img class="w-full h-52 object-cover  opacity-50"
+                                    src="../../../../assets/img/imgDefault/sinProd.png" alt="Sin imagen">
+                                }
+                            </div>
+
+                            <!-- Información del producto -->
+                            <div class="flex-1 space-y-1">
+                                <div class="text-sm font-medium text-gray-900">
+                                    {{p.id_producto}} / {{p.pro_nom}}
+                                </div>
+
+                                @if(catalogue.show_price) {
+                                <div class="text-sm text-green-600 font-semibold">
+                                    <strong>PVP:</strong> ${{p.precioReal | number: '1.2'}}
+                                </div>
+                                }
+
+                                @if(catalogue.stock) {
+                                <div class="text-xs text-gray-600">
+                                    <strong>Stock:</strong> {{p.stockactual}}
+                                </div>
+                                }
+
+                                @if(catalogue.description) {
+                                <div class="text-xs text-gray-600">
+                                    <strong>Descripción:</strong> {{p.descripcion}}
+                                </div>
+                                }
+
+                                @if(catalogue.marca) {
+                                <div class="text-xs text-gray-600">
+                                    <strong>Marca:</strong> {{p.marca_nombre}}
+                                </div>
+                                }
+
+                                @if(catalogue.peso) {
+                                <div class="text-xs text-gray-600">
+                                    <strong>Peso/Piezas:</strong> {{p.peso}}
+                                </div>
+                                }
+
+                                @if(catalogue.medida) {
+                                <div class="text-xs text-gray-600">
+                                    <strong>Medida:</strong> {{p.valor_medida}} {{p.unidad_medida}}
+                                </div>
+                                }
+
+                                @if(catalogue.ubicacion) {
+                                <div class="text-xs text-gray-600">
+                                    <strong>Ubicación:</strong> {{p.ubicacion}}
+                                </div>
+                                }
+
+                                @if(catalogue.origen) {
+                                <div class="text-xs text-gray-600">
+                                    <strong>Origen:</strong>
+                                    @if(p.origen == 1) {
+                                    <span>Nacional</span>
+                                    }
+                                    @if(p.origen == 2) {
+                                    <span>Importado</span>
+                                    }
+                                </div>
+                                }
+
+                                @if(catalogue.cant_bulto) {
+                                <div class="text-xs text-gray-600">
+                                    <strong>Cantidad por bulto:</strong> {{p.cant_bulto}}
+                                </div>
+                                }
+                            </div>
+                        </div>
+                        }
+                </div>
+                }
+            </div>
+
+        </div>
+        }
+
+
+
+
+
+        <!-- Estado sin productos -->
+        @if(catalogue.view_products == false) {
+        <div class="border border-gray-200 rounded-lg mt-2 bg-gray-50 p-8">
+            <div class="text-center">
+                @if(loading) {
+                <div class="flex justify-center items-center">
+                    <svg class="animate-spin w-8 h-8 text-gray-500" fill="none" viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" class="opacity-25">
+                        </circle>
+                        <path fill="currentColor" class="opacity-75"
+                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                        </path>
+                    </svg>
+                    <span class="ml-2 text-gray-500">Cargando productos...</span>
+                </div>
+                } @else {
+                <img class="w-32 h-auto mx-auto mb-4 opacity-50" src="../../../../assets/img/imgDefault/sinProd.png"
+                    alt="Sin productos">
+                <p class="text-gray-500">Seleccione los filtros para mostrar productos</p>
+                }
+            </div>
+        </div>
+        }
+    </div>
+</div>
+
+<!-- Loading global -->
+<!-- @if(loading) {
+<div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div class="bg-white rounded-lg p-6 flex items-center space-x-3">
+        <svg class="animate-spin w-6 h-6 text-green-500" fill="none" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" class="opacity-25"></circle>
+            <path fill="currentColor" class="opacity-75"
+                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+            </path>
+        </svg>
+        <span class="text-gray-700">Cargando...</span>
+    </div>
+</div>
+} -->
+
+<ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px', fullScreenBackdrop: true }" [template]="">
+</ngx-loading>
+
+@if(catalogue.view_products) {
+<div id="section-pdf" #content style="margin-top: 1.5rem; display: none;">
+    <div style="width: 100%; border-radius: 0.5rem; text-align: center; padding: 1rem;">
+        <img [src]="urlBase+configuracion?.imgLogo+'?alt=media'"
+            style="width: 200px; height: auto; margin: auto; text-align: center;">
+    </div>
+
+    <div style="width: 100%; border-radius: 0.5rem; background-color: rgb(249 250 251); text-align: center;">
+        <h4
+            style="font-size: 1rem; line-height: 1.5rem; font-weight: 700; color: rgb(75 85 99); background-color: rgb(255 255 255); padding-left: 1rem; padding-right: 1rem; border-radius: 0.5rem; display: inline-block;">
+            CATÁLOGO DE PRODUCTOS
+        </h4>
+    </div>
+
+    <div
+        style="width: 100%; border-radius: 0.5rem; background-color: rgb(249 250 251); margin-top: 1rem; margin: 10px !important;">
+        @for(p of catalogue.products; track p.id_producto) {
+        <div style="margin-bottom: 1rem;">
+            @if(p.id_producto < 0 && p.view==true) { <table
+                style="width: 100%; font-size: 0.875rem; line-height: 1.25rem; text-align: left; color: rgb(107 114 128); padding: 0.5rem;">
+                <thead
+                    style=" border-radius:  0.5rem; font-size: 0.75rem; line-height: 1rem; color: rgb(229 231 235); text-transform: uppercase; background-color: rgb(107 114 128); text-align: center;">
+                    <tr style="text-align: center;" colspan="2">
+                        <th scope="col" colspan="1"
+                            style="padding-left: 1.5rem; padding-right: 1.5rem; padding-top: 0.75rem; padding-bottom: 0.75rem; font-weight: 500;">
+                            <div><strong>GRUPO:</strong> {{p.nombre_grupo}}</div>
+                        </th>
+                        <th scope="col" colspan="1"
+                            style="padding-left: 1.5rem; padding-right: 1.5rem; padding-top: 0.75rem; padding-bottom: 0.75rem; font-weight: 500;">
+                            <div><strong>SUBGRUPO:</strong> {{p.nombre_subgrupo}}</div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if(p.id_producto > 0) {
+                    <tr colspan="2">
+                        <td colspan="1">
+                            <div style="width: 13rem; flex-shrink: 0;">
+                                @if(p.imagenPrincipal != '1bW4FHKxVF0tHzYbiYTu1iEh4BaSYbRm2') {
+                                <img style="width: 100%; height: 13rem; object-fit: contain;"
+                                    [src]="urlBase+p.imagenPrincipal+'?alt=media'" [alt]="p.pro_nom">
+                                } @else {
+                                <img style="width: 100%; height: 13rem; object-fit: cover; opacity: 0.5;"
+                                    src="../../../../assets/img/imgDefault/sinProd.png" alt="Sin imagen">
+                                }
+                            </div>
+                        </td>
+                        <td>
+                            <div style="flex: 1 1 0%;">
+                                <div
+                                    style="font-size: 0.875rem; line-height: 1.25rem; font-weight: 500; color: rgb(17 24 39); margin-bottom: 0.25rem;">
+                                    {{p.id_producto}} / {{p.pro_nom}}
+                                </div>
+
+                                @if(catalogue.show_price) {
+                                <div
+                                    style="font-size: 0.875rem; line-height: 1.25rem; color: rgb(22 163 74); font-weight: 600; margin-bottom: 0.25rem;">
+                                    <strong>PVP:</strong> ${{p.precioReal | number: '1.2'}}
+                                </div>
+                                }
+
+                                @if(catalogue.stock) {
+                                <div
+                                    style="font-size: 0.75rem; line-height: 1rem; color: rgb(75 85 99); margin-bottom: 0.25rem;">
+                                    <strong>Stock:</strong> {{p.stockactual}}
+                                </div>
+                                }
+
+                                @if(catalogue.description) {
+                                <div
+                                    style="font-size: 0.75rem; line-height: 1rem; color: rgb(75 85 99); margin-bottom: 0.25rem;">
+                                    <strong>Descripción:</strong> {{p.descripcion}}
+                                </div>
+                                }
+
+                                @if(catalogue.marca) {
+                                <div
+                                    style="font-size: 0.75rem; line-height: 1rem; color: rgb(75 85 99); margin-bottom: 0.25rem;">
+                                    <strong>Marca:</strong> {{p.marca_nombre}}
+                                </div>
+                                }
+
+                                @if(catalogue.peso) {
+                                <div
+                                    style="font-size: 0.75rem; line-height: 1rem; color: rgb(75 85 99); margin-bottom: 0.25rem;">
+                                    <strong>Peso/Piezas:</strong> {{p.peso}}
+                                </div>
+                                }
+
+                                @if(catalogue.medida) {
+                                <div
+                                    style="font-size: 0.75rem; line-height: 1rem; color: rgb(75 85 99); margin-bottom: 0.25rem;">
+                                    <strong>Medida:</strong> {{p.valor_medida}} {{p.unidad_medida}}
+                                </div>
+                                }
+
+                                @if(catalogue.ubicacion) {
+                                <div
+                                    style="font-size: 0.75rem; line-height: 1rem; color: rgb(75 85 99); margin-bottom: 0.25rem;">
+                                    <strong>Ubicación:</strong> {{p.ubicacion}}
+                                </div>
+                                }
+
+                                @if(catalogue.origen) {
+                                <div
+                                    style="font-size: 0.75rem; line-height: 1rem; color: rgb(75 85 99); margin-bottom: 0.25rem;">
+                                    <strong>Origen:</strong>
+                                    @if(p.origen == 1) {
+                                    <span>Nacional</span>
+                                    }
+                                    @if(p.origen == 2) {
+                                    <span>Importado</span>
+                                    }
+                                </div>
+                                }
+
+                                @if(catalogue.cant_bulto) {
+                                <div style="font-size: 0.75rem; line-height: 1rem; color: rgb(75 85 99);">
+                                    <strong>Cantidad por bulto:</strong> {{p.cant_bulto}}
+                                </div>
+                                }
+                            </div>
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+                </table>
+                }
+
+                @if(p.id_producto > 0) {
+                <div
+                    style="width: 100%; border: 1px solid rgb(209 213 219); border-radius: 0.5rem; background-color: rgb(255 255 255); padding: 1rem; display: flex; gap: 1rem;">
+                    <div style="width: 13rem; flex-shrink: 0;">
+                        @if(p.imagenPrincipal != '1bW4FHKxVF0tHzYbiYTu1iEh4BaSYbRm2') {
+                        <img style="width: 100%; height: 13rem; object-fit: contain;"
+                            [src]="urlBase+p.imagenPrincipal+'?alt=media'" [alt]="p.pro_nom">
+                        } @else {
+                        <img style="width: 100%; height: 13rem; object-fit: cover; opacity: 0.5;"
+                            src="../../../../assets/img/imgDefault/sinProd.png" alt="Sin imagen">
+                        }
+                    </div>
+
+                    <div style="flex: 1 1 0%;">
+                        <div
+                            style="font-size: 0.875rem; line-height: 1.25rem; font-weight: 500; color: rgb(17 24 39); margin-bottom: 0.25rem;">
+                            {{p.id_producto}} / {{p.pro_nom}}
+                        </div>
+
+                        @if(catalogue.show_price) {
+                        <div
+                            style="font-size: 0.875rem; line-height: 1.25rem; color: rgb(22 163 74); font-weight: 600; margin-bottom: 0.25rem;">
+                            <strong>PVP:</strong> ${{p.precioReal | number: '1.2'}}
+                        </div>
+                        }
+
+                        @if(catalogue.stock) {
+                        <div
+                            style="font-size: 0.75rem; line-height: 1rem; color: rgb(75 85 99); margin-bottom: 0.25rem;">
+                            <strong>Stock:</strong> {{p.stockactual}}
+                        </div>
+                        }
+
+                        @if(catalogue.description) {
+                        <div
+                            style="font-size: 0.75rem; line-height: 1rem; color: rgb(75 85 99); margin-bottom: 0.25rem;">
+                            <strong>Descripción:</strong> {{p.descripcion}}
+                        </div>
+                        }
+
+                        @if(catalogue.marca) {
+                        <div
+                            style="font-size: 0.75rem; line-height: 1rem; color: rgb(75 85 99); margin-bottom: 0.25rem;">
+                            <strong>Marca:</strong> {{p.marca_nombre}}
+                        </div>
+                        }
+
+                        @if(catalogue.peso) {
+                        <div
+                            style="font-size: 0.75rem; line-height: 1rem; color: rgb(75 85 99); margin-bottom: 0.25rem;">
+                            <strong>Peso/Piezas:</strong> {{p.peso}}
+                        </div>
+                        }
+
+                        @if(catalogue.medida) {
+                        <div
+                            style="font-size: 0.75rem; line-height: 1rem; color: rgb(75 85 99); margin-bottom: 0.25rem;">
+                            <strong>Medida:</strong> {{p.valor_medida}} {{p.unidad_medida}}
+                        </div>
+                        }
+
+                        @if(catalogue.ubicacion) {
+                        <div
+                            style="font-size: 0.75rem; line-height: 1rem; color: rgb(75 85 99); margin-bottom: 0.25rem;">
+                            <strong>Ubicación:</strong> {{p.ubicacion}}
+                        </div>
+                        }
+
+                        @if(catalogue.origen) {
+                        <div
+                            style="font-size: 0.75rem; line-height: 1rem; color: rgb(75 85 99); margin-bottom: 0.25rem;">
+                            <strong>Origen:</strong>
+                            @if(p.origen == 1) {
+                            <span>Nacional</span>
+                            }
+                            @if(p.origen == 2) {
+                            <span>Importado</span>
+                            }
+                        </div>
+                        }
+
+                        @if(catalogue.cant_bulto) {
+                        <div style="font-size: 0.75rem; line-height: 1rem; color: rgb(75 85 99);">
+                            <strong>Cantidad por bulto:</strong> {{p.cant_bulto}}
+                        </div>
+                        }
+                    </div>
+                </div>
+                }
+        </div>
+        }
+    </div>
+</div>
+}

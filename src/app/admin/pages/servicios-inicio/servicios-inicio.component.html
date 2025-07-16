@@ -1,0 +1,343 @@
+<div class=" pt-5">
+    <h2 class="mb-2 2xl:text-2xl text-xl font-bold text-gray-600 ">Servicios Inicio </h2>
+    <div class="2xl:mx-10 xl:mx-1 mt-3">
+        <div
+            class="mt-5   grid grid-cols-6    2xl:space-x-3 xl:space-x-2 lg:space-x-1 md:space-y-1 md:space-x-1 space-y-1  relative">
+            <div class="col-span-6">
+                <h4 class="mb-2 text-md font-semibold text-gray-600">1. Administrar botones portada</h4>
+                <button (click)="openModal('#modalNewBtn', 'create','')"
+                    class="bg-green-400 text-white px-5 py-1.5 rounded-md text-xs effectoZoomBoton ">
+                    Crear Nuevo <i class="bi bi-plus"></i>
+                </button>
+            </div>
+        </div>
+        <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-5 ">
+            <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 p-2">
+                <thead
+                    class="text-xs text-gray-200 uppercase bg-gray-500  dark:bg-gray-700 dark:text-gray-400 text-center">
+                    <tr>
+                        <th scope="col" class="px-6 py-2">
+                            Título
+                        </th>
+                        <th scope="col" class="px-6 py-2">
+                            URL
+                        </th>
+                        <th scope="col" class="px-6 py-2">
+                            Color botón
+                        </th>
+                        <th scope="col" class="px-6 py-2">
+                            Color letra
+                        </th>
+                        <th scope="col" class="px-6 py-2 text-center">
+                            <i class="bi bi-gear-fill"></i>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @if(botones.length==0){
+                    <tr>
+                        <td colspan="6">
+                            <div class=" flex justify-center pt-5">
+                                <i class="bi bi-folder-x text-6xl text-gray-500 "></i>
+                            </div>
+                            <div class=" flex justify-center pb-5">
+
+                                <span style="font-size: 20px; ;" class="text-gray-500"> Aún no ha creado
+                                    botones </span>
+                            </div>
+                        </td>
+                    </tr>
+                    }@else {
+                    @for(btn of botones; track btn.id){
+                    <tr
+                        class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 text-xs text-center">
+                        <th scope="row" class="px-6 py-2 font-semibold text-gray-900 whitespace-nowrap dark:text-white">
+                            {{btn.titulo}}
+                        </th>
+
+                        <td class="px-6 py-2">
+                            {{btn.url}}
+                        </td>
+                        <td class="px-6 py-2">
+                            <span
+                                class=" text-xs font-medium me-2 px-2.5 py-0.5 rounded text-white  border border-gray-400"
+                                [ngStyle]="{'background-color':btn.colorBoton }"></span>
+                        </td>
+                        <td class="px-6 py-2 text-center">
+                            <span
+                                class=" text-xs font-medium me-2 px-2.5 py-0.5 rounded text-white border-gray-600  border border-gray-400"
+                                [ngStyle]="{'background-color':btn.colorLetra }"></span>
+                        </td>
+                        <td class="px-6 py-2 text-center">
+                            <i (click)="openModal('#modalNewBtn', 'edit',btn)"
+                                class="bi bi-pencil-fill text-green-500 2xl:text-sm  py-1.5 px-2 hover:py-1.5 hover:px-2 hover:bg-green-500 hover:rounded-full hover:text-white cursor-pointer "></i>
+                            <i (click)="deleteBtn(btn)"
+                                class="bi bi-trash2-fill text-red-500 2xl:text-sm py-1.5 px-2 hover:py-1.5 hover:px-2 hover:bg-red-500 hover:rounded-full hover:text-white cursor-pointer"></i>
+                        </td>
+                    </tr>
+                    }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="2xl:mx-10 xl:mx-1 ">
+        <div
+            class="mt-5   grid grid-cols-6    2xl:space-x-3 xl:space-x-2 lg:space-x-1 md:space-y-1 md:space-x-1 space-y-1  relative">
+            <div class="col-span-6">
+                <h4 class="mb-2 text-md font-semibold text-gray-600">2. Administrar servicios inicio</h4>
+                <button 
+                    (click)="openModalS('#modalNewServ','create','')"
+                    class="bg-green-400 text-white px-5 py-1.5 rounded-md text-xs effectoZoomBoton ">
+                    Crear Nuevo <i class="bi bi-plus"></i>
+                </button>
+            </div>
+        </div>
+        <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-5">
+            <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 p-2">
+                <thead
+                    class="text-xs text-gray-200 uppercase bg-gray-500  dark:bg-gray-700 dark:text-gray-400 text-center">
+                    <tr>
+                        <th scope="col" class="px-6 py-2">
+                            Nombre
+                        </th>
+                        <th scope="col" class="px-6 py-2">
+                            Descripción
+                        </th>
+                        <th scope="col" class="px-6 py-2">
+                            Imagen
+                        </th>
+                        <th scope="col" class="px-6 py-2">
+                            Color letra
+                        </th>
+                        <th scope="col" class="px-6 py-2 text-center">
+                            <i class="bi bi-gear-fill"></i>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if(servicios.length==0){
+                    <tr>
+                        <td colspan="6">
+                            <div class=" flex justify-center pt-5">
+                                <i class="bi bi-folder-x text-6xl text-gray-500 "></i>
+                            </div>
+                            <div class=" flex justify-center pb-5">
+
+                                <span style="font-size: 20px; ;" class="text-gray-500"> Aún no ha creado
+                                    servicios </span>
+                            </div>
+                        </td>
+                    </tr>
+                    }@else {
+
+                    @for(serv of servicios; track serv.id){
+                    <tr
+                        class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 text-xs text-center">
+                        <th scope="row" class="px-6 py-2 font-semibold text-gray-900 whitespace-nowrap dark:text-white">
+                            {{serv.nombre}}
+                        </th>
+
+                        <td class="px-6 py-2">
+                            {{serv.detalle}}
+                        </td>
+                        <td class="px-6 py-2">
+                            <span class="font-semibold cursor-pointer " type="button"
+                                (click)="redirecTO(urlBase+serv.imagen+'?alt=media')"> Ver
+                            </span>
+                        </td>
+                        <td class="px-6 py-2 text-center">
+                            <span
+                                class=" text-xs font-medium me-2 px-2.5 py-0.5 rounded text-white border-gray-600  border border-gray-400"
+                                [ngStyle]="{'background-color':serv.colorLetra }"></span>
+                        </td>
+                        <td class="px-6 py-2 text-center">
+                            <i
+                                (click)="openModalS('#modalNewServ','edit',serv)"
+                                class="bi bi-pencil-fill text-green-500 2xl:text-sm  py-1.5 px-2 hover:py-1.5 hover:px-2 hover:bg-green-500 hover:rounded-full hover:text-white cursor-pointer "></i>
+                            <i
+                            (click)="deleteBtnService(serv)"
+                                class="bi bi-trash2-fill text-red-500 2xl:text-sm py-1.5 px-2 hover:py-1.5 hover:px-2 hover:bg-red-500 hover:rounded-full hover:text-white cursor-pointer"></i>
+                        </td>
+                    </tr>
+                    }
+                    }
+
+
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+<!-- MODAL CREAR Y EDITAR BOTON -->
+<div id="modalNewBtn" tabindex="-1"
+    class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+    <div class="relative p-4 w-full max-w-md max-h-full">
+        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+            <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+                @if(tipoBtn=='create'){
+                <h3 class=" text-lg font-normal text-gray-500 dark:text-gray-400">Crear botón</h3>
+
+                }@else {
+                <h3 class=" text-lg font-normal text-gray-500 dark:text-gray-400">Editar botón</h3>
+                }
+                <button type="button"
+                    class="end-2.5 white bg-gray-200 icoClose rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center "
+                    (click)="closeModal(true, '#modalNewBtn')">
+                    <svg class="w-3 h-3 " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                        viewBox="0 0 14 14">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                    </svg>
+                    <span class="sr-only">Close modal</span>
+                </button>
+            </div>
+            <form [formGroup]="formCrearButton" class="mt-3">
+                <div class=" grid grid-cols-1 m-5">
+                    <div class="col-span-1 mb-2">
+                        <div class="pb-2">
+                            <label for="email" class="labelGeneral">Título</label>
+                            <input formControlName="titulo" type="text" class="inputGeneral"
+                                placeholder="Ingrese título" />
+                        </div>
+                    </div>
+                    <div class="col-span-1 mb-2">
+                        <div class="pb-2">
+                            <label for="email" class="labelGeneral">URL</label>
+                            <input formControlName="url" type="text" class="inputGeneral"
+                                placeholder="Ingrese url al que desea redirigir" />
+                        </div>
+                    </div>
+                    <div class="col-span-1 mt-3">
+                        <div class="pb-2">
+                            <label for="email" class="labelGeneral">Color Botón</label>
+                            <input formControlName="colorBoton" type="color" class="mt-4 ml-4" />
+                        </div>
+                    </div>
+                    <div class="col-span-1 my-4">
+                        <div class="grid grid-cols-2 space-x-2 ">
+                            <div class="col-span-1">
+                                <button type="button" ngbAutofocus
+                                    class="bg-gray-500 text-white px-5 py-2 rounded-md text-xs w-full "
+                                    (click)="closeModal(true, '#modalNewBtn')">
+                                    Cerrar
+                                </button>
+                            </div>
+                            <div class="col-span-1">
+                                @if(tipoBtn=='create'){
+                                <button [disabled]="formCrearButton.invalid" type="button" ngbAutofocus
+                                    class="bg-green-500 text-white px-5 py-2 rounded-md text-xs w-full "
+                                    (click)="crearNuevoBoton(formCrearButton.value)">
+                                    Crear Botón
+                                </button>
+                                }@else{
+                                <button type="button" ngbAutofocus
+                                    class="bg-green-500 text-white px-5 py-2 rounded-md text-xs w-full "
+                                    (click)="editNuevoBoton(formCrearButton.value)">
+                                    Editar Botón
+                                </button>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL CREAR Y EDITAR SERVICIO -->
+<div id="modalNewServ" tabindex="-1"
+    class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+    <div class="relative p-4 w-full max-w-md max-h-full">
+        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+            <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+                @if(tipoBtn=='create'){
+                <h3 class=" text-lg font-normal text-gray-500 dark:text-gray-400">Crear Servicio</h3>
+
+                }@else {
+                <h3 class=" text-lg font-normal text-gray-500 dark:text-gray-400">Editar Servicio</h3>
+                }
+                <button type="button"
+                    class="end-2.5 white bg-gray-200 icoClose rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center "
+                    (click)="closeModal(true, '#modalNewServ')">
+                    <svg class="w-3 h-3 " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                        viewBox="0 0 14 14">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                    </svg>
+                    <span class="sr-only">Close modal</span>
+                </button>
+            </div>
+            <form [formGroup]="formCrearServicio" class="mt-3">
+                <div class=" grid grid-cols-1 m-5">
+                    <div class="col-span-1 mb-2">
+                        <div class="pb-2">
+                            <label for="email" class="labelGeneral">Nombre</label>
+                            <input formControlName="nombre" type="text" class="inputGeneral"
+                                placeholder="Ingrese nombre" />
+                        </div>
+                    </div>
+                    <div class="col-span-1 mb-2">
+                        <div class="pb-2">
+                            <label for="email" class="labelGeneral">Descripción</label>
+                           
+                            <textarea formControlName="detalle" type="text" class="inputGeneral3" placeholder="Ingrese detalle slogan empresa"></textarea>
+
+                        </div>
+                    </div>
+                    <div class="col-span-1 mt-2 mb-2">
+                        <div class="pb-2">
+                            <label for="email" class="labelGeneral">Imagen</label>
+                            <input 
+                            class="block w-full mb-5 text-xs text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" 
+                            type="file" style="font-size: 13px; "
+                            (change)="selectImgService($event)" accept="image/*">
+                        </div>
+                    </div>
+                    <div class="col-span-1 mt-1">
+                        <div class="pb-2">
+                            <label for="email" class="labelGeneral">Color Letra Botón</label>
+                            <input formControlName="colorLetra" type="color" class="mt-4 ml-4" />
+                        </div>
+                    </div>
+                    <div class="col-span-1 my-3">
+                        <div class="grid grid-cols-2 space-x-2 ">
+                            <div class="col-span-1">
+                                <button type="button" ngbAutofocus
+                                    class="bg-gray-500 text-white px-5 py-2 rounded-md text-xs w-full "
+                                    (click)="closeModal(true, '#modalNewServ')">
+                                    Cerrar
+                                </button>
+                            </div>
+                            <div class="col-span-1">
+                                @if(tipoBtn=='create'){
+                                <button [disabled]="formCrearServicio.invalid" type="button" ngbAutofocus
+                                    class="bg-green-500 text-white px-5 py-2 rounded-md text-xs w-full "
+                                    (click)="crearNuevoServicio(formCrearServicio.value)">
+                                    Crear Servicio
+                                </button>
+                                }@else{
+                                <button type="button" ngbAutofocus
+                                    class="bg-green-500 text-white px-5 py-2 rounded-md text-xs w-full "
+                                    (click)="editNuevoServicio(formCrearServicio.value)">
+                                    Editar Servicio
+                                </button>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Loading  -->
+
+<ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px', fullScreenBackdrop: true }" [template]="">
+</ngx-loading>

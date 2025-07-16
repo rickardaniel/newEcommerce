@@ -1,0 +1,338 @@
+<div class=" pt-5">
+    <h2 class="mb-2 2xl:text-2xl text-xl font-bold text-gray-600">Configuración</h2>
+
+    <div
+        class="mt-5   grid grid-cols-5     2xl:space-x-3 xl:space-x-2 lg:space-x-1  md:space-x-1  bg-gray-100 p-3 rounded-lg shadow-lg ">
+        <div class="col-span-1">
+            <div class="pb-2">
+                <label for="email" class="labelGeneral3">Mostrar precios</label>
+                <select class="inputGeneral3" [(ngModel)]="configuracion.mostrar_precio"
+                    (change)="updateShowPrice($event)">
+                    <option value="1">Si</option>
+                    <option value="0">No</option>
+                </select>
+            </div>
+
+        </div>
+        <div class="col-span-1 ">
+            <div class="pb-2">
+                <label for="email" class="labelGeneral3">Bodega</label>
+                <select class="inputGeneral3" [(ngModel)]="configuracion.id_bodega" (change)="updateBodega($event)">
+                    <option value="0">Todas</option>
+                    @for( b of bodegas; track b.id){
+                    <option value="{{b.id}}">{{b.nombre}}</option>
+                    }
+
+                </select>
+            </div>
+
+        </div>
+        <div class="col-span-1">
+            <div class="pb-2">
+                <label for="email" class="labelGeneral3">Tipo de precio</label>
+                <select class="inputGeneral3" [(ngModel)]="configuracion.tipoPrecio" (change)="updatePriceType($event)">
+                    @for( b of pricesTypes; track b.id){
+                    <option [value]="b.tipoprecio">{{b.tipoprecio}}</option>
+                    }
+                </select>
+            </div>
+
+        </div>
+        <div class="col-span-1">
+            <div class="pb-2">
+                <label for="email" class="labelGeneral3">Producto tendencia</label>
+                <select class="inputGeneral3" (change)="updateTrendProductsShow($event)">
+                    <option value="1">Productos Nuevos</option>
+                    <option value="2">Productos Promoción</option>
+                    <option value="3">Grupos</option>
+                </select>
+            </div>
+
+        </div>
+        <div class="col-span-1">
+            <div class="pb-2">
+                <label for="email" class="labelGeneral3">Pagina Inicio</label>
+                <select class="inputGeneral3" title="Establecer ruta de inicio del sitio"
+                    (change)="updateRouteDefault($event)" [(ngModel)]="configuracion.ruta_inicio_defecto">
+                    <option value="home/1">Ecommerce</option>
+                    <option value="products">Catálogo</option>
+                    <option value="inicio">Inicio</option>
+                </select>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="mt-5   grid grid-cols-3     2xl:space-x-3 xl:space-x-2 lg:space-x-1  md:space-x-1  bg-gray-100 p-3 rounded-lg shadow-lg ">
+        <div class="col-span-3">
+            <h4 class="text-center  text-gray-600 my-2 font-semibold text-sm">Vista ventanas Header</h4>
+        </div>
+        <div class="col-span-1">
+            <div class="pb-2 flex justify-center">
+                <label class="switch ">
+                    @if(configuracion.verInicio == 1){
+                    <input type="checkbox" checked (change)="changeView($event,configuracion,'inicio')">
+                    }@else{
+                    <input type="checkbox" (change)="changeView($event,configuracion,'inicio')">
+                    }
+                    <span class="slider round"> </span>
+                </label>
+                @if(configuracion.verInicio == 0){
+                <span class=" mt-2.5 text-xs " style="padding-left: 0.5em;">
+                    Activar vista Inicio
+                </span>
+                }@else {
+                <span class=" font-bold mt-2.5 text-xs" style="padding-left: 0.5em;">
+                    Desactivar vista Inicio
+                </span>
+                }
+            </div>
+
+        </div>
+        <div class="col-span-1 ">
+            <div class="pb-2 flex justify-center">
+                <label class="switch ">
+                    @if(configuracion.verHome == 1){
+                    <input type="checkbox" checked (change)="changeVerPromociones($event,configuracion)">
+                    }@else{
+                    <input type="checkbox" (change)="changeVerPromociones($event,configuracion)">
+                    }
+                    <span class="slider round"> </span>
+                </label>
+                @if(configuracion.verHome == 0){
+                <span class=" mt-2.5 text-xs " style="padding-left: 0.5em;">
+                    Activar vista Ecommerce
+                </span>
+                }@else {
+                <span class=" font-bold mt-2.5 text-xs " style="padding-left: 0.5em;">
+                    Desactivar vista Ecommerce
+                </span>
+                }
+            </div>
+
+        </div>
+        <div class="col-span-1">
+            <div class="pb-2 flex justify-center">
+                <label class="switch ">
+                    @if(configuracion.verCatalogo == 1){
+                    <input type="checkbox" checked (change)="changeVerPromociones($event,configuracion)">
+                    }@else{
+                    <input type="checkbox" (change)="changeVerPromociones($event,configuracion)">
+                    }
+                    <span class="slider round"> </span>
+                </label>
+                @if(configuracion.verCatalogo == 0){
+                <span class=" mt-2.5 text-xs " style="padding-left: 0.5em;">
+                    Activar vista Catálogo
+                </span>
+                }@else {
+                <span class=" font-bold mt-2.5 text-xs " style="padding-left: 0.5em;">
+                    Desactivar vista Catálogo
+                </span>
+                }
+            </div>
+
+        </div>
+    </div>
+
+    <div class="mt-5   grid grid-cols-2     2xl:space-x-3 xl:space-x-2 lg:space-x-1  md:space-x-1  bg-gray-100 p-3 rounded-lg shadow-lg relative ">
+        <div class="col-span-2">
+            <h4 class="text-center  text-gray-600 my-2 font-semibold text-sm">Descuentos y Valores</h4>
+        </div>
+        <div class="col-span-1">
+                <label class="text-xs"> Porcentaje precio oferta Ejm: ( <span class="">${{price.before | number: '1.2'}}
+                    </span>
+                    <span> $ {{price.now | number: '1.2'}}</span>
+                    )
+                </label>
+                <br>
+                <div class="relative w-full">
+                    <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                            class="bi bi-percent w-4 h-4 text-gray-500" viewBox="0 0 16 16">
+                            <path
+                                d="M13.442 2.558a.625.625 0 0 1 0 .884l-10 10a.625.625 0 1 1-.884-.884l10-10a.625.625 0 0 1 .884 0M4.5 6a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m0 1a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5m7 6a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m0 1a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5" />
+                        </svg>
+                    </div>
+                    <input placeholder="0" [(ngModel)]="configuracion.porcentajePrecioOferta" type="text"
+                        id="simple-search"
+                        class=" w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
+                </div>
+        </div>
+        <div class="col-span-1 ">
+
+                <label class="text-xs  ">Porcentaje Descuento por promoción Ejm: (<strong>Black Friday</strong>
+                    )</label>
+                <br>
+                <div class="relative w-full">
+                    <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                            class="bi bi-percent w-4 h-4 text-gray-500" viewBox="0 0 16 16">
+                            <path
+                                d="M13.442 2.558a.625.625 0 0 1 0 .884l-10 10a.625.625 0 1 1-.884-.884l10-10a.625.625 0 0 1 .884 0M4.5 6a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m0 1a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5m7 6a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m0 1a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5" />
+                        </svg>
+                    </div>
+                    <input placeholder="0" [(ngModel)]="configuracion.porcentajeDescuento" type="text"
+                        id="simple-search"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
+                </div>
+
+            <div class="absolute top-0 right-0 ">
+                <div class="mt-3">
+                  <div class="flex justify-center">
+                    <button
+                    (click)="updateConfiguration(configuracion )"
+                    class="btnSave px-3 py-2.5 rounded-full text-xs mt-4 shadow-lg effectoZoomBoton">
+                    <i class="bi bi-pencil-fill"></i>
+                  </button>
+                  </div>
+                </div>
+              </div>
+        </div>
+    </div>
+
+    <div class="mt-5   grid grid-cols-3 2xl:space-x-3 xl:space-x-2 lg:space-x-1  md:space-x-1  bg-gray-100 p-3 rounded-lg shadow-lg relative">
+        <div class="col-span-3">
+            <h4 class="text-center  text-gray-600 my-2 font-semibold text-sm ">Tarjeta de crédito</h4>
+        </div>
+        <div class="col-span-2">
+            <div class="pb-2">
+                <label for="email" class="labelGeneral3">Descripción del recargo</label>
+                <input type="text" class="inputGeneral3" [(ngModel)]="configuracion.txtRecargoTarjetaC">
+            </div>
+        </div>
+        <div class="col-span-1">
+            <div class="pb-2">
+                <label for="email" class="labelGeneral3">Porcentaje del recargo</label>
+                <input type="text" class="inputGeneral3" [(ngModel)]="configuracion.porcentajeCompraTarjeta">
+            </div>
+        </div>
+        <div class="absolute top-0 right-0 ">
+            <div class="mt-3">
+              <div class="flex justify-center">
+                <button
+                (click)="updateConfiguration(configuracion)"
+                class="btnSave px-3 py-2.5 rounded-full text-xs mt-4 shadow-lg effectoZoomBoton">
+                <i class="bi bi-pencil-fill"></i>
+              </button>
+              </div>
+            </div>
+          </div>
+    </div>
+
+
+    <div class="mt-5   grid grid-cols-3     2xl:space-x-3 xl:space-x-2 lg:space-x-1  md:space-x-1  bg-gray-100 p-3 rounded-lg shadow-lg ">
+        <div class="col-span-3">
+            <h4 class="text-center  text-gray-600 my-2 font-semibold text-sm ">Botones de compra</h4>
+        </div>
+        <div class="col-span-1">
+
+            <div class="w-full p-6 bg-white border border-gray-200 rounded-lg shadow relative  cardRecoger">
+                <i class="bi bi-shop-window absolute top-1 right-1  text-gray-100  text-3xl "></i>
+                <a>
+                    <h5 class="mb-2 2xl:text-xl xl:text-lg  font-semibold tracking-tight text-gray-300 ">Para recoger en
+                        la tienda</h5>
+                </a>
+                <div class="pb-2 text-center ">
+                    <label for="email" class=" text-center text-xs text-gray-100 ">Descripción del botón</label>
+                    <input type="text" class="inputGeneral3" [(ngModel)]="configuracion.txtBtnEnviarPedido1">
+                </div>
+            </div>
+        </div>
+        <div class="col-span-1">
+            <div class="w-full p-6 bg-white border border-gray-200 rounded-lg shadow relative cardWhatsApp">
+                <i class="bi bi-whatsapp absolute top-1 right-1 text-gray-100  text-3xl "></i>
+                <a>
+                    <h5 class="mb-2 2xl:text-xl xl:text-lg  font-semibold tracking-tight text-gray-300 ">WhatsApp</h5>
+                </a>
+                <div class="pb-2 text-center ">
+                    <label for="email" class=" text-center text-xs text-gray-100 ">Visualizar botón</label>
+                    <select (change)="updateShowButton($event, 'whatsapp')" class="inputGeneral3"
+                        [(ngModel)]="configuracion.visibilidadBtnWhatsapp" title="Aplicar costo de envío">
+                        <option value="1">Si</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="col-span-1">
+            <div class="w-full p-6 bg-white border border-gray-200 rounded-lg shadow relative cardPago">
+                <i class="bi bi-cash absolute top-1 right-1 text-gray-100  text-3xl "></i>
+                <a>
+                    <h5 class="mb-2 2xl:text-xl xl:text-lg  font-semibold tracking-tight text-gray-300 ">Pago en la
+                        entrega</h5>
+                </a>
+                <div class="pb-2 text-center ">
+                    <label for="email" class=" text-center text-xs text-gray-100 ">Visualizar botón</label>
+                    <select (change)="updateShowButton($event, 'entrega')" class="inputGeneral3"
+                        [(ngModel)]="configuracion.valor_minimo_compra" title="Visualizar boton">
+                        <option value="1">Si</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="my-5   grid grid-cols-3     2xl:space-x-3 xl:space-x-2 lg:space-x-1  md:space-x-1  bg-gray-100 p-3 rounded-lg shadow-lg ">
+        <div class="col-span-3">
+            <h4 class="text-center  text-gray-600 my-2 font-semibold text-sm ">Costos de envío</h4>
+        </div>
+        <div class="col-span-3">
+        <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-5">
+            <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                <thead class="text-xs text-gray-200 uppercase bg-gray-500  dark:bg-gray-700 dark:text-gray-400">
+                    <tr>
+                        <th scope="col" class="px-6 py-2">
+                            Codigo
+                        </th>
+                        <th scope="col" class="px-6 py-2">
+                            Provincia
+                        </th>
+                        <th scope="col" class="px-6 py-2">
+                            Costo de enví
+                        </th>
+                        <th scope="col" class="px-6 py-2 text-center">
+                           
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for(c of provinces; track c.id){
+                    <tr
+                        class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 text-xs">
+                        <th scope="row" class="px-6 py-2 font-semibold text-gray-900 whitespace-nowrap dark:text-white">
+                            {{c.codigoProv}}
+                        </th>
+                        <td class="px-6 py-2">
+                            {{c.descripProv}} / {{c.capital}}
+                        </td>
+                        <td class="px-6 py-2">
+                            <div class="relative w-full">
+                                <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-currency-dollar" viewBox="0 0 16 16">
+                                        <path d="M4 10.781c.148 1.667 1.513 2.85 3.591 3.003V15h1.043v-1.216c2.27-.179 3.678-1.438 3.678-3.3 0-1.59-.947-2.51-2.956-3.028l-.722-.187V3.467c1.122.11 1.879.714 2.07 1.616h1.47c-.166-1.6-1.54-2.748-3.54-2.875V1H7.591v1.233c-1.939.23-3.27 1.472-3.27 3.156 0 1.454.966 2.483 2.661 2.917l.61.162v4.031c-1.149-.17-1.94-.8-2.131-1.718zm3.391-3.836c-1.043-.263-1.6-.825-1.6-1.616 0-.944.704-1.641 1.8-1.828v3.495l-.2-.05zm1.591 1.872c1.287.323 1.852.859 1.852 1.769 0 1.097-.826 1.828-2.2 1.939V8.73z"/>
+                                      </svg>
+                                </div>
+                                <input placeholder="Ingrese el valor" [(ngModel)]="c.precio_envio" type="text"
+                                    id="simple-search"
+                                    class=" w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-1.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
+                            </div>
+                        </td>
+                        <td class="px-6 py-2">
+                            <i  (click)="updateCostShippingProvince(c)" class="bi bi-check-circle-fill text-xl text-green-400 "></i>
+                        </td>
+
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        </div>
+
+    </div>
+
+</div>

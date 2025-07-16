@@ -1,0 +1,204 @@
+<!-- component -->
+<!-- <link rel="stylesheet" href="https://demos.creative-tim.com/notus-js/assets/styles/tailwind.css"> -->
+<!-- <link rel="stylesheet"
+    href="https://demos.creative-tim.com/notus-js/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css"> -->
+
+
+    <div class=" mx-2 2xl:mt-40 xl:mt-40 mt-10 mb-10  2xl:mb-20 xl:mb-20 rounded-lg backSuspcribe " >
+        <p class="suscribe pt-5   2xl:text-4xl xl:text-2xl lg:text-lg md:text-lg text-md">
+            ¡Mantente informado! Suscríbete a Nuestro Boletín de Noticias en {{information.nombre | uppercase}}
+        </p>
+        <div class="mt-10   flex justify-center  ">
+            <div class="content  " >
+                <form class="subscription ">
+                    <input class="add-email" type="email" placeholder="Ingrese su correo electrónico">
+                    <button class="submit-email" type="button">
+                        <span class="before-submit"> Subscribirse</span>
+                        <span class="after-submit">Thank you for subscribing!</span>
+                    </button>
+                </form>
+            </div>
+    
+        </div>
+
+    <div class=" my-5 mb-5 pb-5 flex justify-center ">
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+            <label class="form-check-label 2xl:text-xl xl:text-lg lg:text-lg md:text-lg text-sm" for="defaultCheck1">
+                He leído y acepto la política de privacidad
+            </label>
+        </div>
+    </div>
+
+</div>
+
+<footer class="relative bg-[#EDEDED] pt-10 pb-6">
+
+    <div class="container mx-auto px-4">
+        <div class="grid  grid-cols-5">
+            <div class="2xl:col-span-2 xl:col-span-2 lg:col-span-2 md:col-span-2 col-span-5">
+                <div class="flex justify-center" >
+                    <img [src]="urlBase+configuracion?.imgLogo+'?alt=media'" width="200" height="100"  style="display: flex; justify-content: center;align-items: center; " >
+                </div>
+                <h5 class="2xl:text-lg xl:text-sm lg:text-sm md:text-sm text-xs fonat-semibold text-blueGray-700 text-center ">
+
+                    {{information.direccion}}
+                </h5>
+                <div class="mt-6 lg:mb-0 mb-6  text-center">
+                    <button 
+                       (click)="goToSocialNetwork(information?.facebook)"
+                        class="bg-white shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full  mr-2 icoFooter "
+                        type="button">
+                        <i class="bi bi-facebook icoSM"></i>
+                    </button>
+                        <button
+                        (click)="goToSocialNetwork(information?.instagram)"
+                        class="bg-white shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full  mr-2 icoFooter "
+                        type="button">
+                        <i class="bi bi-instagram icoSM"></i>
+                    </button>
+                    <button
+                    (click)="goToSocialNetwork(information?.tiktok)"
+                    class="bg-white shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full  mr-2 icoFooter "
+                    type="button">
+                    <i class="bi bi-tiktok icoSM"></i>
+                </button>
+                    <button
+                    (click)="goToSocialNetwork(information?.youtube)"
+                    class="bg-white shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full  mr-2 icoFooter "
+                    type="button">
+                    <i class="bi bi-youtube icoSM"></i>
+                </button>
+                    <button
+                    (click)="goToSocialNetwork(information?.twitter)"
+                    class="bg-white shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full  mr-2 icoFooter "
+                    type="button">
+                    <i class="bi bi-twitter icoSM"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="2xl:col-span-3 xl:col-span-3 lg:col-span-3 md:col-span-3 col-span-5 flex 2xl:justify-end  xl:justify-end lg:justify-end justify-center  "  >
+                <div class="grid grid-cols-2 ">
+                    <div class="col-span-1">
+                        <span class="block uppercase text-blueGray-500 text-sm font-semibold mb-2">Accesos Directos</span>
+                        <ul class="list-unstyled">
+                            <li>
+                                <a class="text-blueGray-600 hover:text-blueGray-800 font-normal block pb-2 text-sm hoverMenu"
+                                   [routerLink]="['/products']" routerLinkActive="router-link-active"   >Sobre Nosotros</a>
+                            </li>
+                            <li>
+                                <a class="text-blueGray-600 hover:text-blueGray-800 font-normal block pb-2 text-sm hoverMenu"
+                                [routerLink]="['/home/1']" routerLinkActive="router-link-active" >E-commerce</a>
+                            </li>
+                            <li>
+                                <a class="text-blueGray-600 hover:text-blueGray-800 font-normal block pb-2 text-sm hoverMenu"
+                                [routerLink]="['/products']" routerLinkActive="router-link-active" >Catálogo</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-span-1">
+                        <span class="block uppercase text-blueGray-500 text-sm font-semibold mb-2">Contáctanos</span>
+                        <div>
+                            <div>
+                                <p class="text-blueGray-600 hover:text-blueGray-800 font-semibold block pb-2 text-sm" >Email:</p>
+                                <p class="text-blueGray-600 hover:text-blueGray-800 font-normal block pb-2 text-sm" > {{information?.email}}</p>
+                            </div>
+                            <div>
+                                <p class="text-blueGray-600 hover:text-blueGray-800 font-semibold block pb-2 text-sm" >Teléfono:</p>
+                                <p class="text-blueGray-600 hover:text-blueGray-800 font-normal block pb-2 text-sm" > {{information?.telefonos}}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+        <!-- <div class="flex flex-wrap text-left lg:text-left">
+            <div class="w-full lg:w-6/12 px-4">
+                <h5 class="text-xl fonat-semibold text-blueGray-700">
+                    <img [src]="urlBase+configuracion?.imgLogo+'?alt=media'" width="200" height="100">
+                    {{information.direccion}}
+                </h5>
+                <div class="mt-6 lg:mb-0 mb-6">
+                    <button 
+                       (click)="goToSocialNetwork(information?.facebook)"
+                        class="bg-white shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full  mr-2 icoFooter "
+                        type="button">
+                        <i class="bi bi-facebook icoSM"></i>
+                    </button>
+                        <button
+                        (click)="goToSocialNetwork(information?.instagram)"
+                        class="bg-white shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full  mr-2 icoFooter "
+                        type="button">
+                        <i class="bi bi-instagram icoSM"></i>
+                    </button>
+                    <button
+                    (click)="goToSocialNetwork(information?.tiktok)"
+                    class="bg-white shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full  mr-2 icoFooter "
+                    type="button">
+                    <i class="bi bi-tiktok icoSM"></i>
+                </button>
+                    <button
+                    (click)="goToSocialNetwork(information?.youtube)"
+                    class="bg-white shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full  mr-2 icoFooter "
+                    type="button">
+                    <i class="bi bi-youtube icoSM"></i>
+                </button>
+                    <button
+                    (click)="goToSocialNetwork(information?.twitter)"
+                    class="bg-white shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full  mr-2 icoFooter "
+                    type="button">
+                    <i class="bi bi-twitter icoSM"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="w-full lg:w-6/12 px-4">
+                <div class="flex flex-wrap items-top mb-6">
+                    <div class="w-full lg:w-4/12 px-4 ml-auto">
+                        <span class="block uppercase text-blueGray-500 text-sm font-semibold mb-2">Accesos Directos</span>
+                        <ul class="list-unstyled">
+                            <li>
+                                <a class="text-blueGray-600 hover:text-blueGray-800 font-normal block pb-2 text-sm hoverMenu"
+                                   [routerLink]="['/products']" routerLinkActive="router-link-active"   >Sobre Nosotros</a>
+                            </li>
+                            <li>
+                                <a class="text-blueGray-600 hover:text-blueGray-800 font-normal block pb-2 text-sm hoverMenu"
+                                [routerLink]="['/home/1']" routerLinkActive="router-link-active" >E-commerce</a>
+                            </li>
+                            <li>
+                                <a class="text-blueGray-600 hover:text-blueGray-800 font-normal block pb-2 text-sm hoverMenu"
+                                [routerLink]="['/products']" routerLinkActive="router-link-active" >Catálogo</a>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="w-full lg:w-4/12 px-4">
+                        <span class="block uppercase text-blueGray-500 text-sm font-semibold mb-2">Contáctanos</span>
+                        <div>
+                            <div>
+                                <p class="text-blueGray-600 hover:text-blueGray-800 font-semibold block pb-2 text-sm" >Email:</p>
+                                <p class="text-blueGray-600 hover:text-blueGray-800 font-normal block pb-2 text-sm" > {{information?.email}}</p>
+                            </div>
+                            <div>
+                                <p class="text-blueGray-600 hover:text-blueGray-800 font-semibold block pb-2 text-sm" >Teléfono:</p>
+                                <p class="text-blueGray-600 hover:text-blueGray-800 font-normal block pb-2 text-sm" > {{information?.telefonos}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+        <hr class="my-6 borderHr ">
+        <div class="flex flex-wrap items-center md:justify-between justify-center">
+            <div class="w-full md:w-4/12 px-4 mx-auto text-center">
+                <div class="text-sm text-blueGray-500 font-semibold py-1">
+                    Copyright <span id="get-current-year">{{footerText}}</span>
+                    <a (click)="goToSocialNetwork('https://www.sofpymes.com')"
+                        class="text-blueGray-500 hover:text-gray-800" target="_blank"> Powered by PuntoPymes </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>

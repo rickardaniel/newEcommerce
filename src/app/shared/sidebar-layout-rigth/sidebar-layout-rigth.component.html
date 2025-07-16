@@ -1,0 +1,324 @@
+<!-- <div class="max-w-md mx-auto bg-white min-h-screen shadow-lg overflow-y-auto">
+    <div class="p-4 ">
+
+        <div class="grid-cols-1 space-y-3">
+            @for(prod of arrayProduct; track prod){
+            <div class="col-span-1">
+
+                <a
+                    class="flex flex-col items-center bg-white  2xl:h-[6.5rem] xl:h-[5.85rem] border border-gray-200 rounded-lg shadow-sm md:flex-row md:max-w-xl hover:bg-gray-100 hover:shadow-xl ">
+                    <img class="object-cover 2xl:h-[6.5rem] xl:h-[5.85rem]  2xl:w-[7rem] xl:w-[6.35rem]  md:h-auto md:rounded-none md:rounded-s-lg"
+                        [src]="urlFirebae+prod.imagenPrincipal+'?alt=media'" [alt]="prod.pro_nom">
+
+                    <div class="flex flex-col pt-2 justify-between px-3 leading-normal">
+                        <h5 class="mb-1 text-sm font-semibold tracking-tight text-gray-500 dark:text-white">
+                            {{prod.pro_nom}}
+                        </h5>
+                        <div class="mb-0">
+                            <span class="text-sm font-bold text-gray-600"> $ {{ prod.precioReal | number:'1.2-2' }}
+                            </span>
+                        </div>
+                        <div class="flex ">
+
+                            <div class="flex items-center">
+                                <button type="button" onclick="decrementQuantity('product-1')"
+                                    class="flex items-center justify-center w-6 h-6 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-full hover:bg-gray-100 hover:text-gray-700 focus:ring-4 focus:ring-gray-200 transition-colors">
+                                    <i class="fas fa-minus text-xs"></i>
+                                </button>
+
+                                <input type="number" id="quantity-product-1" value="1" min="1" max="99"
+                                    class="mx-2 w-12 text-center text-sm font-medium text-gray-900 bg-transparent border-0 focus:ring-0 focus:outline-none"
+                                    readonly>
+
+                                <button type="button" onclick="incrementQuantity('product-1')"
+                                    class="flex items-center justify-center w-6 h-6 text-sm font-medium text-white bg-red-500 border rounded-full hover:bg-red-600 focus:ring-4 focus:ring-red-200 transition-colors">
+                                    <i class="fas fa-plus text-xs"></i>
+                                </button>
+                            </div>
+
+                            <div class="flex items-end ml-10">
+                                <button type="button" onclick="removeProduct('product-1')"
+                                    class="text-red-500 hover:text-red-700 hover:bg-red-50 p-2 rounded-full transition-colors"
+                                    title="Eliminar producto">
+                                    <i class="fas fa-trash-alt text-lg"></i>
+                                </button>
+                            </div>
+
+                        </div>
+                    </div>
+                </a>
+            </div>
+            }
+        </div>
+
+        <div class="flex-1"></div>
+        <hr>
+
+
+    </div>
+
+    <div class="px-4 py-6 border-t border-gray-200 bg-white">
+
+        <div class="flex justify-between items-center mb-4">
+            <span class="text-lg font-medium text-gray-900">Subtotal:</span>
+            <span class="text-xl font-bold text-red-500" id="cart-subtotal">$ 279.98</span>
+        </div>
+
+        <button type="button" onclick="goToCheckout()"
+            class="w-full bg-red-500 text-white py-1.5 px-4 rounded-lg font-medium text-lg hover:bg-red-600 focus:ring-4 focus:ring-red-200 transition-all duration-200 transform hover:scale-[1.02] active:scale-[0.98]">
+            Ir al carrito
+        </button>
+    </div>
+
+
+
+</div> -->
+
+
+<div class="card rounded-xl shadow-lg   !h-[6.75rem] " style="border: 1px solid rgb(228, 228, 228);">
+    <div class="grid grid-cols-8 h-full w-full">
+        <div class="col-span-3 flex items-center justify-center overflow-hidden">
+            @if(d?.imagenPrincipal === '1bW4FHKxVF0tHzYbiYTu1iEh4BaSYbRm2') {
+            <img [loading]="isLazyLoaded ? 'lazy' : 'eager'" [decoding]="isLazyLoaded ? 'async' : 'auto'"
+                class="object-scale-down w-full h-full md:rounded-none md:rounded-s-xl shadow-2xl "
+                [src]="urlFirebae + logo + '?alt=media'" [alt]="d?.pro_nom || 'Producto'" [srcset]="generateSrcSet()"
+                [sizes]="getSizes()" (load)="onImageLoad($event)" (error)="onImageError($event)" />
+            } @else {
+            <img [loading]="isLazyLoaded ? 'lazy' : 'eager'" [decoding]="isLazyLoaded ? 'async' : 'auto'"
+                class="object-cover w-full h-full md:rounded-none md:rounded-s-xl shadow-2xl p-[1px]" [src]="optimizedImageSrc"
+                [alt]="d?.pro_nom || 'Producto'" [srcset]="generateSrcSet()" [sizes]="getSizes()"
+                (load)="onImageLoad($event)" (error)="onImageError($event)" />
+            }
+            @if (!imageLoadedState && !imageErrorState && isLazyLoaded) {
+            <div class="absolute inset-0 bg-gray-100 flex items-center justify-center">
+                <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-orange-400"></div>
+            </div>
+            }
+        </div>
+        <div class="col-span-5">
+            <div class="flex flex-col pt-3 justify-between px-3 leading-normal  w-full">
+                <p class="text-xs font-normal tracking-tight text-gray-500 line-clamp-3 hover:text-gray-700 transition-colors"
+                    [title]="d?.pro_nom">
+                    {{ d?.pro_nom }}
+                </p>
+                <div class="mt-2">
+                    <p
+                        class="text-sm font-bold tracking-tight text-gray-500 line-clamp-3 hover:text-gray-700 transition-colors">
+                        $ {{ d.precioReal | number:'1.2-2' }}
+                    </p>
+                </div>
+                <div class="flex justify-between  w-full ">
+                    <div class="flex items-center">
+                        <button type="button" onclick="decrementQuantity('product-1')"
+                            class="flex items-center justify-center w-6 h-6 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-full hover:bg-gray-100 hover:text-gray-700 focus:ring-4 focus:ring-gray-200 transition-colors">
+                            <i class="fas fa-minus text-xs"></i>
+                        </button>
+
+                        <input type="number" id="quantity-product-1" [value]="d.quantity" min="1" max="99"
+                            class="mx-2 w-12 text-center text-sm font-medium text-gray-900 bg-transparent border-0 focus:ring-0 focus:outline-none"
+                            readonly>
+
+                        <button type="button" onclick="incrementQuantity('product-1')"
+                            class="flex items-center justify-center w-6 h-6 text-sm font-medium text-white bg-red-500 border rounded-full hover:bg-red-600 focus:ring-4 focus:ring-red-200 transition-colors">
+                            <i class="fas fa-plus text-xs"></i>
+                        </button>
+                    </div>
+
+                    <div class="flex  ">
+                        <button type="button" onclick="removeProduct('product-1')"
+                            class="text-red-500 hover:text-red-700 hover:bg-red-50 p-2 rounded-full transition-colors "
+                            title="Eliminar producto">
+                            <i class="far fa-trash-alt text-lg"></i>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <!-- <a
+    class="flex flex-col items-center bg-white  2xl:h-[6.5rem] xl:h-[5.85rem] border border-gray-200 rounded-lg shadow-sm md:flex-row md:max-w-xl hover:bg-gray-100 hover:shadow-lg ">
+    @if(d?.imagenPrincipal === '1bW4FHKxVF0tHzYbiYTu1iEh4BaSYbRm2') {
+    <img [loading]="isLazyLoaded ? 'lazy' : 'eager'" [decoding]="isLazyLoaded ? 'async' : 'auto'"
+        class="object-scale-down 2xl:h-[6.5rem] xl:h-[5.85rem]  2xl:w-[6.5rem] xl:w-[6rem]  md:h-auto md:rounded-none md:rounded-s-lg"
+        [src]="urlFirebae + logo + '?alt=media'" [alt]="d?.pro_nom || 'Producto'" [srcset]="generateSrcSet()"
+        [sizes]="getSizes()" (load)="onImageLoad($event)" (error)="onImageError($event)" />
+    } @else {
+    <img [loading]="isLazyLoaded ? 'lazy' : 'eager'" [decoding]="isLazyLoaded ? 'async' : 'auto'"
+        class="object-cover 2xl:h-[6.5rem] xl:h-[5.85rem]  2xl:w-[8.5rem] xl:w-[9rem] md:h-auto md:rounded-none md:rounded-s-lg"
+        [src]="optimizedImageSrc" [alt]="d?.pro_nom || 'Producto'" [srcset]="generateSrcSet()" [sizes]="getSizes()"
+        (load)="onImageLoad($event)" (error)="onImageError($event)">
+    }
+    @if (!imageLoadedState && !imageErrorState && isLazyLoaded) {
+    <div class="absolute inset-0 bg-gray-100 flex items-center justify-center">
+        <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-orange-400"></div>
+    </div>
+    }
+
+    <div class="flex flex-col pt-2 justify-between px-3 leading-normal  w-full">
+
+        <p class="text-xs font-normal tracking-tight text-gray-500 line-clamp-3 hover:text-gray-700 transition-colors"
+            [title]="d?.pro_nom">
+            {{ d?.pro_nom }}
+        </p>
+        <div class="mb-0">
+            <p
+                class="text-sm font-semibold tracking-tight text-gray-700 line-clamp-3 hover:text-gray-700 transition-colors">
+                $ {{ d.precioReal | number:'1.2-2' }}
+            </p>
+        </div>
+        <div class="flex justify-between  w-full ">
+            <div class="flex items-center">
+                <button type="button" onclick="decrementQuantity('product-1')"
+                    class="flex items-center justify-center w-6 h-6 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-full hover:bg-gray-100 hover:text-gray-700 focus:ring-4 focus:ring-gray-200 transition-colors">
+                    <i class="fas fa-minus text-xs"></i>
+                </button>
+
+                <input type="number" id="quantity-product-1" [value]="d.quantity" min="1" max="99"
+                    class="mx-2 w-12 text-center text-sm font-medium text-gray-900 bg-transparent border-0 focus:ring-0 focus:outline-none"
+                    readonly>
+
+                <button type="button" onclick="incrementQuantity('product-1')"
+                    class="flex items-center justify-center w-6 h-6 text-sm font-medium text-white bg-red-500 border rounded-full hover:bg-red-600 focus:ring-4 focus:ring-red-200 transition-colors">
+                    <i class="fas fa-plus text-xs"></i>
+                </button>
+            </div>
+
+            <div class="flex  ">
+                <button type="button" onclick="removeProduct('product-1')"
+                    class="text-red-500 hover:text-red-700 hover:bg-red-50 p-2 rounded-full transition-colors "
+                    title="Eliminar producto">
+                    <i class="far fa-trash-alt text-lg"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</a> -->
+
+    <style>
+        .animate-pulse {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: .5;
+            }
+        }
+
+        .line-clamp-3 {
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .line-clamp-4 {
+            display: -webkit-box;
+            -webkit-line-clamp: 4;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        /* Mantener tus clases CSS existentes */
+        .imgCardPS {
+            /* Mantener tus estilos existentes */
+        }
+
+        .imgLogo {
+            /* Mantener tus estilos existentes */
+        }
+
+        .spanColor {
+            /* Mantener tus estilos existentes */
+        }
+
+        /* Mejoras de accesibilidad */
+        .group:focus-within .opacity-0 {
+            opacity: 1;
+        }
+
+        /* Optimizaciones de rendimiento */
+        .card-mobile {
+            contain: layout style paint;
+        }
+
+        .card-desktop {
+            contain: layout style paint;
+        }
+
+        /* Animaciones suaves */
+        .transition-all {
+            transition: all 0.2s ease-in-out;
+        }
+
+        .transition-transform {
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .transition-shadow {
+            transition: box-shadow 0.3s ease-in-out;
+        }
+
+        .transition-colors {
+            transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out;
+        }
+
+        /* Hover effects */
+        .hover\:scale-105:hover {
+            transform: scale(1.05);
+        }
+
+        .hover\:scale-110:hover {
+            transform: scale(1.10);
+        }
+
+        .active\:scale-95:active {
+            transform: scale(0.95);
+        }
+
+        /* Estados de carga */
+        .animate-spin {
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .card-mobile .p-4 {
+                padding: 0.75rem;
+            }
+
+            .card-mobile .text-lg {
+                font-size: 1rem;
+            }
+        }
+
+        /* Optimización para pantallas de alta densidad */
+        @media (-webkit-min-device-pixel-ratio: 2),
+        (min-resolution: 192dpi) {
+
+            .imgCardPS,
+            .imgLogo {
+                image-rendering: -webkit-optimize-contrast;
+                image-rendering: crisp-edges;
+            }
+        }
+    </style>

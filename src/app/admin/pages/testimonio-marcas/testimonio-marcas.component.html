@@ -1,0 +1,457 @@
+<div class=" pt-5">
+    <h2 class="mb-2 2xl:text-2xl text-xl font-bold text-gray-600 ">Servicios Inicio </h2>
+    <div class="2xl:mx-10 xl:mx-1 mt-3">
+        <div
+            class="mt-5   grid grid-cols-6    2xl:space-x-3 xl:space-x-2 lg:space-x-1 md:space-y-1 md:space-x-1 space-y-1  relative">
+            <div class="col-span-6">
+                <h4 class="mb-2 text-md font-semibold text-gray-600">1. Administrar marcas </h4>
+                <button (click)="openModal('#createMarca', 'create','')"
+                    class="bg-green-400 text-white px-5 py-1.5 rounded-md text-xs effectoZoomBoton">
+                    Crear Nuevo <i class="bi bi-plus"></i>
+                </button>
+            </div>
+        </div>
+        <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-5 ">
+            <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 p-2">
+                <thead
+                    class="text-xs text-gray-200 uppercase bg-gray-500  dark:bg-gray-700 dark:text-gray-400 text-center">
+                    <tr>
+                        <th scope="col" class="px-6 py-2">
+                            Logo
+                        </th>
+                        <th scope="col" class="px-6 py-2">
+                            Nombre
+                        </th>
+                        <th scope="col" class="px-6 py-2">
+                            Descripción
+                        </th>
+                        <th scope="col" class="px-6 py-2 text-center">
+                            <i class="bi bi-gear-fill"></i>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @if(marcas.length==0){
+                    <tr>
+                        <td colspan="6">
+                            <div class=" flex justify-center pt-5">
+                                <i class="bi bi-folder-x text-6xl text-gray-500 "></i>
+                            </div>
+                            <div class=" flex justify-center pb-5">
+
+                                <span style="font-size: 20px; ;" class="text-gray-500"> Aún no ha creado
+                                    marcas </span>
+                            </div>
+                        </td>
+                    </tr>
+                    }@else {
+                    @for(marca of marcas; track marca.id){
+                    <tr
+                        class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 text-xs text-center">
+                        <th scope="row" class="px-6 py-2 font-semibold text-gray-900 whitespace-nowrap dark:text-white">
+                            <span  class="fw-semibold cursor-pointer "  (click)="redirecTO(urlBase+marca.logo+'?alt=media')" >Ver Logo</span>
+                        </th>
+
+                        <td class="px-6 py-2">
+                            @if(marca.nombre){
+                                <span >{{marca.nombre}}</span>
+                            }@else{
+                                <span >SN</span>
+                            }
+                        </td>
+                        <td class="px-6 py-2">
+                            @if(marca.detalle){
+                                <span >{{marca.detalle}}</span>
+                            }@else{
+                                <span >SN</span>
+                            }
+                        </td>
+
+                        <td class="px-6 py-2 text-center">
+                            <i (click)="openModal('#createMarca', 'edit',marca)"
+                                class="bi bi-pencil-fill text-green-500 2xl:text-sm  py-1.5 px-2 hover:py-1.5 hover:px-2 hover:bg-green-500 hover:rounded-full hover:text-white cursor-pointer "></i>
+                            <i (click)="eliminarMarca(marca)"
+                                class="bi bi-trash2-fill text-red-500 2xl:text-sm py-1.5 px-2 hover:py-1.5 hover:px-2 hover:bg-red-500 hover:rounded-full hover:text-white cursor-pointer"></i>
+                        </td>
+                    </tr>
+                    }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="2xl:mx-10 xl:mx-1 ">
+        <div
+            class="mt-5   grid grid-cols-6    2xl:space-x-3 xl:space-x-2 lg:space-x-1 md:space-y-1 md:space-x-1 space-y-1  relative">
+            <div class="col-span-6">
+                <h4 class="mb-2 text-md font-semibold text-gray-600">2. Administrar testimonios clientes</h4>
+                <button 
+                    (click)="openModalS('#creteTestimonio','create','')"
+                    class="bg-green-400 text-white px-5 py-1.5 rounded-md text-xs effectoZoomBoton ">
+                    Crear Nuevo <i class="bi bi-plus"></i>
+                </button>
+            </div>
+        </div>
+        <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-5">
+            <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 p-2">
+                <thead
+                    class="text-xs text-gray-200 uppercase bg-gray-500  dark:bg-gray-700 dark:text-gray-400 text-center">
+                    <tr>
+                        <th scope="col" class="px-6 py-2">
+                            Logo
+                        </th>
+                        <th scope="col" class="px-6 py-2">
+                            Título
+                        </th>
+                        <th scope="col" class="px-6 py-2">
+                            Descripción
+                        </th>
+                        <th scope="col" class="px-6 py-2">
+                            Autor
+                        </th>
+                        <th scope="col" class="px-6 py-2">
+                            Cargo
+                        </th>
+                        <th scope="col" class="px-6 py-2">
+                            Imágen
+                        </th>
+                        <th scope="col" class="px-6 py-2 text-center">
+                            <i class="bi bi-gear-fill"></i>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if(testimonios.length==0){
+                    <tr>
+                        <td colspan="6">
+                            <div class=" flex justify-center pt-5">
+                                <i class="bi bi-folder-x text-6xl text-gray-500 "></i>
+                            </div>
+                            <div class=" flex justify-center pb-5">
+
+                                <span style="font-size: 20px; ;" class="text-gray-500"> Aún no ha creado
+                                    testimonios </span>
+                            </div>
+                        </td>
+                    </tr>
+                    }@else {
+
+                    @for(test of testimonios; track test.id){
+                    <tr
+                        class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 text-xs text-center">
+                        <th scope="row" class="px-6 py-2 font-semibold text-gray-900 whitespace-nowrap dark:text-white">
+                            @if(test.logo){
+                                <span class="fw-semibold cursor-pointer" (click)="redirecTO(urlBase+test.logo+'?alt=media')" > Ver</span>
+                            }@else{
+                                <span  >SN</span>
+                            }            
+                        </th>
+                        <td class="px-6 py-2">
+                            {{test.titulo}}
+                        </td>
+                        <td>{{test.descripcion}}</td>
+                        <td>{{test.autor}}</td>
+                        <td>{{test.cargo}}</td>
+                        <td class="px-6 py-2">
+                            @if(test.imagen){
+                                <span class="font-semibold cursor-pointer " type="button"
+                                (click)="redirecTO(urlBase+test.imagen+'?alt=media')"> Ver
+                            </span>
+                            }@else {
+                                <span >SN</span>
+                            }
+                        </td>
+
+                        <td class="px-6 py-2 text-center">
+                            <i
+                                (click)="openModalT('#creteTestimonio','edit',test)"
+                                class="bi bi-pencil-fill text-green-500 2xl:text-sm  py-1.5 px-2 hover:py-1.5 hover:px-2 hover:bg-green-500 hover:rounded-full hover:text-white cursor-pointer "></i>
+                            <i
+                            (click)="eliminarTestimonio(test)"
+                                class="bi bi-trash2-fill text-red-500 2xl:text-sm py-1.5 px-2 hover:py-1.5 hover:px-2 hover:bg-red-500 hover:rounded-full hover:text-white cursor-pointer"></i>
+                        </td>
+                    </tr>
+                    }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+
+
+<!-- MODAL CREAR Y EDITAR BOTON -->
+<div id="createMarca" tabindex="-1"
+    class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+    <div class="relative p-4 w-full max-w-md max-h-full">
+        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+            <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+                @if(tipoBtn=='create'){
+                <h3 class=" text-lg font-normal text-gray-500 dark:text-gray-400">Crear Marca</h3>
+
+                }@else {
+                <h3 class=" text-lg font-normal text-gray-500 dark:text-gray-400">Editar Marca</h3>
+                }
+                <button type="button"
+                    class="end-2.5 white bg-gray-200 icoClose rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center "
+                    (click)="closeModal(true, '#createMarca')">
+                    <svg class="w-3 h-3 " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                        viewBox="0 0 14 14">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                    </svg>
+                    <span class="sr-only">Close modal</span>
+                </button>
+            </div>
+            <form [formGroup]="formCrearMarca" class="mt-3">
+  
+                <div class=" grid grid-cols-1 m-5">
+                    <div class="col-span-1">
+                        @if(tipoBtn=='create'){
+                            <div class="pb-2">
+                                <label for="email" class="labelGeneral">Imagen Marca *</label>
+                                <input 
+                                class="block w-full mb-5 text-xs text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" 
+                                type="file" style="font-size: 13px; "
+                                formControlName="logo"
+                                (change)="selectImgMarca($event)" accept="image/*">
+                            </div>
+                        }@else{  
+                            @if(!flagPicture2){
+                                <div class="pb-2">
+                                    <label for="email" class="labelGeneral">Imagen Marca *</label>
+                                    <input 
+                                    class="block w-full mb-5 text-xs text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" 
+                                    type="file" style="font-size: 13px; "
+                                    formControlName="logo"
+                                    (change)="selectImgMarca($event)" accept="image/*">
+                                </div>
+                            }@else{
+                                <div class="form-group" *ngIf="!flagPicture2 ">
+                                    <p>
+                                        <i class="bi bi-image  mr-2"></i>
+                                        <label class="text-size-12 mb-3">Imagen Marca <span class="text-danger">*</span></label>
+                                        <input type="file" style="font-size: 13px; " class="form-control" formControlName="logo"
+                                               (change)="selectImgMarca($event)" accept="image/*">
+                                    </p>
+                                </div>
+                                <div class="form-group" *ngIf="flagPicture2">                 
+                                    <div class="" style="position:relative">
+                                        <img [src]="urlBase+element.logo+'?alt=media'" alt=""
+                                            style="object-fit: scale-down;width: 100%; ">
+                                        <span class="rounded-1 p-1 border-gray-300 border-2 rounded-lg cursor-pointer " type="button" (click)="changePicture(false)"
+                                            style="position: absolute; top:0; right: 0; background-color: #f2f2f4" >
+                                            Cambiar Imagen
+                                        </span>
+                                    </div>
+                                </div>
+                            }
+                        }
+                    </div>
+                    <div class="col-span-1 mb-2">
+                        <div class="pb-2">
+                            <label for="email" class="labelGeneral">Nombre Marca</label>
+                            <input formControlName="nombre" type="text" class="inputGeneral"
+                                placeholder="Ingrese nombre de la marca" />
+                        </div>
+                    </div>
+                    <div class="col-span-1 mb-2">
+                        <div class="pb-2">
+                            <label for="email" class="labelGeneral">Descripción Marca </label>
+                            <textarea formControlName="detalle" type="text" class="inputGeneral"
+                                placeholder="Ingrese descripción de la marca" ></textarea>
+                        </div>
+                    </div>
+
+                    <div class="col-span-1 my-4">
+                        <div class="grid grid-cols-2 space-x-2 ">
+                            <div class="col-span-1">
+                                <button type="button" ngbAutofocus
+                                    class="bg-gray-500 text-white px-5 py-2 rounded-md text-xs w-full "
+                                    (click)="closeModal(true, '#createMarca')">
+                                    Cerrar
+                                </button>
+                            </div>
+                            <div class="col-span-1">
+                                @if(tipoBtn=='create'){
+                                <button [disabled]="formCrearMarca.invalid" type="button" ngbAutofocus
+                                    class="bg-green-500 text-white px-5 py-2 rounded-md text-xs w-full "
+                                    (click)="crearNuevaMarca(formCrearMarca.value)">
+                                    Crear Marca
+                                </button>
+                                }@else{
+                                <button type="button" ngbAutofocus
+                                    class="bg-green-500 text-white px-5 py-2 rounded-md text-xs w-full "
+                                    (click)="editarNuevaMarca(formCrearMarca.value)">
+                                    Editar Marca
+                                </button>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<!-- MODAL CREAR Y EDITAR TESTIMONIO -->
+<div id="creteTestimonio" tabindex="-1"
+    class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+    <div class="relative p-4 w-full max-w-md max-h-full">
+        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+            <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+                @if(tipoBtn=='create'){
+                <h3 class=" text-lg font-normal text-gray-500 dark:text-gray-400">Crear Testimonio</h3>
+
+                }@else {
+                <h3 class=" text-lg font-normal text-gray-500 dark:text-gray-400">Editar Testimonio</h3>
+                }
+                <button type="button"
+                    class="end-2.5 white bg-gray-200 icoClose rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center "
+                    (click)="closeModal(true, '#creteTestimonio')">
+                    <svg class="w-3 h-3 " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                        viewBox="0 0 14 14">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                    </svg>
+                    <span class="sr-only">Close modal</span>
+                </button>
+            </div>
+            <form [formGroup]="formCrearTestimonio" class="mt-3">
+                <div class=" grid grid-cols-1 m-7">
+                    @if(tipoBtn=='create'){
+                        <div class="pb-2">
+                            <label for="email" class="labelGeneral">Imagen Logo *</label>
+                            <input 
+                            class="block w-full mb-5 text-xs text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" 
+                            type="file" style="font-size: 13px; "
+                            formControlName="logo"
+                            (change)="selectImgLogo($event)" accept="image/*">
+                        </div>
+                    }@else{
+                        @if(!flagPicture){
+                            <div class="pb-2">
+                                <label for="email" class="labelGeneral">Imagen Marca *</label>
+                                <input 
+                                class="block w-full mb-5 text-xs text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" 
+                                type="file" style="font-size: 13px; "
+                                formControlName="logo"
+                                (change)="selectImgLogo($event)" accept="image/*">
+                            </div>
+                        }@else{
+                            <div class="form-group" >                 
+                                <div class="" style="position:relative">
+                                    <img [src]="urlBase+element.logo+'?alt=media'" alt=""
+                                        style="object-fit: scale-down;width: 100%; ">
+                                    <span class="rounded-1 p-1 border-gray-300 border-2 rounded-lg cursor-pointer " type="button" (click)="changeLogo(false)"
+                                        style="position: absolute; top:0; right: 0; background-color: #f2f2f4" >
+                                        Cambiar Imagen
+                                    </span>
+                                </div>
+                            </div>
+                        } 
+                    }
+
+                    <div class="col-span-1 mt-8 mb-2">
+                        <div class="pb-2">
+                            <label for="email" class="labelGeneral">Título</label>
+                            <input formControlName="titulo" type="text" class="inputGeneral"
+                                placeholder="Ingrese título" />
+                        </div>
+                    </div>
+                    <div class="col-span-1 mb-2">
+                        <div class="pb-2">
+                            <label for="email" class="labelGeneral">Descripción</label>
+                            <textarea class="inputGeneral"  formControlName="descripcion" ></textarea>
+                        </div>
+                    </div>
+                    <div class="col-span-1 mt-2">
+                        <div class="pb-2">
+                            <label for="email" class="labelGeneral">Autor</label>
+                            <input formControlName="autor" placeholder="Ingrese autor"  type="text" class="inputGeneral" />
+                        </div>
+                    </div>
+                    <div class="col-span-1 mt-3">
+                        <div class="pb-2">
+                            <label for="email" class="labelGeneral">Cargo</label>
+                            <input formControlName="cargo" placeholder="Ingrese cargo auto"  type="text" class="inputGeneral" />
+                        </div>
+                    </div>
+
+                    <div class="col-span-1 mt-3">
+                        @if(tipoBtn=='create'){
+                            <div class="pb-2">
+                                <label for="email" class="labelGeneral">Imagen *</label>
+                                <input 
+                                class="block w-full mb-5 text-xs text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" 
+                                type="file" style="font-size: 13px; "
+                                formControlName="imagen"
+                                (change)="selectImg($event)" accept="image/*">
+                            </div>
+                        }@else{
+                            @if(!flagPicture3){
+                                <div class="pb-2">
+                                    <label for="email" class="labelGeneral">Imagen *</label>
+                                    <input 
+                                    class="block w-full mb-5 text-xs text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" 
+                                    type="file" style="font-size: 13px; "
+                                    formControlName="imagen"
+                                    (change)="selectImg($event)" accept="image/*">
+                                </div>
+                            }@else{
+                                <div class="form-group" >                 
+                                    <div class="" style="position:relative">
+                                        <img [src]="urlBase+element.imagen+'?alt=media'" alt=""
+                                            style="object-fit: scale-down;width: 100%; ">
+                                        <span class="rounded-1 p-1 border-gray-300 border-2 rounded-lg cursor-pointer " type="button" (click)="changeImagen(false)"
+                                            style="position: absolute; top:0; right: 0; background-color: #f2f2f4" >
+                                            Cambiar Imagen
+                                        </span>
+                                    </div>
+                                </div> 
+                            }
+                        }
+                    </div>
+
+                    <div class="col-span-1 my-4">
+                        <div class="grid grid-cols-2 space-x-2 ">
+                            <div class="col-span-1">
+                                <button type="button" ngbAutofocus
+                                    class="bg-gray-500 text-white px-5 py-2 rounded-md text-xs w-full "
+                                    (click)="closeModal(true, '#creteTestimonio')">
+                                    Cerrar
+                                </button>
+                            </div>
+                            <div class="col-span-1">
+                                @if(tipoBtn=='create'){
+                                <button [disabled]="formCrearTestimonio.invalid" type="button" ngbAutofocus
+                                    class="bg-green-500 text-white px-5 py-2 rounded-md text-xs w-full "
+                                    (click)="crearNuevoTestimonio(formCrearTestimonio.value)">
+                                    Crear Testimonio
+                                </button>
+                                }@else{
+                                <button type="button" ngbAutofocus
+                                    class="bg-green-500 text-white px-5 py-2 rounded-md text-xs w-full "
+                                    (click)="editarNuevoTestimonio(formCrearTestimonio.value)">
+                                    Editar Testimonio
+                                </button>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<!-- Loading  -->
+<ngx-loading [show]="loadingAll" [config]="{ backdropBorderRadius: '3px', fullScreenBackdrop: true }" [template]="">
+</ngx-loading>

@@ -1,0 +1,16 @@
+{
+  "hosting": {
+    "public": "dist/new-ecommerce/browser",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  }
+}

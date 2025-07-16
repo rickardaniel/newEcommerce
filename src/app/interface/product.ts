@@ -1,0 +1,67 @@
+export interface Product {
+    id_producto:           string;
+    pro_nom:               string;
+    descripcion:           string;
+    productotipo_id:       string;
+    stockactual:           number;
+    img:                   string;
+    codigo2:               string;
+    esServicio:            string;
+    codbarras1:            null;
+    codbarras2:            string;
+    codbarras3:            string;
+    impuesto_porcent:      string;
+    desc_impuesto:         string;
+    id_grupo:              string;
+    id_subgrupo:           string;
+    imagen_uno:            null;
+    imagen_dos:            null;
+    imagen_tres:           null;
+    imagen_cuatro:         null;
+    fechaultactualizacion: Date;
+    procedencia:           string;
+    peso:                  string;
+    unidad_medida:         string;
+    valor_medida:          string;
+    ubicacion:             string;
+    origen:                string;
+    cant_bulto:            string;
+    iceporcent:            string;
+    ivaporcent:            string;
+    marca_id:              string;
+    existenciaMinima:      string;
+    existenciaMaxima:      string;
+    especificaciones:      string;
+    proteinas:             null;
+    calorias:              null;
+    tiempo:                string;
+    mas_vendido:           string;
+    vista_web:             string;
+    es_promo:              string;
+    es_promo2:             string;
+    fotourl:               null;
+    referidos:             null;
+    prod_fecha_caducidad:  null;
+    guarnicion_max:        string;
+    seccion_print:         string;
+    marca_nombre:          string;
+    stock_reserva:         number;
+    guarnicion:            boolean;
+    precios:               Precio[];
+    id_ivaporcent:         string;
+    id_iceporcent:         number;
+}
+
+export interface Precio {
+    id:                   string;
+    id_precio:            string;
+    id_producto:          string;
+    valor:                string;
+    id_tipo:              string;
+    cantidad_volumen:     string;
+    porcent_rentabilidad: string;
+    descuento_porcentaje: string;
+    descuento_x_marca:    string;
+    ivaval:               number;
+    valor_mas_iva:        number;
+}

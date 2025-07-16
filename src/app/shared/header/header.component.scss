@@ -1,0 +1,40 @@
+
+:root {
+    --dynamic-color: black; /* Valor por defecto */
+    --font-color-letter: black; /* Valor por defecto */
+    --lighterTone: black; /* Valor por defecto */
+  }
+ nav{
+    font-family: 'Montserrat';
+ } 
+.hoverMenu{
+    @apply   w-full px-3  px-4 py-1.5 mt-2 mr-0 mb-0 ml-0 text-base text-sm  block  hover:rounded-full hover:bg-[var(--lighterTone)]  hover:font-semibold;
+
+}
+
+.initSesion{
+    @apply hover:rounded-full  hover:font-semibold  hover:px-2.5  hover:py-1.5 hover:bg-[var(--lighterTone)] hover:text-[var(--dynamic-color)]
+}
+.btnCar{
+    // color: var(--dynamic-color);
+    color: orange;
+    // padding: 5px;
+    & :hover{
+        background-color: rgb(229 231 235);
+        border-radius: 50%;
+        // padding: 5px;
+        // padding: 3px 4px;
+    }
+}
+
+.btnAvatar{
+    background-color: var(--lighterTone) !important;
+   font-weight: bold;
+   font-size: 0.8em !important;
+   .spanAvatar{
+   color: var(--dynamic-color);
+
+   }
+}
+
+

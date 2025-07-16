@@ -1,0 +1,498 @@
+<!-- @if(tipo=='1'){
+<swiper-container class="mySwiper "
+    breakpoints='{"1536": {"slidesPerView": 5}, "1280": {"slidesPerView": 4}, "1024": {"slidesPerView": 3}, "768": {"slidesPerView": 3}, "0": {"slidesPerView": 1}}'
+    slides-per-view="5" speed="500" loop="true" css-mode="true" navigation="true">
+    @for(d of data; track d.id ){
+    <swiper-slide class="m-1">
+        @if(empresa=='decorfree'){
+            <div
+                class=" relative effectCard max-w-sm bg-white border-2 border-gray-100 rounded-2xl hoverEffectCard cursor-pointer">
+                <a (click)="seeDetail(d)">
+                    @if(d.imagenPrincipal == '1bW4FHKxVF0tHzYbiYTu1iEh4BaSYbRm2'){
+                    <img loading="lazy" class="rounded-t-xl imgCardPS 2xl:px-2 xl:p-3 imgLogo "
+                        [src]="urlFB+logo+'?alt=media'" alt="" style="object-fit: cover;" />
+                    }@else {
+                    <img class="rounded-t-xl imgCardPS 2xl:p-2 xl:p-3 " [src]="urlFB+d.imagenPrincipal+'?alt=media'" alt=""
+                        style="object-fit: cover;" />
+                    } </a>
+                <div class="px-5 py-2">
+                    <a>
+                        <h5 class="text-xs font-normal tracking-tight text-gray-500 dark:text-white">
+                            {{clampText(d.pro_nom)}}</h5>
+                    </a>
+                    <div class="h-7">
+                        <span class="line-clamp-4 text-xs font-light leading-relaxed">
+                            <strong>Disponible: </strong> {{d.stockactual}}
+                        </span>
+                    </div>
+                    <div class=" grid-cols-2 flex group justify-between  pt-2 pb-4">
+                        <div class="font-black flex flex-col">
+                            <div class="price">
+                                <p class="2xl:text-xl xl:text-sm  ">
+                                    @if(d?.precioOferta > 0){
+                                    <span class="colorSpanPrice">
+                                        $ {{d?.precioOferta |number:'1.2-2'}}</span>
+                                    }@else {
+                                    <span class="colorSpanPrice"> $ {{d?.precioReal |number:'1.2-2'}}</span>
+                                    }
+                                </p>
+                            </div>
+                        </div>
+                        <div class="flex flex-col items-end">
+                            <div class="h-7">
+                                <button class=" py-2 px-3 bg-orange-100 text-orange-400 rounded-md  shadow-md">
+                                    <i class="ri-shopping-cart-fill"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <span *ngIf="d.precioOferta > 0" class="absolute top-0 start-0 translate-middle badge px-1.5  badgeDesc"
+                    style="margin-top: 0.65em; border-top-right-radius: 6px; border-bottom-right-radius: 6px; ">
+                    {{calculateDescount(d.precioOferta, d.precioReal )}} %
+                </span>
+                <span *ngIf="d.precioOferta > 0"
+                    class="absolute top-0 end-0 translate-middle badge border border-gray-300 px-2.5  rounded-full badgeStar"
+                    style="margin-top: 0.65em; margin-right: 1em;  ">
+                    5 <i class="bi bi-star-fill "></i>
+                </span>
+            </div>
+        }@else{
+            <div class="max-w-sm mx-auto">
+                <div
+                    class="bg-white border border-gray-200 rounded-2xl shadow-md hover:shadow-xl transition-shadow duration-300 relative overflow-hidden group">
+                    <div class="relative overflow-hidden">
+                        @if(d.imagenPrincipal == '1bW4FHKxVF0tHzYbiYTu1iEh4BaSYbRm2'){
+                        <img loading="lazy" class="rounded-t-xl imgCardPS 2xl:px-2 xl:p-3 imgLogo "
+                            [src]="urlFB+logo+'?alt=media'" alt="" style="object-fit: cover;" />
+                        }@else {
+                        <img (click)="seeDetail(d)"
+                            class="w-full 2xl:h-72 !xl:h-64 lg:h-64 object-cover rounded-t-2xl group-hover:scale-105 transition-transform duration-300"
+                            [src]="urlFB+d.imagenPrincipal+'?alt=media'" alt="Auriculares Gaming RGB">
+                        }
+                    </div>
+                    <div class="p-4 mb-5">
+                        <a>
+                            <p class=" text-xs font-normal tracking-tight text-gray-500 line-clamp-3">{{d.pro_nom}}
+                            </p>
+                        </a>
+                        <div class="h-7">
+                            <span class="line-clamp-4 text-xs font-light leading-relaxed">
+                                <strong> Disponible: </strong> {{d.stockactual}}
+                            </span>
+                        </div>
+                        <div class=" grid-cols-2 flex group justify-between">
+                            <div class="font-black flex flex-col">
+                                <div class="price">
+                                    <p class=" spanColor ">
+                                        @if(d.precioOferta > 0){
+                                        <span>
+                                            $ {{d.precioOferta |number:'1.2-2'}}</span>
+                                        }@else {
+                                        <span> $ {{d.precioReal |number:'1.2-2'}}</span>
+                                        }
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="flex flex-col items-end">
+                                <div class="h-7">
+                                    <button class=" py-2 px-3 bg-orange-100 text-orange-400 rounded-md  shadow-md">
+                                        <i class="ri-shopping-cart-fill"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }       
+    </swiper-slide>
+    }
+</swiper-container>
+}@else if(tipo=='2'){
+<swiper-container slides-per-view="5"
+    breakpoints='{"1536": {"slidesPerView": 5}, "1280": {"slidesPerView": 4}, "1024": {"slidesPerView": 3}, "768": {"slidesPerView": 3}, "0": {"slidesPerView": 1}}'
+    speed="500" loop="true" css-mode="true" navigation="true">
+    @for(d of data; track d.id ){
+    <swiper-slide class="m-1">
+           @if(empresa=='decorfree'){
+            <div
+                (click)="seeDetail(d)"
+                class=" effectCard max-w-sm bg-white border-2 border-gray-100 rounded-2xl hoverEffectCard relative" 
+               >
+                <a>
+                    @if(d.imagenPrincipal == '1bW4FHKxVF0tHzYbiYTu1iEh4BaSYbRm2'){
+                    <img   class="rounded-t-xl imgCardPS 2xl:px-2 xl:p-3 imgLogo " [src]="urlFB+logo+'?alt=media'"
+                        alt="" style="object-fit: cover;" />
+                    }@else {
+                    <img class="rounded-t-xl imgCardPS 2xl:px-2 xl:p-3 "
+                        [src]="urlFB+d.imagenPrincipal+'?alt=media'" alt="" style="object-fit: cover;" />
+                    }
+                </a>
+
+                <div class="px-5 py-2">
+                    <a>
+                        <h5 class="text-xs font-normal tracking-tight text-gray-500 dark:text-white line-clamp-4">
+                            {{clampText(d.pro_nom)}}</h5>
+                    </a>
+                    <div class="h-7">
+                        <span class="line-clamp-4 text-xs font-light leading-relaxed">
+                            <strong>Disponible: </strong> {{d.stockactual}}
+                        </span>
+                    </div>
+                    <div class=" grid-cols-2 flex group justify-between pt-2 pb-6">
+                        <div class="font-black flex flex-col">
+                            <div class="price">
+                                <p class="2xl:text-xl xl:text-sm  ">
+                                    @if(d.precioOferta > 0){
+                                    <span class="colorSpanPrice">
+                                        $ {{d.precioOferta |number:'1.2-2'}}</span>
+                                    }@else {
+                                    <span class="colorSpanPrice"> $ {{d.precioReal |number:'1.2-2'}}</span>
+                                    }
+                                </p>
+                            </div>
+                        </div>
+                        <div class="flex flex-col items-end">
+                            <div class="h-4">
+                                <button class=" py-2 px-3 bg-orange-100 text-orange-400 rounded-md  shadow-md">
+                                    <i class="ri-shopping-cart-fill"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <span *ngIf="d.precioOferta > 0"
+                    class="absolute top-0 start-0 translate-middle badge px-1.5  badgeDesc"
+                    style="margin-top: 0.65em; border-top-right-radius: 6px; border-bottom-right-radius: 6px; ">
+                    {{calculateDescount(d.precioOferta, d.precioReal )}} %
+                </span>
+                <span *ngIf="d.precioOferta > 0"
+                    class="absolute top-0 end-0 translate-middle badge border border-gray-300 px-2.5  rounded-full badgeStar"
+                    style="margin-top: 0.65em; margin-right: 1em;  ">
+                    5 <i class="bi bi-star-fill "></i>
+                </span>
+            </div>
+           }@else{
+                    <div class="max-w-sm mx-auto">
+            <div
+                class="bg-white border border-gray-200 rounded-2xl shadow-md hover:shadow-xl transition-shadow duration-300 relative overflow-hidden group">
+                <div class="relative overflow-hidden">
+                   
+                    @if(d.imagenPrincipal == '1bW4FHKxVF0tHzYbiYTu1iEh4BaSYbRm2'){
+                    <img loading="lazy" class="rounded-t-xl imgCardPS 2xl:px-2 xl:p-3 imgLogo "
+                        [src]="urlFB+logo+'?alt=media'" alt="" style="object-fit: cover;" />
+                    }@else {
+                    <img (click)="seeDetail(d)"
+                        class="w-full 2xl:h-72 !xl:h-64 lg:h-64 object-cover rounded-t-2xl group-hover:scale-105 transition-transform duration-300"
+                        [src]="urlFB+d.imagenPrincipal+'?alt=media'" alt="Auriculares Gaming RGB">
+                    }
+                </div>
+                <div class="p-4 mb-5">
+                    <a>
+                        <p class=" text-xs font-normal tracking-tight text-gray-500 line-clamp-3">{{d.pro_nom}}
+                        </p>
+                    </a>
+                    <div class="h-7">
+                        <span class="line-clamp-4 text-xs font-light leading-relaxed">
+                            <strong> Disponible: </strong> {{d.stockactual}}
+                        </span>
+                    </div>
+                    <div class=" grid-cols-2 flex group justify-between">
+                        <div class="font-black flex flex-col">
+                            <div class="price">
+                                <p class=" spanColor ">
+                                    @if(d.precioOferta > 0){
+                                    <span>
+                                        $ {{d.precioOferta |number:'1.2-2'}}</span>
+                                    }@else {
+                                    <span> $ {{d.precioReal |number:'1.2-2'}}</span>
+                                    }
+                                </p>
+                            </div>
+                        </div>
+                        <div class="flex flex-col items-end">
+                            <div class="h-7">
+                                <button class=" py-2 px-3 bg-orange-100 text-orange-400 rounded-md  shadow-md">
+                                    <i class="ri-shopping-cart-fill"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+           }
+        
+
+
+    </swiper-slide>
+    }
+</swiper-container>
+
+} -->
+
+@if(tipo=='1'){
+<swiper-container class="mySwiper "
+    breakpoints='{"1536": {"slidesPerView": 5}, "1280": {"slidesPerView": 4}, "1024": {"slidesPerView": 3}, "768": {"slidesPerView": 3}, "0": {"slidesPerView": 2}}'
+    slides-per-view="5" speed="500" loop="true" css-mode="true" navigation="true">
+    @for(d of data; track d.id ){
+    <swiper-slide class="m-1">
+        @if(empresa=='decorfree'){
+        <div class="relative effectCard max-w-sm bg-white border-2 border-gray-100 rounded-2xl cursor-pointer">
+            <!-- Imagen con lazy loading -->
+            <div class="relative overflow-hidden" (click)="seeDetail(d)">
+                @if(d.imagenPrincipal == '1bW4FHKxVF0tHzYbiYTu1iEh4BaSYbRm2'){
+                <img loading="lazy" decoding="async"
+                    class="rounded-t-xl imgCardPS 2xl:px-2 xl:p-3 imgLogo w-full h-48 object-cover"
+                    [src]="urlFB+logo+'?alt=media'" [alt]="d.pro_nom || 'Producto'" (load)="onImageLoad()"
+                    (error)="onImageError()" />
+                }@else {
+                <img loading="lazy" decoding="async"
+                    class="rounded-t-xl imgCardPS 2xl:p-2 xl:p-3 w-full h-48 object-cover hover:scale-105 transition-transform duration-300"
+                    [src]="urlFB+d.imagenPrincipal+'?alt=media'" [alt]="d.pro_nom || 'Producto'" (load)="onImageLoad()"
+                    (error)="onImageError()" />
+                }
+
+                <!-- Loading placeholder -->
+                <!-- @if(!imageLoaded) {
+                    <div class="absolute inset-0 bg-gray-100 flex items-center justify-center">
+                        <div class="animate-pulse bg-gray-200 w-full h-full rounded-t-xl"></div>
+                    </div>
+                    } -->
+
+                @if (!imageLoaded) {
+                <div class="absolute inset-0 bg-gray-100 flex items-center justify-center">
+                    <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-orange-400"></div>
+                </div>
+                }
+            </div>
+
+            <div class="px-5 py-2">
+                <h5 class="text-xs font-normal tracking-tight text-gray-500 dark:text-white line-clamp-2">
+                    {{clampText(d.pro_nom)}}
+                </h5>
+
+                <div class="h-7 mt-2">
+                    <span class="text-xs font-light leading-relaxed">
+                        <strong>Disponible: </strong> {{numberTwoDecimals(d.stockactual)}}
+                    </span>
+                </div>
+
+                <div class="flex justify-between items-center pt-2 pb-4">
+                    <div class="font-black">
+                        <p class="2xl:text-xl xl:text-sm">
+                            @if(d?.precioOferta > 0){
+                            <span class="colorSpanPrice">$ {{d?.precioOferta |number:'1.2-2'}}</span>
+                            }@else {
+                            <span class="colorSpanPrice">$ {{d?.precioReal |number:'1.2-2'}}</span>
+                            }
+                        </p>
+                    </div>
+
+                    <button
+                        class="py-2 px-3 bg-orange-100 text-orange-400 rounded-md shadow-md hover:bg-orange-200 transition-colors"
+                        [disabled]="d.stockactual <= 0">
+                        <i class="ri-shopping-cart-fill"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Badges -->
+            @if(d.precioOferta > 0) {
+            <span class="absolute top-2 left-2 badge px-1.5 badgeDesc rounded-r-md">
+                {{calculateDescount(d.precioOferta, d.precioReal)}}%
+            </span>
+            <span class="absolute top-2 right-2 badge border border-gray-300 px-2.5 rounded-full badgeStar">
+                5 <i class="bi bi-star-fill"></i>
+            </span>
+            }
+        </div>
+        }@else{
+        <!-- Card alternativa -->
+        <div class="max-w-sm mx-auto">
+            <div
+                class="bg-white border border-gray-200 rounded-2xl shadow-md hover:shadow-xl transition-shadow duration-300 relative overflow-hidden group">
+                <div class="relative overflow-hidden">
+                    @if(d.imagenPrincipal == '1bW4FHKxVF0tHzYbiYTu1iEh4BaSYbRm2'){
+                    <img loading="lazy" decoding="async"
+                        class="rounded-t-xl imgCardPS 2xl:px-2 xl:p-3 imgLogo w-full h-48 object-cover"
+                        [src]="urlFB+logo+'?alt=media'" [alt]="d.pro_nom || 'Producto'" (load)="onImageLoad()"
+                        (error)="onImageError()" />
+                    }@else {
+                    <img loading="lazy" decoding="async"
+                        class="rounded-t-xl imgCardPS 2xl:p-2 xl:p-3 w-full h-48 object-cover hover:scale-105 transition-transform duration-300"
+                        [src]="urlFB+d.imagenPrincipal+'?alt=media'" [alt]="d.pro_nom || 'Producto'"
+                        (load)="onImageLoad()" (error)="onImageError()" />
+                    }
+                    @if (!imageLoaded) {
+                    <div class="absolute inset-0 bg-gray-100 flex items-center justify-center">
+                        <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-orange-400"></div>
+                    </div>
+                    }
+                </div>
+
+                <div class="p-4 mb-5">
+                    <p class="text-xs font-normal tracking-tight text-gray-500 line-clamp-3">
+                        {{d.pro_nom}}
+                    </p>
+
+                    <div class="h-7 mt-2">
+                        <span class="text-xs font-light leading-relaxed">
+                            <strong>Disponible: </strong> {{ numberTwoDecimals(d.stockactual)}}
+                        </span>
+                    </div>
+
+                    <div class="flex justify-between items-center mt-3">
+                        <div class=" font-bold " [ngStyle]="{'color': colorMain}" >
+                            <p class="spanColor">
+                                @if(d.precioOferta > 0){
+                                <span>$ {{d.precioOferta |number:'1.2-2'}}</span>
+                                }@else {
+                                <span>$ {{d.precioReal |number:'1.2-2'}}</span>
+                                }
+                            </p>
+                        </div>
+
+                        <button
+                            class="py-2 px-3 bg-orange-100 text-orange-400 rounded-md shadow-md hover:bg-orange-200 transition-colors">
+                            <i class="ri-shopping-cart-fill"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        }
+    </swiper-slide>
+    }
+</swiper-container>
+
+}@else if(tipo=='2'){
+<swiper-container slides-per-view="5"
+    breakpoints='{"1536": {"slidesPerView": 5}, "1280": {"slidesPerView": 4}, "1024": {"slidesPerView": 3}, "768": {"slidesPerView": 3}, "0": {"slidesPerView": 2}}'
+    speed="500" loop="true" css-mode="true" navigation="true">
+    @for(d of data; track d.id ){
+    <swiper-slide class="m-1">
+        @if(empresa=='decorfree'){
+        <div (click)="seeDetail(d)"
+            class="effectCard max-w-sm bg-white border-2 border-gray-100 rounded-2xl hoverEffectCard relative cursor-pointer">
+            <!-- Imagen con lazy loading -->
+            <div class="relative overflow-hidden">
+                @if(d.imagenPrincipal == '1bW4FHKxVF0tHzYbiYTu1iEh4BaSYbRm2'){
+                <img loading="lazy" decoding="async"
+                    class="rounded-t-xl imgCardPS 2xl:px-2 xl:p-3 imgLogo w-full h-48 object-cover"
+                    [src]="urlFB+logo+'?alt=media'" [alt]="d.pro_nom || 'Producto'" (load)="onImageLoad()"
+                    (error)="onImageError()" />
+                }@else {
+                <img loading="lazy" decoding="async"
+                    class="rounded-t-xl imgCardPS 2xl:p-2 xl:p-3 w-full h-48 object-cover hover:scale-105 transition-transform duration-300"
+                    [src]="urlFB+d.imagenPrincipal+'?alt=media'" [alt]="d.pro_nom || 'Producto'" (load)="onImageLoad()"
+                    (error)="onImageError()" />
+                } @if (!imageLoaded) {
+                <div class="absolute inset-0 bg-gray-100 flex items-center justify-center">
+                    <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-orange-400"></div>
+                </div>
+                }
+            </div>
+
+            <div class="px-5 py-2">
+                <h5 class="text-xs font-normal tracking-tight text-gray-500 dark:text-white line-clamp-4">
+                    {{clampText(d.pro_nom)}}
+                </h5>
+
+                <div class="h-7 mt-2">
+                    <span class="text-xs font-light leading-relaxed">
+                        <strong>Disponible : </strong> {{numberTwoDecimals(d.stockactual|number:'1.2-2')}}
+                    </span>
+                </div>
+
+                <div class="flex justify-between items-center pt-2 pb-6">
+                    <div class=" text-red-500" [ngStyle]="{'color': colorMain}" >
+                        {{colorMain}}
+                        <p class="2xl:text-xl xl:text-sm">
+                            @if(d.precioOferta > 0){
+                            <span class="">$ {{d.precioOferta |number:'1.2-2'}}</span>
+                            }@else {
+                            <span class="">$ {{d.precioReal |number:'1.2-2'}}</span>
+                            }
+                        </p>
+                    </div>
+
+                    <button
+                        class="py-2 px-3 bg-orange-100 text-orange-400 rounded-md shadow-md hover:bg-orange-200 transition-colors">
+                        <i class="ri-shopping-cart-fill"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Badges -->
+            @if(d.precioOferta > 0) {
+            <span class="absolute top-2 left-2 badge px-1.5 badgeDesc rounded-r-md">
+                {{calculateDescount(d.precioOferta, d.precioReal)}}%
+            </span>
+            <span class="absolute top-2 right-2 badge border border-gray-300 px-2.5 rounded-full badgeStar">
+                5 <i class="bi bi-star-fill"></i>
+            </span>
+            }
+        </div>
+        }@else{
+        <!-- Card alternativa tipo 2 -->
+        <div class="max-w-sm mx-auto">
+            <div
+                class="bg-white border border-gray-200 rounded-2xl shadow-md hover:shadow-xl transition-shadow duration-300 relative overflow-hidden group">
+                <div class="relative overflow-hidden">
+                    @if(d.imagenPrincipal == '1bW4FHKxVF0tHzYbiYTu1iEh4BaSYbRm2'){
+                    <img loading="lazy" decoding="async"
+                        class="rounded-t-xl imgCardPS 2xl:px-2 xl:p-3 imgLogo w-full h-48 object-cover"
+                        [src]="urlFB+logo+'?alt=media'" [alt]="d.pro_nom || 'Producto'" (load)="onImageLoad()"
+                        (error)="onImageError()" />
+                    }@else {
+                    <img loading="lazy" decoding="async"
+                        class="rounded-t-xl imgCardPS 2xl:p-2 xl:p-3 w-full h-48 object-cover hover:scale-105 transition-transform duration-300"
+                        [src]="urlFB+d.imagenPrincipal+'?alt=media'" [alt]="d.pro_nom || 'Producto'"
+                        (load)="onImageLoad()" (error)="onImageError()" />
+                    }
+                    @if (!imageLoaded) {
+                    <div class="absolute inset-0 bg-gray-100 flex items-center justify-center">
+                        <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-orange-400"></div>
+                    </div>
+                    }
+                </div>
+
+                <div class="p-4 mb-5">
+                    <p class="text-xs font-normal tracking-tight text-gray-500 line-clamp-3">
+                        {{d.pro_nom}}
+                    </p>
+
+                    <div class="h-7 mt-2">
+                        <span class="text-xs font-light leading-relaxed">
+                            <strong>Disponible: </strong> {{d.stockactual}}
+                        </span>
+                    </div>
+
+                    <div class="flex justify-between items-center mt-3">
+                                               <div class=" font-bold " [ngStyle]="{'color': colorMain}" >
+
+                            <p class="spanColor">
+                                @if(d.precioOferta > 0){
+                                <span>$ {{d.precioOferta |number:'1.2-2'}}</span>
+                                }@else {
+                                <span>$ {{d.precioReal |number:'1.2-2'}}</span>
+                                }
+                            </p>
+                        </div>
+
+                        <button
+                            class="py-2 px-3 bg-orange-100 text-orange-400 rounded-md shadow-md hover:bg-orange-200 transition-colors">
+                            <i class="ri-shopping-cart-fill"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        }
+    </swiper-slide>
+    }
+</swiper-container>
+}

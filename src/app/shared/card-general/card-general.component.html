@@ -1,0 +1,339 @@
+<!-- <div class="max-w-sm mx-auto">
+    <div
+        class=" bg-white border border-gray-200 rounded-2xl shadow-md hover:shadow-xl transition-shadow duration-300 relative overflow-hidden group">
+        <div class="relative overflow-hidden">
+
+            @if(d.imagenPrincipal == '1bW4FHKxVF0tHzYbiYTu1iEh4BaSYbRm2'){
+            <img loading="lazy" class="rounded-t-xl imgCardPS 2xl:px-2 xl:p-3 imgLogo " [src]="urlFB+logo+'?alt=media'"
+                alt="" style="object-fit: cover;" />
+            }@else {
+            <img (click)="seeDetail(d)"
+                class="w-full 2xl:h-72 !xl:h-64 lg:h-64 object-cover rounded-t-2xl group-hover:scale-105 transition-transform duration-300"
+                [src]="urlFB+d.imagenPrincipal+'?alt=media'" alt="Auriculares Gaming RGB">
+            }
+
+        </div>
+        <div class="p-4 mb-5">
+            <a>
+                <p class=" text-xs font-normal tracking-tight text-gray-500 line-clamp-3">{{d.pro_nom}}
+                </p>
+            </a>
+            <div class="h-7">
+                <span class="line-clamp-4 text-xs font-light leading-relaxed">
+                    <strong> Disponible: </strong> {{d.stockactual}}
+                </span>
+            </div>
+            <div class=" grid-cols-2 flex group justify-between">
+                <div class="font-black flex flex-col">
+                    <div class="price">
+                        <p class=" spanColor ">
+                            @if(d.precioOferta > 0){
+                            <span>
+                                $ {{d.precioOferta |number:'1.2-2'}}</span>
+                            }@else {
+                            <span> $ {{d.precioReal |number:'1.2-2'}}</span>
+                            }
+                        </p>
+                    </div>
+                </div>
+                <div class="flex flex-col items-end">
+                    <div class="h-7">
+                        <button class=" py-2 px-3 bg-orange-100 text-orange-400 rounded-md  shadow-md">
+                            <i class="ri-shopping-cart-fill"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->
+
+
+<!-- Card Container con lazy loading optimizado -->
+<div [class]="cardClasses" [attr.data-product-id]="d?.id_producto || d?.codigo">
+  <div class=" bg-white border border-gray-200 rounded-2xl  hover:shadow-xl transition-shadow duration-300 relative overflow-hidden group">
+
+        <!-- ===== CONTENEDOR DE IMAGEN ===== -->
+        <div class="relative overflow-hidden cursor-pointer">
+            <!-- Imagen Principal Optimizada -->
+            @if(d?.imagenPrincipal === '1bW4FHKxVF0tHzYbiYTu1iEh4BaSYbRm2') {
+            <img [loading]="isLazyLoaded ? 'lazy' : 'eager'" [decoding]="isLazyLoaded ? 'async' : 'auto'"
+                class="rounded-t-xl imgCardPS 2xl:px-2 xl:p-3 opacity-50  w-full 2xl:h-72 xl:h-64 lg:h-64 md:h-64 h-52 object-cover transition-transform duration-300"
+                [src]="urlFB + logo + '?alt=media'" [alt]="d?.pro_nom || 'Producto'" [srcset]="generateSrcSet()"
+                [sizes]="getSizes()" (load)="onImageLoad($event)" (error)="onImageError($event)"
+                style="object-fit: cover;" />
+            } @else {
+            <img [loading]="isLazyLoaded ? 'lazy' : 'eager'" [decoding]="isLazyLoaded ? 'async' : 'auto'"
+                class="w-full 2xl:h-72 xl:h-64 lg:h-64 md:h-64 h-52 object-cover rounded-t-2xl group-hover:scale-105 transition-transform duration-300 cursor-pointer"
+                [src]="optimizedImageSrc" [alt]="d?.pro_nom || 'Producto'" [srcset]="generateSrcSet()"
+                [sizes]="getSizes()" (click)="seeDetail(d)" (load)="onImageLoad($event)" (error)="onImageError($event)">
+            }
+
+            <!-- Overlay de carga mientras la imagen se carga -->
+            @if (!imageLoadedState && !imageErrorState && isLazyLoaded) {
+            <div class="absolute inset-0 bg-gray-100 flex items-center justify-center">
+                <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-orange-400"></div>
+            </div>
+            }
+
+            <!-- Badge de Descuento (mantener tu lógica existente) -->
+            @if (hasDiscount) {
+            <span
+                class="absolute top-3 left-3 bg-red-500 text-white px-2 py-1 rounded-full text-xs font-bold shadow-lg">
+                -{{ discountPercentage }}%
+            </span>
+            }
+
+            <!-- Badge de Rating/Estrella (mantener si existe) -->
+            @if (hasDiscount) {
+            <span
+                class="absolute top-3 right-3 bg-yellow-400 text-white px-2 py-1 rounded-full text-xs font-bold shadow-lg flex items-center gap-1">
+                5 <i class="bi bi-star-fill"></i>
+            </span>
+            }
+
+           
+
+            <!-- Indicador de Stock en la imagen -->
+            @if (stockLevel === 'out') {
+            <div class="absolute inset-0 bg-black/50 flex items-center justify-center">
+                <span class="bg-red-600 text-white px-4 py-2 rounded-lg font-semibold">
+                    Sin Stock
+                </span>
+            </div>
+            } @else if (stockLevel === 'low') {
+            <div class="absolute bottom-3 left-3 bg-orange-500 text-white px-2 py-1 rounded text-xs font-semibold">
+                ¡Últimos {{ d?.stockactual }}!
+            </div>
+            }
+        </div>
+
+        <!-- ===== CONTENIDO DE LA CARD ===== -->
+        <div class="p-3 mb-5">
+
+            <!-- Título del Producto (mantener tu lógica) -->
+            <div class="cursor-pointer" (click)="seeDetail(d)">
+                <p class="text-xs font-normal tracking-tight text-gray-500 line-clamp-3 hover:text-gray-700 transition-colors"
+                    [title]="d?.pro_nom">
+                    {{ d?.pro_nom }}
+                </p>
+            </div>
+
+            <!-- Stock Information (mantener tu lógica mejorada) -->
+            <div class="h-7 mt-2">
+                <span class="line-clamp-4 text-xs font-light leading-relaxed" [class]="stockColor">
+                    <strong>{{ getStockText() }}</strong>
+                </span>
+            </div>
+
+            <!-- Precio y Botón de Carrito (mantener tu layout existente) -->
+            <div class="grid-cols-2 flex group justify-between items-center mt-3">
+
+                <!-- Sección de Precio -->
+                <div class="font-black flex flex-col">
+                    <div class="price">
+                        <!-- Precio Original Tachado -->
+                        @if (hasDiscount) {
+                        <p class="text-xs text-gray-400 line-through mb-1">
+                            @if(d?.precioOferta > 0) {
+                            <span>
+                                $ {{ d.precioOferta | number:'1.2-2' }}
+                            </span>
+                            } @else {
+                            <span>
+                                $ {{ d.precioReal | number:'1.2-2' }}
+                            </span>
+                            }
+                        </p>
+                        }
+
+                        <!-- Precio Actual (mantener tu lógica) -->
+                        <p class="spanColor text-lg font-bold" [style.color]="color">
+                            @if(originalPrice>0){
+                            {{ formatPrice(originalPrice) }}                                
+                            }@else {
+                                @if(d?.precioOferta > 0) {
+                            <span>
+                                $ {{ d.precioOferta | number:'1.2-2' }}
+                            </span>
+                            } @else {
+                            <span>
+                                $ {{ d.precioReal | number:'1.2-2' }}
+                            </span>
+                            }  
+                            }
+                        </p>
+
+                        
+
+                        <!-- Ahorro -->
+                        @if (hasDiscount) {
+                        <p class="text-xs text-green-600 font-medium">
+                            Ahorras {{ formatPrice(productPrice - originalPrice ) }}
+                        </p>
+                        }
+                    </div>
+                </div>
+
+                <!-- Botón de Carrito (mejorado con estados) -->
+                <div class="flex flex-col items-end gap-2">
+                    <div class="h-10">
+                        <button [class]="getCartButtonClasses()" [disabled]="!canAddToCart()"
+                            (click)="onAddToCart($event)"
+                            [title]="canAddToCart() ? 'Agregar al carrito' : 'Sin stock disponible'">
+                            <i [class]="getCartButtonIcon()"></i>
+                        </button>
+                    </div>
+
+                    <!-- Botón de Ver Más (solo móvil) -->
+                    @if (isMobile) {
+                    <button class="text-xs text-gray-500 hover:text-gray-700 transition-colors" (click)="seeDetail(d)">
+                        Ver más
+                    </button>
+                    }
+                </div>
+            </div>
+
+            <!-- Información Adicional en Desktop -->
+
+        </div>
+
+        <!-- Indicador de Carga para Add to Cart -->
+        @if (addToCartLoading) {
+        <div class="absolute inset-0 bg-white/80 backdrop-blur-sm flex items-center justify-center">
+            <div class="bg-green-500 text-white px-4 py-2 rounded-lg flex items-center gap-2">
+                <div class="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                Agregando...
+            </div>
+        </div>
+        }
+    </div>
+
+</div>
+
+<!-- Estilos específicos del componente -->
+<style>
+    .animate-pulse {
+        animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+
+    @keyframes pulse {
+
+        0%,
+        100% {
+            opacity: 1;
+        }
+
+        50% {
+            opacity: .5;
+        }
+    }
+
+    .line-clamp-3 {
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    .line-clamp-4 {
+        display: -webkit-box;
+        -webkit-line-clamp: 4;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    /* Mantener tus clases CSS existentes */
+    .imgCardPS {
+        /* Mantener tus estilos existentes */
+    }
+
+    .imgLogo {
+        /* Mantener tus estilos existentes */
+    }
+
+    .spanColor {
+        /* Mantener tus estilos existentes */
+    }
+
+    /* Mejoras de accesibilidad */
+    .group:focus-within .opacity-0 {
+        opacity: 1;
+    }
+
+    /* Optimizaciones de rendimiento */
+    .card-mobile {
+        contain: layout style paint;
+    }
+
+    .card-desktop {
+        contain: layout style paint;
+    }
+
+    /* Animaciones suaves */
+    .transition-all {
+        transition: all 0.2s ease-in-out;
+    }
+
+    .transition-transform {
+        transition: transform 0.3s ease-in-out;
+    }
+
+    .transition-shadow {
+        transition: box-shadow 0.3s ease-in-out;
+    }
+
+    .transition-colors {
+        transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out;
+    }
+
+    /* Hover effects */
+    .hover\:scale-105:hover {
+        transform: scale(1.05);
+    }
+
+    .hover\:scale-110:hover {
+        transform: scale(1.10);
+    }
+
+    .active\:scale-95:active {
+        transform: scale(0.95);
+    }
+
+    /* Estados de carga */
+    .animate-spin {
+        animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+        from {
+            transform: rotate(0deg);
+        }
+
+        to {
+            transform: rotate(360deg);
+        }
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+        .card-mobile .p-4 {
+            padding: 0.75rem;
+        }
+
+        .card-mobile .text-lg {
+            font-size: 1rem;
+        }
+    }
+
+    /* Optimización para pantallas de alta densidad */
+    @media (-webkit-min-device-pixel-ratio: 2),
+    (min-resolution: 192dpi) {
+
+        .imgCardPS,
+        .imgLogo {
+            image-rendering: -webkit-optimize-contrast;
+            image-rendering: crisp-edges;
+        }
+    }
+</style>

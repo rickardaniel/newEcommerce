@@ -1,0 +1,40 @@
+<div class=" pt-3">
+    <!-- <h2 class="mb-2 2xl:text-2xl text-xl font-bold text-gray-600 ">Actualizar contraseña </h2> -->
+    <div class=" bg-gray-200 !h-screen  p-2 rounded-md shadow-md ">
+        <div class="max-w-md w-full bg-white rounded-xl shadow-lg p-8 absolute " style="top: 25%; left: 40%; " >
+            <h2 class="text-xl font-bold text-gray-500 mb-6 text-center">Actualizar su contraseña</h2>
+            @if(administration){
+                        <form  class="space-y-4">
+                <div class="pb-3">
+                    <label class="labelGeneral3 ">Usuario</label>
+                    <input  type="text" class="inputGeneral disabled" placeholder="Usuario"  readonly  [ngModelOptions]="{standalone: true}" [(ngModel)]="administration.data.usuario"   />
+                    
+                </div>
+
+                <div class="pb-3">
+                    <label class="labelGeneral3">Contraseña Actual</label> 
+                    <input type="password" class="inputGeneral3" placeholder="Ingrese contraseña actual"  [ngModelOptions]="{standalone: true}" [(ngModel)]="administration.validate.current" />
+                </div>
+
+                <div class="pb-3">
+                    <label class="labelGeneral3">Contraseña Nueva</label>
+                    <input type="password" class="inputGeneral3" placeholder="Ingrese nueva contraseña"  [ngModelOptions]="{standalone: true}" [(ngModel)]="administration.validate.new"  />
+                </div>
+
+
+
+                <button
+                    
+                    (click)="updateAdministration(administration)"
+                    class="w-full bg-green-500 hover:bg-green-700 text-white text-xs py-2 rounded-md shadow-lg  transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed">
+                    Actualizar
+                </button>
+            </form>
+            }
+    
+
+        </div>
+    </div>
+
+
+</div>

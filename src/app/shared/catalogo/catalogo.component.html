@@ -1,0 +1,67 @@
+<ul class=" bg-gray-100 p-4 m-2 z-50 sidebar-menu transition-transform rounded-lg    "
+    style=" font-family: 'Montserrat'; ">
+    <div class="flex justify-between">
+        <span class="text-gray-800 font-semibold">Categorías</span>
+            @if(flagRender){
+            <div class="">
+                <i class="ri-filter-3-line mx-2"></i>
+                <i class="ri-home-line mx-2 cursor-pointer hoverHome " (click)="returnHome(false)"></i>
+            </div>
+            }
+    </div>
+    @for(g of grupos; track g.id) {
+    <li class="mb-1 group text-xs  ">
+        @if(g.subgrupos?.viewSubgrupo){
+    <li class="mb-1 group">
+        <a class="2xl:flex xl:flex lg:flex  hidden font-normal items-center py-2 px-4 groupHover sidebar-dropdown-toggle-{{g.codigo}}"
+            (click)="seeSubGroups(g.codigo)" style="justify-content: space-between;">
+
+            <span class=" 2xl:text-sm xl:text-xs fontCatalogo ">{{tuncateNameGroup(g.nombre,20)}}</span>
+            <div>
+                <span class=" px-2 py-0.5  text-xs  tracking-wide  rounded-full  spanCounter ">{{g.subgrupos.length}}
+                </span>
+                <i class="ri-arrow-right-s-line ml-auto group-[.selected]:rotate-90 font-semibold"></i>
+            </div>
+        </a>
+        <a class="2xl:hidden xl:hidden lg:hidden  flex font-normal items-center py-2 px-4 groupHover sidebar-dropdown-toggle-{{g.codigo}}"
+            (click)="seeSubGroups1(g.codigo)" style="justify-content: space-between;">
+
+            <span class=" 2xl:text-sm xl:text-xs fontCatalogo ">{{tuncateNameGroup(g.nombre,20)}}</span>
+            <div>
+                <span class=" px-2 py-0.5  text-xs  tracking-wide  rounded-full  spanCounter ">{{g.subgrupos.length}}
+                </span>
+                <i class="ri-arrow-right-s-line ml-auto group-[.selected]:rotate-90 font-semibold"></i>
+            </div>
+        </a>
+        <ul class="pl-4 mt-2 hidden group-[.selected]:block ">
+            @for(s of g.subgrupos; track s.id){
+            <li class="mb-3" [ngClass]="{'clase1':classSelected && idGrupoSubGrupo==s.id_sub}">
+                <a class="flex font-normal items-center py-2 px-4 groupHover3  " (click)="getProductos(g, s)">{{s.nombre
+                    | titlecase }}</a>
+            </li>
+            }
+        </ul>
+    </li>
+    }@else {
+
+    <a class=" flex font-normal items-center py-2 px-4 groupHover cursor-pointer " (click)="getProductos2(g)">
+        <span class="text-sm">{{g.nombre}}</span>
+        <i class="ri-arrow-right-s-line ml-auto group-[.selected]:rotate-90 font-semibold "></i>
+    </a>
+    }
+    </li>
+    }
+    <hr class=" border-1 border-gray-300">
+</ul>
+
+
+
+<div class="fixed top-0 left-0 w-full h-full bg-black/50 z-40 md:hidden sidebar-overlay"></div>
+<main class=" hidden w-full md:w-[calc(100%-256px)] md:ml-64 bg-gray-200 min-h-screen transition-all main">
+    <!-- navbar -->
+    <div class="py-2 px-6 bg-[#f8f4f3] flex items-center shadow-md shadow-black/5 sticky top-0 left-0 z-30">
+        <button type="button" class=" text-lg text-gray-900 font-semibold sidebar-toggle">
+            <i class="ri-menu-line"></i>
+        </button>
+    </div>
+</main>

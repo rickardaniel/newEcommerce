@@ -1,0 +1,144 @@
+<div class="mx-1  text-sm animate__animated animate__fadeIn">
+    <h2 class="mb-2 2xl:text-2xl text-xl font-bold text-gray-600 ">Colores Productos </h2>
+    <div class="w-full">
+        <!-- Formulario para agregar color -->
+        <h4 class="mb-2 text-sm font-semibold text-gray-60 ml-4">1. Seleccione el nuevo color que desea agregar</h4>
+
+        <div class="border border-gray-200 rounded-md shadow-md  mt-2 bg-gray-200 p-4 mx-4">
+            <!-- Grid del formulario -->
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-4 items-end">
+                <!-- Selector de color -->
+                <div class="md:col-span-2">
+                    <label for="color-picker" class="block mb-2 text-sm font-medium text-gray-900 text-center">
+                        Seleccione del color *
+                    </label>
+                    <input type="color" id="color-picker" class="inputGeneral3" [(ngModel)]="colorAddTable.codigo">
+                </div>
+
+                <!-- Nombre del color -->
+                <div class="md:col-span-9">
+                    <label for="color-name" class="block mb-2 text-sm font-medium text-gray-900 text-center">
+                        Nombre del color *
+                    </label>
+                    <input type="text" id="color-name" class="inputGeneral3 " [(ngModel)]="colorAddTable.nombre">
+                </div>
+
+                <!-- Botón guardar -->
+                <div class="md:col-span-1">
+                    <button type="button" (click)="addColorTable(colorAddTable)"
+                        class="w-full text-white bg-green-500 hover:bg-green-700 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 py-2 focus:outline-none flex items-center justify-center">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 16 16">
+                            <path
+                                d="M2 1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H9.5a1 1 0 0 0-1 1v7.293l2.646-2.647a.5.5 0 0 1 .708.708l-3.5 3.5a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L7.5 8.293V2a2 2 0 0 1 2-2H14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h2.5a.5.5 0 0 1 0 1H2z" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tabla de colores -->
+        <div class=" m-4">
+            <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+                <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                    <thead class="text-xs text-gray-200 uppercase bg-gray-500  dark:bg-gray-700 dark:text-gray-400">
+                        <tr class="">
+                            <th scope="col" class="px-6 py-2 ">
+                                Nombre
+                            </th>
+                            <th scope="col" class="px-6 py-2 flex justify-start ">
+                                Color
+                            </th>
+                            <th scope="col" class="px-6 py-2">
+                                Código
+                            </th>
+                            <th scope="col" class="px-6 py-2 flex justify-center">
+                                Acciones
+                            </th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for(c of colorsTable; track c){
+                        <tr
+                            class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 text-xs">
+                            <th scope="row"
+                                class="px-6 py-2 font-semibold text-gray-900 whitespace-nowrap dark:text-white">
+                                {{c.nombre}}
+                            </th>
+
+                            <!-- Color visual -->
+                            <td class="px-6 py-2">
+                                <div class="flex justify-start">
+                                    <div class="w-8 h-8 rounded-full border-2 border-gray-300 shadow-sm"
+                                        [ngStyle]="{'background-color': c.codigo}">
+                                    </div>
+                                </div>
+                            </td>
+
+                            <!-- Código -->
+                            <td class="px-6 py-4 text-gray-700 font-mono">
+                                {{c.codigo}}
+                            </td>
+
+                            <!-- Botón eliminar -->
+                            <td class="px-6 py-4 flex justify-center">
+                                <i
+                                type="button" (click)="openModal('#deleteFileModal', c)"
+                                    class="bi bi-trash3-fill text-red-500 !text-md py-1.5 px-2 hover:py-1.5 hover:px-2 hover:bg-red-500 hover:rounded-full hover:text-white"></i>
+                            </td>
+                        </tr>
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<div id="deleteFileModal" tabindex="-1"
+    class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+    <div class="relative p-4 w-full max-w-md max-h-full">
+        <div class="relative bg-white rounded-lg shadow-sm dark:bg-gray-700">
+            <button type="button"
+            (click)="closeModal(true,'#deleteFileModal')"
+                class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                >
+                <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                    viewBox="0 0 14 14">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                </svg>
+                <span class="sr-only">Close modal</span>
+            </button>
+            <div class="p-4 md:p-5 text-center">
+                <svg class="mx-auto mb-4 text-gray-400 w-12 h-12 dark:text-gray-200" aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                </svg>
+                <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">¿Está seguro de eliminar el color?</h3>
+
+                              <button
+                                class="bg-gray-500 text-white mr-3 w-50 px-10 py-2.5 rounded-md text-xs  transition transform effectoZoomBoton  "
+                                (click)="closeModal(true, '#deleteFileModal')">
+                                Cancelar
+                            </button>
+                <button  type="button"
+                (click)="deleteColorTable(colorSelect)"
+                    class="text-white  ms-3 bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-md text-xs inline-flex items-center px-5 py-2.5 text-center transition transform effectoZoomBoton ">
+                    Si, eliminar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Loading component -->
+<ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px', fullScreenBackdrop: true }" [template]="">
+</ngx-loading>

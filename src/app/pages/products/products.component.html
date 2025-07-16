@@ -1,0 +1,107 @@
+@if(!isEmpty(information) && !isEmpty(configuracion) ){
+<app-header [information]="information" [configuracion]="configuracion"></app-header>
+}
+
+<!-- -------------------------------------------- VISTA LG Y SUPERIORES -------------------------------------------- -->
+<div class="mainScreen animate__animated animate__fadeIn 2xl:block xl:block lg:block hidden "
+    style="font-family: 'Montserrat';">
+    <div class="pt-20 p-2 ">
+        <span></span>
+    </div>
+    <div class="m-2 rounded-md  ">
+        <div class="grid 2xl:grid-cols-10 xl:grid-cols-12 lg:grid-cols-12">
+            <!-- Catálogo lateral para pantallas grandes -->
+            <div class="2xl:col-span-2 xl:col-span-3 lg:col-span-4">
+                <app-catalogo (sendGrupSubgrupo)="getNameGrupoSubg($event)" (sendGrupos)="getGroupsCatalogue($event)"
+                    (sendConfig)="getConfig($event)">
+                </app-catalogo>
+            </div>
+
+            <!-- Productos para pantallas grandes -->
+            <div class="2xl:col-span-8 xl:col-span-9 lg:col-span-8 2xl:mx-5 bg-gray-100 mt-3 rounded-xl">
+                <div class="p-2 text-gray-600" style="font-weight: 450;">
+                    {{dataGrupoSubGrupo.name_grupo | titlecase }} / <strong>{{dataGrupoSubGrupo.name_subgrupo |
+                        titlecase}}</strong>
+                </div>
+                <div>
+                    <div class="grid 2xl:grid-cols-10 xl:grid-cols-8 lg:grid-cols-8 p-3 pt-5"
+                        style="justify-content: center; align-items: center;">
+                        @for(d of products ; track $index ){
+                        <div class="2xl:col-span-2 xl:col-span-2 lg:col-span-4 m-1">
+                            @if(!isEmpty(information) && !isEmpty(configuracion) ){
+
+                            <app-card-general (viewModalR)="viewModalProduct($event)" [logo]="logo" [prod]="d"
+                                [color]="color" [configuration]="configuration" [loading]="flagLoader"
+                                [information]="information">
+                            </app-card-general>
+                            }
+                        </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- -------------------------------------------- VISTA MD Y SM -------------------------------------------- -->
+<div class="mainScreen animate__animated animate__fadeIn 2xl:hidden xl:hidden lg:hidden block"
+    style="font-family: 'Montserrat';">
+    <div class="pt-20 p-2">
+        <span></span>
+    </div>
+
+    <div class="m-2 rounded-md mt-1">
+        <div class="w-full mb-4">
+            <div class="bg-gray-100 rounded-lg p-3">
+                <h3 class="text-gray-800 font-semibold md:mt-10 mb-3">Categorías</h3>
+
+                <app-sidebar-layout class="!h-16" (sendGrupSubgrupo)="getNameGrupoSubg($event)"
+                    [groups]="groups"></app-sidebar-layout>
+
+                <div>
+                    <div class="grid md:grid-cols-3 grid-cols-2 p-1 pt-5"
+                        style="justify-content: center; align-items: center;">
+                        @for(d of products ; track $index ){
+
+                        <div class="col-span-1 m-1">
+                            @if(!isEmpty(information) && !isEmpty(configuracion) ){
+                            <app-card-general (viewModalR)="viewModalProduct($event)" [logo]="logo" [prod]="d"
+                                [color]="color" [configuration]="configuration" [loading]="flagLoader" [information]="information">
+                            </app-card-general>
+                            }
+
+                        </div>
+                        }
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div id="modalProduct" tabindex="-1"
+    class="fixed  z-50 hidden w-full p-4  overflow-x-hidden overflow-y-auto lg:inset-0 h-[calc(100%-1rem)] max-h-full">
+    <div class="relative p-4 w-full ">
+        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+            <button type="button"
+                class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                (click)="closeModal()">
+                <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                    viewBox="0 0 14 14">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                </svg>
+                <span class="sr-only">Close modal</span>
+            </button>
+            <app-detail-product [product]="productSelect"></app-detail-product>
+        </div>
+    </div>
+</div>
+
+<ngx-loading [show]="flagLoader"></ngx-loading>

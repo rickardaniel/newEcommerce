@@ -1,0 +1,45 @@
+
+
+// ============  Nuevo estilo ===========
+:root {
+    --dynamic-color: black; /* Valor por defecto */
+    --color-font-portada: black; /* Valor por defecto */
+    --color-font-portada: black; /* Valor por defecto */
+    --color-letter-primary: black; /* Valor por defecto */
+    --color-letter-secondary: black; /* Valor por defecto */
+    --color-btn: yellow; /* Valor por defecto */
+    --lighter-tone: hsl(0, 100%, 70%);
+
+  }
+
+//   hover:bg-[var(--dynamic-color)]
+// hover:text-gray-800
+.groupHover{
+    // @apply text-gray-900  hover:bg-gray-200   hover:text-[var(--dynamic-color)]  hover:font-semibold rounded-full group-[.active]:bg-blue-800 group-[.active]:text-white group-[.selected]:bg-red-950 group-[.selected]:text-gray-100
+    @apply text-gray-900  hover:bg-gray-200   hover:text-[var(--dynamic-color)]  hover:font-semibold rounded-full group-[.active]:bg-blue-800 group-[.active]:text-[var(--dynamic-color)] group-[.selected]:bg-[var(--lighter-tone)] group-[.selected]:text-[var(--dynamic-color)]
+}
+.groupHover2{
+    @apply  text-gray-900  hover:bg-[var(--dynamic-color)]  hover:text-gray-100 rounded-full group-[.active]:bg-gray-800 group-[.active]:text-white group-[.selected]:bg-gray-950 group-[.selected]:text-gray-100 
+}
+.groupHover3{
+    @apply  text-gray-900 text-xs  hover:bg-gray-200  hover:text-gray-800 rounded-full  
+}
+
+.spanCounter{
+    background-color: var(--lighter-tone) !important;
+    color: var(--dynamic-color) !important;
+    // font-weight: bold;
+}
+
+.hoverHome:hover {
+    background-color: var(--lighter-tone);
+    color: var(--dynamic-color);
+    border-radius: 50%;
+}
+
+.clase1{
+    background-color: #E5E7EB !important;
+    // color: var(--dynamic-color) !important;
+    border-radius: 18px;
+    font-weight: 600 !important;
+}

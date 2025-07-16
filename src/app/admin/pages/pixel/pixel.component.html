@@ -1,0 +1,160 @@
+<div class="container mt-5">
+        <div class="grid grid-cols-1 border rounded mt-2 ml-0 mr-0 bg-light">
+          <div class="col-span-1 bg-[#3B5998] text-white text-size-13 text-center m-3 p-2 rounded-md shadow-md ">
+            <label class="col-form-label btn-facebook w-100 text-sm "> <strong class="text-size-13">Inserte su código fuente
+                otorgado por pixel de facebook, para ser implementado en su tienda</strong></label>
+          </div>
+          <div class="col-span-1 text-size-13 text-center m-3 p-2  ">
+            <textarea style="font-size: 13px;width: 100% ; " rows="20" class="inputGeneral3" 
+              [(ngModel)]="configuracion.pixel_facebook"></textarea>
+          </div>
+          <div class=" text-center mt-2 mb-2">
+            <button class="bg-green-500 px-7 py-2 text-white text-xs rounded-md shadow-sm   " (click)="updatePixelfacebook(configuracion.pixel_facebook)">
+              Guardar
+            </button>
+          </div>
+        </div>
+</div>
+
+
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Card - Flowbite</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-gray-100 p-8">
+    
+
+
+    <!-- Multiple Cards Example -->
+    <div class="mt-8">
+        <!-- <h3 class="text-xl font-semibold text-gray-800 mb-4 text-center">Grid de Productos</h3> -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 max-w-6xl mx-auto">
+            
+            <!-- Card 1 -->
+            <!-- <div class="bg-white border border-gray-200 rounded-2xl shadow-md hover:shadow-xl transition-shadow duration-300 relative overflow-hidden group">
+                <span class="absolute top-2 left-2 bg-red-500 text-white text-xs font-semibold px-2 py-1 rounded-md z-10">-15%</span>
+                <span class="absolute top-2 right-2 bg-white text-gray-800 text-xs font-medium px-2 py-1 rounded-full border border-gray-200 z-10 flex items-center gap-1">
+                    4.7 <i class="fas fa-star text-yellow-400 text-xs"></i>
+                </span>
+                
+                <div class="relative overflow-hidden">
+                    <img class="w-full h-40 object-cover rounded-t-2xl group-hover:scale-105 transition-transform duration-300" 
+                         src="https://images.unsplash.com/photo-1583394838336-acd977736f90?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" 
+                         alt="Auriculares Gaming">
+                </div>
+                
+                <div class="p-4">
+                    <h5 class="text-sm font-medium text-gray-900 mb-2 leading-tight">Auriculares Gaming RGB</h5>
+                    <div class="mb-3">
+                        <span class="text-xs text-gray-600"><strong>Disponible:</strong> 25</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-2">
+                            <span class="text-lg font-bold text-gray-900">$ 0.21</span>
+                            <span class="text-sm text-gray-500 line-through">$ 0.30</span>
+                        </div>
+                        <button class="p-2 text-teal-600 bg-teal-50 hover:bg-teal-100 focus:ring-4 focus:ring-teal-200 rounded-lg transition-colors duration-200">
+                            <i class="fas fa-shopping-cart text-sm"></i>
+                        </button>
+                    </div>
+                </div>
+            </div> -->
+
+            <!-- Card 2 -->
+            <!-- <div class="bg-white border border-gray-200 rounded-2xl shadow-md hover:shadow-xl transition-shadow duration-300 relative overflow-hidden group">
+                <span class="absolute top-2 left-2 bg-green-500 text-white text-xs font-semibold px-2 py-1 rounded-md z-10">-20%</span>
+                <span class="absolute top-2 right-2 bg-white text-gray-800 text-xs font-medium px-2 py-1 rounded-full border border-gray-200 z-10 flex items-center gap-1">
+                    4.9 <i class="fas fa-star text-yellow-400 text-xs"></i>
+                </span>
+                
+                <div class="relative overflow-hidden">
+                    <img class="w-full h-40 object-cover rounded-t-2xl group-hover:scale-105 transition-transform duration-300" 
+                         src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" 
+                         alt="Zapatillas Deportivas">
+                </div>
+                
+                <div class="p-4">
+                    <h5 class="text-sm font-medium text-gray-900 mb-2 leading-tight">Zapatillas Deportivas Premium</h5>
+                    <div class="mb-3">
+                        <span class="text-xs text-gray-600"><strong>Disponible:</strong> 15</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-2">
+                            <span class="text-lg font-bold text-gray-900">$ 89.99</span>
+                            <span class="text-sm text-gray-500 line-through">$ 112.49</span>
+                        </div>
+                        <button class="p-2 text-teal-600 bg-teal-50 hover:bg-teal-100 focus:ring-4 focus:ring-teal-200 rounded-lg transition-colors duration-200">
+                            <i class="fas fa-shopping-cart text-sm"></i>
+                        </button>
+                    </div>
+                </div>
+            </div> -->
+
+            <!-- Card 3 -->
+            <!-- <div class="bg-white border border-gray-200 rounded-2xl shadow-md hover:shadow-xl transition-shadow duration-300 relative overflow-hidden group">
+                <span class="absolute top-2 right-2 bg-white text-gray-800 text-xs font-medium px-2 py-1 rounded-full border border-gray-200 z-10 flex items-center gap-1">
+                    4.5 <i class="fas fa-star text-yellow-400 text-xs"></i>
+                </span>
+                
+                <div class="relative overflow-hidden">
+                    <img class="w-full h-40 object-cover rounded-t-2xl group-hover:scale-105 transition-transform duration-300" 
+                         src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" 
+                         alt="Reloj Inteligente">
+                </div>
+                
+                <div class="p-4">
+                    <h5 class="text-sm font-medium text-gray-900 mb-2 leading-tight">Reloj Inteligente Series 9</h5>
+                    <div class="mb-3">
+                        <span class="text-xs text-gray-600"><strong>Disponible:</strong> 8</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-2">
+                            <span class="text-lg font-bold text-gray-900">$ 299.99</span>
+                        </div>
+                        <button class="p-2 text-teal-600 bg-teal-50 hover:bg-teal-100 focus:ring-4 focus:ring-teal-200 rounded-lg transition-colors duration-200">
+                            <i class="fas fa-shopping-cart text-sm"></i>
+                        </button>
+                    </div>
+                </div>
+            </div> -->
+
+            <!-- Card 4 -->
+            <!-- <div class="bg-white border border-gray-200 rounded-2xl shadow-md hover:shadow-xl transition-shadow duration-300 relative overflow-hidden group">
+                <span class="absolute top-2 left-2 bg-blue-500 text-white text-xs font-semibold px-2 py-1 rounded-md z-10">NUEVO</span>
+                <span class="absolute top-2 right-2 bg-white text-gray-800 text-xs font-medium px-2 py-1 rounded-full border border-gray-200 z-10 flex items-center gap-1">
+                    5.0 <i class="fas fa-star text-yellow-400 text-xs"></i>
+                </span>
+                
+                <div class="relative overflow-hidden">
+                    <img class="w-full h-40 object-cover rounded-t-2xl group-hover:scale-105 transition-transform duration-300" 
+                         src="https://images.unsplash.com/photo-1546868871-7041f2a55e12?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" 
+                         alt="Smartphone">
+                </div>
+                
+                <div class="p-4">
+                    <h5 class="text-sm font-medium text-gray-900 mb-2 leading-tight">Smartphone Pro Max 256GB</h5>
+                    <div class="mb-3">
+                        <span class="text-xs text-gray-600"><strong>Disponible:</strong> 12</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-2">
+                            <span class="text-lg font-bold text-gray-900">$ 899.99</span>
+                        </div>
+                        <button class="p-2 text-teal-600 bg-teal-50 hover:bg-teal-100 focus:ring-4 focus:ring-teal-200 rounded-lg transition-colors duration-200">
+                            <i class="fas fa-shopping-cart text-sm"></i>
+                        </button>
+                    </div>
+                </div>
+            </div> -->
+
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.js"></script>
+</body>
+</html>

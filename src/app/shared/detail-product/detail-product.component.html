@@ -1,0 +1,410 @@
+<div class="mainScreen  animate__animated animate__fadeIn 2xl:block xl:block lg:block hidden pt-5 2xl:mx-40 xl:mx-10 ">
+    <div class="grid grid-cols-5 py-5">
+        <div class="col-span-3 ">
+            <div class="grid grid-cols-8 ">
+                <div class="col-span-1">
+                    <div class="grid grid-cols-1 ">
+                        @for(f of arrayFotos; track f.id;let index= $index){
+                        <div class="m-1 ">
+                            <img (click)="changePicture(f.resource)"
+                                class="!h-24 max-w-full rounded-lg hoverImgDetail object-scale-down "
+                                [src]="urlFB+f.resource+'?alt=media'" alt="">
+                        </div>
+                        }
+                    </div>
+                </div>
+                <div class="col-span-6">
+                    <div class="flex justify-center align-items-center ">
+                        <img class="rounded-lg  w-96 !h-96 object-contain " [src]="urlFB+imgDefault+'?alt=media'"
+                            alt="">
+                        @if(imgDefault){
+
+                        }@else {
+                        <!-- imgProdSelect -->
+                        <img class="rounded-lg w-96  !h-96 object-contain" [src]="urlFB+imgDefault+'?alt=media'" alt="">
+                        }
+                    </div>
+                </div>
+                <!-- <div class="col-span-1">
+
+                </div> -->
+                <div class="col-span-8">
+                    <hr class="my-10 " style="border:1px solid silver">
+                    @if(configurationVariables.referidos.length > 0 && configurationVariables.exists_referidos){
+                    <label class="font-bold spanPR">Productos recomendados</label>
+                    }@else if(configurationVariables.referidos.length > 0 && configurationVariables.exists_referidos ==
+                    false){
+                    <label class="font-bold spanPR"> Productos recomendados</label>
+                    }
+                    <div class=" grid 2xl:grid-cols-8 xl:grid-cols-4 space-x-2 mt-5 ">
+                        @for(d of configurationVariables.referidos; track d; ){
+                        <div class="2xl:col-span-2 xl:col-span-1">
+                            <div class="max-w-sm mx-auto">
+                                <div
+                                    class="bg-white border border-gray-200 rounded-2xl shadow-md hover:shadow-xl transition-shadow duration-300 relative overflow-hidden group">
+                                    <div class="relative overflow-hidden">
+                                        <img class="w-full 2xl:h-36 !xl:h-24 lg:h-24 object-cover rounded-t-2xl group-hover:scale-105 transition-transform duration-300"
+                                            [src]="urlFB+d.imagenPrincipal+'?alt=media'" alt="Auriculares Gaming RGB">
+                                    </div>
+                                    <div class="p-4 mb-5">
+                                        <a>
+                                            <p
+                                                class="text-[10px] sm:text-[10px] md:text-[10px] lg:text-[10px] xl:text-[10px] 2xl:text-xs tracking-tight text-gray-500 line-clamp-3">
+                                                {{d.pro_nom}}
+                                            </p>
+                                        </a>
+                                        <div class="h-7">
+                                            <span class="line-clamp-4 text-xs font-light leading-relaxed">
+                                                <strong> Disponible: </strong> {{d.stockactual}}
+                                            </span>
+                                        </div>
+                                        <div class=" grid-cols-2 flex group justify-between">
+                                            <div class="font-black flex flex-col">
+                                                <div class="price">
+                                                    <p class=" spanColor ">
+                                                        @if(d.precioOferta > 0){
+                                                        <span>
+                                                            $ {{d.precioOferta |number:'1.2-2'}}</span>
+                                                        }@else {
+                                                        <span> $ {{d.precioReal |number:'1.2-2'}}</span>
+                                                        }
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <div class="flex flex-col items-end">
+                                                <div class="h-7">
+                                                    <button
+                                                        class=" py-2 px-3 bg-orange-100 text-orange-400 rounded-md  shadow-md">
+                                                        <i class="ri-shopping-cart-fill"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-span-2 ">
+            <div class=" p-5">
+                <label for="" class="2xl:text-sm xl:text-sm ">{{productSelect?.product?.pro_nom}}</label>
+                <br>
+                <div class="flex justify-between">
+                    <p class="text-size-16 text-mayuscula-texto text-center">
+                        <span class=" 2xl:text-2xl xl:text-2xl mr-2 line-through text-gray-500 "
+                            *ngIf="productSelect?.product?.precioOferta > 0">
+                            $ {{productSelect?.product?.precioOferta | number: '1.2'}}
+                        </span>
+                        <span class=" 2xl:text-xl xl:text-2xl mr-2 font-semibold spanPR ">
+                            $ {{productSelect?.product?.precioReal | number: '1.2'}}
+                        </span>
+                    </p>
+                    <button
+                        class="bg-yellow-100 text-yellow-800 text-xs font-medium px-3 rounded-full  border border-yellow-300">
+                        <label>
+                            5 <i class="bi bi-star-fill text-yellow-500 "></i>
+                        </label>
+                    </button>
+                </div>
+                <p class="text-sm py-2">{{productSelect?.product?.descripcion}}</p>
+                <div class="flex justify-between mt-4 text-sm">
+                    <div>
+                        <div class="flex  space-x-2 ">
+                            <label class="pt-1 mt-1">
+                                Cantidad :
+                            </label>
+                            <button class="bg-gray-200 text-gray-900 rounded-full px-2 shadow-lg "
+                                (click)="removeItem()">
+                                <i class="bi bi-dash "></i>
+                            </button>
+                            <input [value]="cant" type="text" class="w-14 py-1.5 rounded-md " style="height: 2em;">
+                            <button class="bg-red-500 text-white  rounded-full px-2 shadow-lg " (click)="addItem()">
+                                <i class="bi bi-plus-lg"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div>
+                        <button class="bg-blue-300 rounded-full border-1 border-blue-500  py-1 px-5">
+                            <i class="bi bi-cart-plus"></i> Agregar al carrito
+                        </button>
+                    </div>
+                </div>
+                <div class="mt-3 text-sm">
+                    <label for="" class="font-semibold">
+                        Características
+                    </label>
+                    <div>
+                        <ul>
+                            <li>
+                                <span class="text-semibold"> Color:</span> <span> Celeste</span>
+                            </li>
+                            <li>
+                                <span class="text-semibold"> Tipo:</span> <span> Celeste</span>
+                            </li>
+                            <li>
+                                <span class="text-semibold"> Peso:</span> <span> Celeste</span>
+                            </li>
+                            <li>
+                                <span class="text-semibold"> Color:</span> <span> Celeste</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="mt-3 text-sm">
+                    <label for="" class="text-green-400 text-sm ">Seguridad del pago</label>
+                    <p>
+                        Compra con confianza. Sabemos que la seguridad es importante para ti, por eso aceptamos una
+                        variedad de métodos de pago seguros.
+                    </p>
+                    <div class="mx-5 ">
+                        <div class="grid grid-cols-3 py-2">
+                            <div class="col-span-1">
+                                <label for="" class="font-semibold">Tarjetas de crédito: </label>
+                                <div class="flex justify-start">
+                                    <img src="../../../assets/img/creditCard.png" alt="">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 py-2">
+                            <div class="col-span-1">
+                                <label for="" class="font-semibold">Paypal: </label>
+                                <img src="../../../assets/img/paypal.png" alt="" width="85">
+                                <div class="flex justify-start">
+                                    <label for=""> Realiza transacciones seguras con tu cuenta PayPal.</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 py-2">
+                            <div class="col-span-1">
+                                <label for="" class="font-semibold">Trasnferencia bancaria: </label>
+                                <div class="flex justify-start">
+                                    <label for=""> Paga directamente desde tu cuenta bancaria.</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+</div>
+
+<div
+    class="mainScreen  animate__animated animate__fadeIn 2xl:hidden xl:hidden lg:hidden block pt-5 2xl:mx-40 xl:mx-10 ">
+    <div class="grid grid-cols-5  md:py-5 pb-5 ">
+        <div class="col-span-5 ">
+            <div class="grid grid-cols-8 ">
+                <div class="col-span-8">
+                    <div class="grid grid-cols-4 ">
+                        @for(f of arrayFotos; track f.id;let index= $index){
+                        <div class="col-span-1">
+                            <div class="m-1 ">
+                                @if(f.resource){
+                                <img (click)="changePicture(f.resource)"
+                                    class="!h-24 max-w-full rounded-lg hoverImgDetail object-scale-down "
+                                    [src]="urlFB+f.resource+'?alt=media'" alt="">
+                                }
+                            </div>
+                        </div>
+                        }
+                    </div>
+                </div>
+
+                <div class="col-span-8">
+                    <div class="flex justify-center align-items-center ">
+                        <img class="rounded-lg  w-96 !h-96 object-contain " [src]="urlFB+imgDefault+'?alt=media'"
+                            alt="">
+                        <!-- @if(imgDefault){
+
+                        }@else {
+                        <img class="rounded-lg w-96  !h-96 object-contain" [src]="urlFB+imgDefault+'?alt=media'" alt="">
+                        } -->
+                    </div>
+                </div>
+
+
+                <!-- <div class="col-span-1">
+
+                </div> -->
+
+            </div>
+        </div>
+
+
+        <div class="col-span-5 ">
+            <hr class="my-10 w-full " style="border:1px solid silver">
+            <div class=" p-5">
+                <label for="" class="2xl:text-sm xl:text-sm ">{{productSelect?.product?.pro_nom}}</label>
+                <br>
+                <div class="flex justify-between">
+                    <p class="text-size-16 text-mayuscula-texto text-center">
+                        <span class=" 2xl:text-2xl xl:text-2xl mr-2 line-through text-gray-500 "
+                            *ngIf="productSelect?.product?.precioOferta > 0">
+                            $ {{productSelect?.product?.precioOferta | number: '1.2'}}
+                        </span>
+                        <span class=" 2xl:text-xl xl:text-2xl mr-2 font-semibold spanPR ">
+                            $ {{productSelect?.product?.precioReal | number: '1.2'}}
+                        </span>
+                    </p>
+                    <button
+                        class="bg-yellow-100 text-yellow-800 text-xs font-medium px-3 rounded-full  border border-yellow-300">
+                        <label>
+                            5 <i class="bi bi-star-fill text-yellow-500 "></i>
+                        </label>
+                    </button>
+                </div>
+                <p class="text-sm py-2">{{productSelect?.product?.descripcion}}</p>
+                <div class="flex justify-between mt-4 text-sm">
+                    <div>
+                        <div class="flex  space-x-2 ">
+                            <label class="pt-1 mt-1">
+                                Cantidad :
+                            </label>
+                            <button class="bg-gray-200 text-gray-900 rounded-full px-2 shadow-lg "
+                                (click)="removeItem()">
+                                <i class="bi bi-dash "></i>
+                            </button>
+                            <input [value]="cant" type="text" class="w-24 py-1.5 rounded-md " style="height: 2em;">
+                            <button class="bg-red-500 text-white  rounded-full px-2 shadow-lg " (click)="addItem()">
+                                <i class="bi bi-plus-lg"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div>
+                        <button class="bg-blue-300 rounded-full border-1 border-blue-500  py-1 px-5">
+                            <i class="bi bi-cart-plus"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="mt-3 text-sm">
+                    <label for="" class="font-semibold">
+                        Características
+                    </label>
+                    <div>
+                        <ul>
+                            <li>
+                                <span class="text-semibold"> Color:</span> <span> Celeste</span>
+                            </li>
+                            <li>
+                                <span class="text-semibold"> Tipo:</span> <span> Celeste</span>
+                            </li>
+                            <li>
+                                <span class="text-semibold"> Peso:</span> <span> Celeste</span>
+                            </li>
+                            <li>
+                                <span class="text-semibold"> Color:</span> <span> Celeste</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="mt-3 text-sm">
+                    <label for="" class="text-green-400 text-sm ">Seguridad del pago</label>
+                    <p>
+                        Compra con confianza. Sabemos que la seguridad es importante para ti, por eso aceptamos una
+                        variedad de métodos de pago seguros.
+                    </p>
+                    <div class="mx-5 ">
+                        <div class="grid grid-cols-3 py-2">
+                            <div class="col-span-1">
+                                <label for="" class="font-semibold">Tarjetas de crédito: </label>
+                                <div class="flex justify-start">
+                                    <img src="../../../assets/img/creditCard.png" alt="">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 py-2">
+                            <div class="col-span-1">
+                                <label for="" class="font-semibold">Paypal: </label>
+                                <img src="../../../assets/img/paypal.png" alt="" width="85">
+                                <div class="flex justify-start">
+                                    <label for=""> Realiza transacciones seguras con tu cuenta PayPal.</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 py-2">
+                            <div class="col-span-1">
+                                <label for="" class="font-semibold">Trasnferencia bancaria: </label>
+                                <div class="flex justify-start">
+                                    <label for=""> Paga directamente desde tu cuenta bancaria.</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-span-5">
+            <hr class="my-10 " style="border:1px solid silver">
+            @if(configurationVariables.referidos.length > 0 && configurationVariables.exists_referidos){
+            <label class="font-bold spanPR">Productos recomendados</label>
+            }@else if(configurationVariables.referidos.length > 0 && configurationVariables.exists_referidos ==
+            false){
+            <label class="font-bold spanPR"> Productos recomendados</label>
+            }
+            <div class=" grid md:grid-cols-2 grid-cols-2 space-x-2 mt-5 ">
+                @for(d of configurationVariables.referidos; track d; ){
+                <div class="col-span-1">
+                    <div class="max-w-sm mx-auto">
+                        <div
+                            class="bg-white border border-gray-200 rounded-2xl shadow-md hover:shadow-xl transition-shadow duration-300 relative overflow-hidden group">
+                            <div class="relative overflow-hidden">
+                                <img class="w-full 2xl:h-36 !xl:h-24 lg:h-24 object-cover rounded-t-2xl group-hover:scale-105 transition-transform duration-300"
+                                    [src]="urlFB+d.imagenPrincipal+'?alt=media'" alt="Auriculares Gaming RGB">
+                            </div>
+                            <div class="p-4 mb-5">
+                                <a>
+                                    <p
+                                        class="text-[10px] sm:text-[10px] md:text-[10px] lg:text-[10px] xl:text-[10px] 2xl:text-xs tracking-tight text-gray-500 line-clamp-3">
+                                        {{d.pro_nom}}
+                                    </p>
+                                </a>
+                                <div class="h-7">
+                                    <span class="line-clamp-4 text-xs font-light leading-relaxed">
+                                        <strong> Disponible: </strong> {{d.stockactual}}
+                                    </span>
+                                </div>
+                                <div class=" grid-cols-2 flex group justify-between">
+                                    <div class="font-black flex flex-col">
+                                        <div class="price">
+                                            <p class=" spanColor ">
+                                                @if(d.precioOferta > 0){
+                                                <span>
+                                                    $ {{d.precioOferta |number:'1.2-2'}}</span>
+                                                }@else {
+                                                <span> $ {{d.precioReal |number:'1.2-2'}}</span>
+                                                }
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="flex flex-col items-end">
+                                        <div class="h-7">
+                                            <button
+                                                class=" py-2 px-3 bg-orange-100 text-orange-400 rounded-md  shadow-md">
+                                                <i class="ri-shopping-cart-fill"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                }
+            </div>
+        </div>
+    </div>
+
+
+
+
+</div>

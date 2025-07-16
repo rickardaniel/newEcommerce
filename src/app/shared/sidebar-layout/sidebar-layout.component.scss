@@ -1,0 +1,958 @@
+// // ===== VARIABLES SCSS =====
+// $sidebar-width: 18rem; // 64 en Tailwind (w-64)
+// $sidebar-collapsed-width: 4rem; // 16 en Tailwind (w-16)
+// $mobile-breakpoint: 76px;
+// $transition-duration: 300ms;
+// $transition-timing: cubic-bezier(0.4, 0, 0.2, 1);
+
+// // Colores
+// $primary-color: #3b82f6;
+// $primary-hover: #2563eb;
+// $gray-50: #f9fafb;
+// $gray-100: #f3f4f6;
+// $gray-200: #e5e7eb;
+// $gray-500: #6b7280;
+// $gray-700: #374151;
+// $gray-800: #1f2937;
+// $gray-900: #111827;
+
+// // Sombras
+// $shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+// $shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+// $shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+
+// // ===== MIXINS =====
+// @mixin smooth-transition($properties: all) {
+//   transition: $properties $transition-duration $transition-timing;
+// }
+
+// @mixin sidebar-shadow {
+//   box-shadow: $shadow-lg;
+// }
+
+// @mixin mobile-only {
+//   @media (max-width: $mobile-breakpoint ) {
+//     @content;
+//   }
+// }
+
+// @mixin desktop-only {
+//   @media (min-width: $mobile-breakpoint) {
+//     @content;
+//   }
+// }
+
+// // ===== ESTILOS GLOBALES DEL COMPONENTE =====
+// :host {
+//   display: block;
+//   height: 100vh;
+//   overflow: hidden;
+// }
+
+// // ===== SIDEBAR PRINCIPAL =====
+// .sidebar {
+//   @include smooth-transition(transform);
+//   @include sidebar-shadow;
+  
+//   &.collapsed {
+//     width: $sidebar-collapsed-width;
+//   }
+  
+//   &.mobile {
+//     @include mobile-only {
+//       width: $sidebar-width;
+//       transform: translateX(-100%);
+      
+//       &.open {
+//         transform: translateX(0);
+//       }
+//     }
+//   }
+  
+//   // Estados de hover para items colapsados
+//   &.collapsed .menu-item {
+//     position: relative;
+    
+//     .tooltip {
+//       position: absolute;
+//       left: 100%;
+//       top: 50%;
+//       transform: translateY(-50%);
+//       margin-left: 0.5rem;
+//       padding: 0.5rem 0.75rem;
+//       background-color: $gray-900;
+//       color: white;
+//       font-size: 0.875rem;
+//       border-radius: 0.375rem;
+//       white-space: nowrap;
+//       opacity: 0;
+//       pointer-events: none;
+//       z-index: 1000;
+//       @include smooth-transition(opacity);
+//     }
+    
+//     &:hover .tooltip {
+//       opacity: 1;
+//     }
+//   }
+// }
+
+// // ===== OVERLAY MÓVIL =====
+// .mobile-overlay {
+//   @include smooth-transition(opacity);
+//   backdrop-filter: blur(2px);
+  
+//   &.hidden {
+//     opacity: 0;
+//     pointer-events: none;
+//   }
+  
+//   &.visible {
+//     opacity: 1;
+//   }
+// }
+
+// // ===== CONTENIDO PRINCIPAL =====
+// .main-content {
+//   @include smooth-transition(margin-left);
+//   min-height: 100vh;
+  
+//   &.sidebar-open {
+//     @include desktop-only {
+//       margin-left: $sidebar-width;
+//     }
+    
+//     &.collapsed {
+//       margin-left: $sidebar-collapsed-width;
+//     }
+//   }
+  
+//   @include mobile-only {
+//     margin-left: 0 !important;
+//   }
+// }
+
+// // ===== HEADER =====
+// .app-header {
+//   position: sticky;
+//   top: 0;
+//   z-index: 30;
+//   backdrop-filter: blur(8px);
+//   background-color: rgba(255, 255, 255, 0.95);
+  
+//   .menu-button {
+//     @include smooth-transition(all);
+    
+//     &:hover {
+//       background-color: $gray-100;
+//       transform: scale(1.05);
+//     }
+    
+//     &:active {
+//       transform: scale(0.95);
+//     }
+//   }
+// }
+
+// // ===== ITEMS DEL MENÚ =====
+// .menu-item {
+//   @include smooth-transition(all);
+//   position: relative;
+  
+//   &:hover {
+//     transform: translateX(2px);
+//   }
+  
+//   &.active {
+//     background-color: rgba($primary-color, 0.1);
+//     color: $primary-color;
+//     border-right: 3px solid $primary-color;
+    
+//     .menu-icon {
+//       color: $primary-color;
+//     }
+//   }
+  
+//   .menu-icon {
+//     @include smooth-transition(color);
+//   }
+  
+//   .menu-badge {
+//     @include smooth-transition(all);
+//     animation: pulse-badge 2s infinite;
+//   }
+// }
+
+// // ===== USUARIO INFO =====
+// .user-info {
+//   @include smooth-transition(all);
+  
+//   &:hover {
+//     transform: translateY(-1px);
+//     box-shadow: $shadow-md;
+//   }
+  
+//   .user-avatar {
+//     @include smooth-transition(transform);
+    
+//     &:hover {
+//       transform: scale(1.1);
+//     }
+//   }
+// }
+
+// // ===== ANIMACIONES =====
+// @keyframes slideInFromLeft {
+//   from {
+//     transform: translateX(-100%);
+//     opacity: 0;
+//   }
+//   to {
+//     transform: translateX(0);
+//     opacity: 1;
+//   }
+// }
+
+// @keyframes slideOutToLeft {
+//   from {
+//     transform: translateX(0);
+//     opacity: 1;
+//   }
+//   to {
+//     transform: translateX(-100%);
+//     opacity: 0;
+//   }
+// }
+
+// @keyframes pulse-badge {
+//   0%, 100% {
+//     transform: scale(1);
+//   }
+//   50% {
+//     transform: scale(1.05);
+//   }
+// }
+
+// @keyframes fadeIn {
+//   from {
+//     opacity: 0;
+//   }
+//   to {
+//     opacity: 1;
+//   }
+// }
+
+// @keyframes fadeOut {
+//   from {
+//     opacity: 1;
+//   }
+//   to {
+//     opacity: 0;
+//   }
+// }
+
+// // ===== CLASES DE ANIMACIÓN =====
+// .slide-in {
+//   animation: slideInFromLeft $transition-duration $transition-timing;
+// }
+
+// .slide-out {
+//   animation: slideOutToLeft $transition-duration $transition-timing;
+// }
+
+// .fade-in {
+//   animation: fadeIn $transition-duration $transition-timing;
+// }
+
+// .fade-out {
+//   animation: fadeOut $transition-duration $transition-timing;
+// }
+
+// // ===== SCROLLBAR PERSONALIZADO =====
+// .custom-scrollbar {
+//   scrollbar-width: thin;
+//   scrollbar-color: $gray-500 transparent;
+  
+//   &::-webkit-scrollbar {
+//     width: 6px;
+//   }
+  
+//   &::-webkit-scrollbar-track {
+//     background: transparent;
+//   }
+  
+//   &::-webkit-scrollbar-thumb {
+//     background-color: $gray-500;
+//     border-radius: 3px;
+    
+//     &:hover {
+//       background-color: $gray-700;
+//     }
+//   }
+// }
+
+// // ===== ESTADOS DE FOCUS PARA ACCESIBILIDAD =====
+// .focus\:ring-2:focus {
+//   outline: none;
+//   box-shadow: 0 0 0 2px rgba($primary-color, 0.5);
+// }
+
+// .focus\:ring-offset-2:focus {
+//   box-shadow: 0 0 0 2px white, 0 0 0 4px rgba($primary-color, 0.5);
+// }
+
+// // ===== MODO OSCURO =====
+// @media (prefers-color-scheme: dark) {
+//   .sidebar {
+//     background-color: $gray-800;
+//     border-color: $gray-700;
+    
+//     .menu-item {
+//       color: white;
+      
+//       &:hover {
+//         background-color: $gray-700;
+//       }
+      
+//       &.active {
+//         background-color: rgba($primary-color, 0.2);
+//         color: $primary-color;
+//       }
+//     }
+//   }
+  
+//   .app-header {
+//     background-color: rgba($gray-800, 0.95);
+//     border-color: $gray-700;
+//   }
+  
+//   .user-info {
+//     background-color: $gray-700;
+//   }
+// }
+
+// // ===== MEJORAS DE PERFORMANCE =====
+// .sidebar,
+// .main-content,
+// .mobile-overlay {
+//   will-change: transform, opacity;
+// }
+
+// // Contenido crítico que debe cargarse rápido
+// .above-fold {
+//   content-visibility: auto;
+// }
+
+// // Contenido que puede diferirse
+// .below-fold {
+//   content-visibility: auto;
+//   contain-intrinsic-size: 200px;
+// }
+
+// // ===== RESPONSIVIDAD AVANZADA =====
+// @media (max-width: 480px) {
+//   .sidebar {
+//     width: 100vw;
+//     max-width: 320px;
+//   }
+  
+//   .user-info {
+//     padding: 0.75rem;
+    
+//     .user-details {
+//       font-size: 0.875rem;
+//     }
+//   }
+// }
+
+// @media (min-width: 1280px) {
+//   .sidebar {
+//     &.collapsed {
+//       &:hover {
+//         width: $sidebar-width;
+        
+//         .collapsed-content {
+//           opacity: 1;
+//           transform: translateX(0);
+//         }
+//       }
+//     }
+//   }
+// }
+
+// // ===== UTILIDADES ESPECÍFICAS DEL COMPONENTE =====
+// .no-select {
+//   -webkit-user-select: none;
+//   -moz-user-select: none;
+//   -ms-user-select: none;
+//   user-select: none;
+// }
+
+// .gpu-accelerated {
+//   transform: translateZ(0);
+//   backface-visibility: hidden;
+//   perspective: 1000px;
+// }
+
+// .smooth-scrolling {
+//   scroll-behavior: smooth;
+// }
+
+// // ===== ESTADOS DE CARGA =====
+// .loading-skeleton {
+//   background: linear-gradient(90deg, $gray-200 25%, $gray-100 50%, $gray-200 75%);
+//   background-size: 200% 100%;
+//   animation: loading-shimmer 1.5s infinite;
+// }
+
+// @keyframes loading-shimmer {
+//   0% {
+//     background-position: -200% 0;
+//   }
+//   100% {
+//     background-position: 200% 0;
+//   }
+// }
+
+// // ===== PRINT STYLES =====
+// @media print {
+//   .sidebar,
+//   .mobile-overlay,
+//   .menu-button {
+//     display: none !important;
+//   }
+  
+//   .main-content {
+//     margin-left: 0 !important;
+//   }
+// }
+
+// // ===== ACCESIBILIDAD MEJORADA =====
+// @media (prefers-reduced-motion: reduce) {
+//   * {
+//     animation-duration: 0.01ms !important;
+//     animation-iteration-count: 1 !important;
+//     transition-duration: 0.01ms !important;
+//   }
+// }
+
+// // Estados de high contrast
+// @media (prefers-contrast: high) {
+//   .sidebar {
+//     border: 2px solid currentColor;
+//   }
+  
+//   .menu-item {
+//     border: 1px solid transparent;
+    
+//     &:focus,
+//     &:hover {
+//       border-color: currentColor;
+//     }
+//   }
+// }
+
+// // ===== CLASES UTILITARIAS ESPECÍFICAS =====
+// .sidebar-transition {
+//   transition: width $transition-duration $transition-timing,
+//               transform $transition-duration $transition-timing,
+//               margin-left $transition-duration $transition-timing;
+// }
+
+// .content-transition {
+//   transition: margin-left $transition-duration $transition-timing,
+//               padding $transition-duration $transition-timing;
+// }
+
+// .overlay-transition {
+//   transition: opacity $transition-duration $transition-timing,
+//               visibility $transition-duration $transition-timing;
+// }
+
+
+// ===== VARIABLES SCSS =====
+$sidebar-width: 18rem; // 64 en Tailwind (w-64)
+$sidebar-collapsed-width: 4rem; // 16 en Tailwind (w-16)
+// Cambiado de 76px a 1024px para incluir tablets en comportamiento móvil
+$mobile-breakpoint: 1024px;
+$transition-duration: 300ms;
+$transition-timing: cubic-bezier(0.4, 0, 0.2, 1);
+
+// Colores
+$primary-color: #3b82f6;
+$primary-hover: #2563eb;
+$gray-50: #f9fafb;
+$gray-100: #f3f4f6;
+$gray-200: #e5e7eb;
+$gray-500: #6b7280;
+$gray-700: #374151;
+$gray-800: #1f2937;
+$gray-900: #111827;
+
+// Sombras
+$shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+$shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+$shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+
+// ===== MIXINS =====
+@mixin smooth-transition($properties: all) {
+  transition: $properties $transition-duration $transition-timing;
+}
+
+@mixin sidebar-shadow {
+  box-shadow: $shadow-lg;
+}
+
+// Actualizado: ahora mobile incluye tablets (hasta 1024px)
+@mixin mobile-only {
+  @media (max-width: $mobile-breakpoint) {
+    @content;
+  }
+}
+
+// Actualizado: desktop solo para pantallas > 1024px
+@mixin desktop-only {
+  @media (min-width: #{$mobile-breakpoint + 1px}) {
+    @content;
+  }
+}
+
+// ===== ESTILOS GLOBALES DEL COMPONENTE =====
+:host {
+  display: block;
+  height: 100vh;
+  overflow: hidden;
+}
+
+// ===== SIDEBAR PRINCIPAL =====
+.sidebar {
+  @include smooth-transition(transform);
+  @include sidebar-shadow;
+  
+  &.collapsed {
+    width: $sidebar-collapsed-width;
+  }
+  
+  &.mobile {
+    @include mobile-only {
+      width: $sidebar-width;
+      transform: translateX(-100%);
+      
+      &.open {
+        transform: translateX(0);
+      }
+    }
+  }
+  
+  // Estados de hover para items colapsados
+  &.collapsed .menu-item {
+    position: relative;
+    
+    .tooltip {
+      position: absolute;
+      left: 100%;
+      top: 50%;
+      transform: translateY(-50%);
+      margin-left: 0.5rem;
+      padding: 0.5rem 0.75rem;
+      background-color: $gray-900;
+      color: white;
+      font-size: 0.875rem;
+      border-radius: 0.375rem;
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      z-index: 1000;
+      @include smooth-transition(opacity);
+    }
+    
+    &:hover .tooltip {
+      opacity: 1;
+    }
+  }
+}
+
+// ===== OVERLAY MÓVIL/TABLET =====
+.mobile-overlay {
+  @include smooth-transition(opacity);
+  backdrop-filter: blur(2px);
+  
+  &.hidden {
+    opacity: 0;
+    pointer-events: none;
+  }
+  
+  &.visible {
+    opacity: 1;
+  }
+}
+
+// ===== CONTENIDO PRINCIPAL =====
+.main-content {
+  @include smooth-transition(margin-left);
+  min-height: 100vh;
+  
+  &.sidebar-open {
+    @include desktop-only {
+      margin-left: $sidebar-width;
+    }
+    
+    &.collapsed {
+      @include desktop-only {
+        margin-left: $sidebar-collapsed-width;
+      }
+    }
+  }
+  
+  // Ahora móvil incluye tablets (hasta 1024px)
+  @include mobile-only {
+    margin-left: 0 !important;
+  }
+}
+
+// ===== HEADER =====
+.app-header {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  backdrop-filter: blur(8px);
+  background-color: rgba(255, 255, 255, 0.95);
+  
+  .menu-button {
+    @include smooth-transition(all);
+    
+    &:hover {
+      background-color: $gray-100;
+      transform: scale(1.05);
+    }
+    
+    &:active {
+      transform: scale(0.95);
+    }
+  }
+}
+
+// ===== ITEMS DEL MENÚ =====
+.menu-item {
+  @include smooth-transition(all);
+  position: relative;
+  
+  &:hover {
+    transform: translateX(2px);
+  }
+  
+  &.active {
+    background-color: rgba($primary-color, 0.1);
+    color: $primary-color;
+    border-right: 3px solid $primary-color;
+    
+    .menu-icon {
+      color: $primary-color;
+    }
+  }
+  
+  .menu-icon {
+    @include smooth-transition(color);
+  }
+  
+  .menu-badge {
+    @include smooth-transition(all);
+    animation: pulse-badge 2s infinite;
+  }
+}
+
+// ===== USUARIO INFO =====
+.user-info {
+  @include smooth-transition(all);
+  
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: $shadow-md;
+  }
+  
+  .user-avatar {
+    @include smooth-transition(transform);
+    
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
+}
+
+// ===== ANIMACIONES =====
+@keyframes slideInFromLeft {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideOutToLeft {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+}
+
+@keyframes pulse-badge {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+// ===== CLASES DE ANIMACIÓN =====
+.slide-in {
+  animation: slideInFromLeft $transition-duration $transition-timing;
+}
+
+.slide-out {
+  animation: slideOutToLeft $transition-duration $transition-timing;
+}
+
+.fade-in {
+  animation: fadeIn $transition-duration $transition-timing;
+}
+
+.fade-out {
+  animation: fadeOut $transition-duration $transition-timing;
+}
+
+// ===== SCROLLBAR PERSONALIZADO =====
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: $gray-500 transparent;
+  
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background-color: $gray-500;
+    border-radius: 3px;
+    
+    &:hover {
+      background-color: $gray-700;
+    }
+  }
+}
+
+// ===== ESTADOS DE FOCUS PARA ACCESIBILIDAD =====
+.focus\:ring-2:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba($primary-color, 0.5);
+}
+
+.focus\:ring-offset-2:focus {
+  box-shadow: 0 0 0 2px white, 0 0 0 4px rgba($primary-color, 0.5);
+}
+
+// ===== MODO OSCURO =====
+@media (prefers-color-scheme: dark) {
+  .sidebar {
+    background-color: $gray-800;
+    border-color: $gray-700;
+    
+    .menu-item {
+      color: white;
+      
+      &:hover {
+        background-color: $gray-700;
+      }
+      
+      &.active {
+        background-color: rgba($primary-color, 0.2);
+        color: $primary-color;
+      }
+    }
+  }
+  
+  .app-header {
+    background-color: rgba($gray-800, 0.95);
+    border-color: $gray-700;
+  }
+  
+  .user-info {
+    background-color: $gray-700;
+  }
+}
+
+// ===== MEJORAS DE PERFORMANCE =====
+.sidebar,
+.main-content,
+.mobile-overlay {
+  will-change: transform, opacity;
+}
+
+// Contenido crítico que debe cargarse rápido
+.above-fold {
+  content-visibility: auto;
+}
+
+// Contenido que puede diferirse
+.below-fold {
+  content-visibility: auto;
+  contain-intrinsic-size: 200px;
+}
+
+// ===== RESPONSIVIDAD AVANZADA =====
+// Breakpoints específicos para diferentes dispositivos
+@media (max-width: 480px) {
+  .sidebar {
+    width: 100vw;
+    max-width: 320px;
+  }
+  
+  .user-info {
+    padding: 0.75rem;
+    
+    .user-details {
+      font-size: 0.875rem;
+    }
+  }
+}
+
+// Tablets (768px - 1024px) - ahora usan comportamiento móvil
+@media (min-width: 768px) and (max-width: 1024px) {
+  .sidebar {
+    width: $sidebar-width;
+    max-width: none;
+  }
+}
+
+// Solo desktop grande (>1024px) tiene comportamiento collapsed con hover
+@media (min-width: 1281px) {
+  .sidebar {
+    &.collapsed {
+      &:hover {
+        width: $sidebar-width;
+        
+        .collapsed-content {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+    }
+  }
+}
+
+// ===== UTILIDADES ESPECÍFICAS DEL COMPONENTE =====
+.no-select {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.gpu-accelerated {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+.smooth-scrolling {
+  scroll-behavior: smooth;
+}
+
+// ===== ESTADOS DE CARGA =====
+.loading-skeleton {
+  background: linear-gradient(90deg, $gray-200 25%, $gray-100 50%, $gray-200 75%);
+  background-size: 200% 100%;
+  animation: loading-shimmer 1.5s infinite;
+}
+
+@keyframes loading-shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+// ===== PRINT STYLES =====
+@media print {
+  .sidebar,
+  .mobile-overlay,
+  .menu-button {
+    display: none !important;
+  }
+  
+  .main-content {
+    margin-left: 0 !important;
+  }
+}
+
+// ===== ACCESIBILIDAD MEJORADA =====
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+// Estados de high contrast
+@media (prefers-contrast: high) {
+  .sidebar {
+    border: 2px solid currentColor;
+  }
+  
+  .menu-item {
+    border: 1px solid transparent;
+    
+    &:focus,
+    &:hover {
+      border-color: currentColor;
+    }
+  }
+}
+
+// ===== CLASES UTILITARIAS ESPECÍFICAS =====
+.sidebar-transition {
+  transition: width $transition-duration $transition-timing,
+              transform $transition-duration $transition-timing,
+              margin-left $transition-duration $transition-timing;
+}
+
+.content-transition {
+  transition: margin-left $transition-duration $transition-timing,
+              padding $transition-duration $transition-timing;
+}
+
+.overlay-transition {
+  transition: opacity $transition-duration $transition-timing,
+              visibility $transition-duration $transition-timing;
+}

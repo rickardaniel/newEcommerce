@@ -1,0 +1,49 @@
+
+
+:root {
+    --dynamic-color: black; /* Valor por defecto */
+    --font-color-letter: black; /* Valor por defecto */
+  }
+
+.modal-body{
+    font-family: 'Montserrat';
+}
+
+.spanCard{
+    color: var(--dynamic-color);
+}
+
+.icoForm{
+    color: var(--dynamic-color);
+    font-weight: 600;
+    &:hover {
+        background-color: var(--dynamic-color);
+        color: white;
+        border-radius: 50%;
+        padding: 5px;
+        opacity: 0.5;
+      }
+}
+
+.btnSelect{
+    background-color: var(--dynamic-color);
+    color: white;
+}
+
+input{
+    font-size: 13px !important;
+}
+
+.classCustom{
+    background-color: var(--dynamic-color);
+    color: white;
+    font-weight: bold;
+    
+}
+
+.h3Form{
+    color: var(--dynamic-color);
+}
+.icoClose{
+    color: var(--dynamic-color); 
+}

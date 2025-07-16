@@ -1,0 +1,117 @@
+<!-- ===== OVERLAY PARA MÓVIL Y TABLET ===== -->
+<div #overlay [class]="getOverlayClasses()" (click)="onOverlayClick()" aria-hidden="true">
+</div>
+
+<!-- ===== SIDEBAR PRINCIPAL ===== -->
+<aside #sidebar [class]="getSidebarClasses()" class="md:mt-20 md:pt-10 mt-10" (click)="onSidebarClick($event)"
+    [attr.aria-label]="'Sidebar'" [attr.aria-expanded]="isSidebarOpen()">
+
+    <!-- ===== HEADER DEL SIDEBAR ===== -->
+    <div class="h-16 px-1 py-4 border-b border-gray-200 dark:border-gray-700">
+        <div class="flex items-center justify-between">
+
+            <!-- Logo y Título -->
+            @if (!isCollapsed()) {
+            <div class="flex items-center">
+                <div class="flex-shrink-0">
+                    <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M13 10V3L4 14h7v7l9-11h-7z"> </path>
+                    </svg>
+                </div>
+                <div class="ml-2">
+                    {{grupo.nombre}}
+                </div>
+            </div>
+            }
+        </div>
+    </div>
+
+    <!-- ===== CONTENIDO DEL SIDEBAR ===== -->
+    <div class="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
+        <!-- ===== NAVEGACIÓN PRINCIPAL ===== -->
+        <ul class="space-y-1 font-medium">
+            @for(item of subGroups; track item.id) {
+            <li class="text-[11px]">
+                <button type="button" (click)="selectMenuItem(item)" [class]="getMenuItemClasses(item)"
+                    [attr.aria-current]="item.active ? 'page' : null" [title]="isCollapsed() ? item.label : ''">
+
+                    <!-- Texto del menú -->
+                    @if (!isCollapsed()) {
+                    <span class="ml-1 flex-1 text-left text-gray-500"> <i class="fas fa-box-open mr-1"></i> {{
+                        item.nombre }}</span>
+
+                    <!-- Badge -->
+                    @if (hasBadge(item)) {
+                    <span [class]="getBadgeClasses(item)">
+                        {{ item.badge }}
+                    </span>
+                    }
+                    } @else {
+                    <!-- Tooltip para collapsed -->
+                    <div
+                        class="absolute left-full ml-2 px-2 py-1 bg-gray-900 text-white text-sm rounded opacity-0 pointer-events-none group-hover:opacity-100 transition-opacity z-50 whitespace-nowrap">
+                        {{ item.nombre }}
+                        @if (hasBadge(item)) {
+                        <span class="ml-2 text-xs bg-red-500 px-1 rounded">{{ item.badge }}</span>
+                        }
+                    </div>
+                    }
+                </button>
+            </li>
+            }
+        </ul>
+
+
+    </div>
+</aside>
+
+<!-- ===== CONTENIDO PRINCIPAL ===== -->
+<div [class]="getMainContentClasses()">
+
+    <!-- ===== HEADER ===== -->
+    <header class="bg-gray-100 shadow-sm border-b border-gray-200 rounded-md dark:bg-gray-800 dark:border-gray-700">
+        <div class="px-1 sm:px-1">
+            <div class="flex justify-between items-center h-16">
+                <!-- ------------------------------------------------------------------------------->
+                <div class="overflow-x-auto">
+                    <div class="flex space-x-2 pb-2">
+                        @for(g of groups; track g.id) {
+                        @if(g.subgrupos?.viewSubgrupo) {
+                        <div class="flex-shrink-0">
+                            <div class="relative" >
+                                <button  (click)="toggleSidebar(g)" data-sidebar-toggle
+                                    class="px-4 py-2 bg-white rounded-full text-sm font-medium text-gray-700 border border-gray-200 hover:bg-gray-50 hover:border-gray-300 whitespace-nowrap">
+                                    {{g.nombre}}
+                                    <span
+                                        class="ml-1 px-2 py-0.5 text-xs bg-blue-100 text-blue-800 rounded-full">{{g.subgrupos.length}}
+                                        <i class="ml-1 ri-arrow-down-s-line text-xs"></i>
+                                    </span>
+                                </button>
+                            </div>
+                        </div>
+                        } @else {
+                        <button
+                        (click)="getProductos2(g)"
+                            class="flex-shrink-0 px-4 py-2 bg-white rounded-full text-sm font-medium text-gray-700 border border-gray-200 hover:bg-gray-50 hover:border-gray-300 whitespace-nowrap">
+                            {{g.nombre}}
+                        </button>
+                        }
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- ===== CONTENIDO DE LA PÁGINA ===== -->
+    <!-- <main class="p-4 md:p-6 lg:p-8">
+    <div class="mx-auto max-w-7xl">
+         <div class="bg-gray-100 rounded-xl p-4">
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
+                aqui
+            </div>
+        </div>
+    </div>
+  </main> -->
+</div>

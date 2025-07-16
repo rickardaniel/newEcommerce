@@ -1,0 +1,97 @@
+<div class="glide mt-3" id="glide">
+    <div class="glide__track" data-glide-el="track">
+        <ul class="glide__slides">
+            @for(d of data; track d.id ){
+
+            <li class="glide__slide">
+                <!-- <div class="max-w-sm bg-white border border-gray-200 rounded-xl shadow hover:shadow-lg dark:bg-gray-800 dark:border-gray-700">
+                <a >
+                    <img (click)="seeDetail(d)" class="rounded-t-xl imgCardPS mt-2"  [src]="urlFB+d.imagenPrincipal+'?alt=media'"  alt="" style="object-fit: cover;" />
+                </a>
+                <div class="p-5">
+                    <a>
+                        <p class=" text-xs font-normal tracking-tight text-gray-500 line-clamp-3">{{d.pro_nom}}</p>
+                    </a>
+                    <div class="h-7">
+                        <span class="line-clamp-4 text-xs font-light leading-relaxed">
+                             <strong> Disponible: </strong> {{d.stockactual}}
+                        </span>
+                    </div>
+                    <div class=" grid-cols-2 flex group justify-between">
+                        <div class="font-black flex flex-col">            
+                            <div class="price">
+                                <p class=" spanColor ">
+                                    @if(d.precioOferta > 0){
+                                        <span   >
+                                            $ {{d.precioOferta  |number:'1.2-2'}}</span>
+                                    }@else {
+                                        <span> $ {{d.precioReal |number:'1.2-2'}}</span>
+                                    }
+                                </p>
+                            </div>
+                        </div>
+                        <div class="flex flex-col items-end">
+                            <div class="h-7">
+                                <button class=" py-2 px-3 bg-orange-100 text-orange-400 rounded-md  shadow-md" >
+                                    <i class="ri-shopping-cart-fill"></i>  
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+
+                <div class="max-w-sm mx-auto">
+                    <div
+                        class="bg-white border border-gray-200 rounded-2xl shadow-md hover:shadow-xl transition-shadow duration-300 relative overflow-hidden group">
+                        <div class="relative overflow-hidden">
+                            <img (click)="seeDetail(d)"
+                                class="w-full 2xl:h-72 !xl:h-48 lg:h-48 object-cover rounded-t-2xl group-hover:scale-105 transition-transform duration-300"
+                                [src]="urlFB+d.imagenPrincipal+'?alt=media'" alt="Auriculares Gaming RGB">
+                        </div>
+                        <div class="p-4 mb-5">
+                            <a>
+                                <p class=" text-xs font-normal tracking-tight text-gray-500 line-clamp-3">{{d.pro_nom}}
+                                </p>
+                            </a>
+                            <div class="h-7">
+                                <span class="line-clamp-4 text-xs font-light leading-relaxed">
+                                    <strong> Disponible: </strong> {{d.stockactual}}
+                                </span>
+                            </div>
+                            <div class=" grid-cols-2 flex group justify-between">
+                                <div class="font-black flex flex-col">
+                                    <div class="price">
+                                        <p class=" spanColor ">
+                                            @if(d.precioOferta > 0){
+                                            <span>
+                                                $ {{d.precioOferta |number:'1.2-2'}}</span>
+                                            }@else {
+                                            <span> $ {{d.precioReal |number:'1.2-2'}}</span>
+                                            }
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="flex flex-col items-end">
+                                    <div class="h-7">
+                                        <button class=" py-2 px-3 bg-orange-100 text-orange-400 rounded-md  shadow-md">
+                                            <i class="ri-shopping-cart-fill"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            }
+        </ul>
+    </div>
+
+    <div class="glide__arrows" data-glide-el="controls">
+        <button class="glide__arrow glide__arrow--left" data-glide-dir="<"><i
+                class="bi bi-caret-left-fill"></i></button>
+        <button class="glide__arrow glide__arrow--right" data-glide-dir=">"><i
+                class="bi bi-caret-right-fill"></i></button>
+    </div>
+</div>

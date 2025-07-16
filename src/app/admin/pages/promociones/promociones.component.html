@@ -1,0 +1,313 @@
+<div class="mx-1 text-sm">
+    <h2 class="mt-5 2xl:text-2xl text-xl font-bold text-gray-600">Administrar Promociones</h2>
+
+    <div class="w-full mt-4">
+        <!-- Sección título de promociones -->
+        <h4 class="mb-2 text-sm font-semibold text-gray-60 ml-4">1. Título Sección de Promociones</h4>
+
+        <div class="border  rounded-md shadow-md mt-2 bg-gray-200 p-4">
+            <div class="flex gap-2">
+                <input type="text" class="inputGeneral3 flex-1" placeholder="Título de la sección"
+                    [(ngModel)]="configuracion.tituloPromocion">
+                <button type="button"
+                    class="text-white bg-green-500 hover:bg-green-600 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-4 py-2 transition transform effectoZoomBoton"
+                    [disabled]="loading" (click)="updateTitlePromotion(configuracion.tituloPromocion)">
+                    @if(loading) {
+                    <svg class="animate-spin w-4 h-4" fill="none" viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" class="opacity-25">
+                        </circle>
+                        <path fill="currentColor" class="opacity-75"
+                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                        </path>
+                    </svg>
+                    } @else {
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 16 16">
+                        <path
+                            d="M2 1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H9.5a1 1 0 0 0-1 1v7.293l2.646-2.647a.5.5 0 0 1 .708.708l-3.5 3.5a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L7.5 8.293V2a2 2 0 0 1 2-2H14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h2.5a.5.5 0 0 1 0 1H2z" />
+                    </svg>
+                    }
+                </button>
+            </div>
+        </div>
+
+        <!-- Sección nueva promoción -->
+        <h4 class="mt-4 mb-2 text-sm font-semibold text-gray-60 ml-4">Nueva Promoción <span style="font-weight: 300;">El
+                tamaño recomendado de la imagen debe ser de 800 * 400px</span></h4>
+
+        <div class="border border-gray-200 rounded-md shadow-md mt-2 bg-gray-200 p-4">
+            <div class="w-full text-center">
+                <!-- <label class="text-sm font-bold text-gray-900 block mb-2">
+                    Nueva Promoción
+                </label>
+                <p class="text-red-500 text-xs mb-4">
+                    El tamaño recomendado de la imagen debe ser de 800 * 400px
+                </p> -->
+                <button type="button" (click)="openModal('#createPromotionModal')"
+                    class="text-white bg-green-500 border border-green-500 hover:bg-green-600 rounded-md shadow-md text-sm px-3 py-2 transition transform effectoZoomBoton">
+                    <i class="bi bi-plus-circle-fill mr-2"></i>
+                    Crear Promoción
+                </button>
+            </div>
+        </div>
+
+        <!-- Tabla de promociones -->
+        @if(promotions && promotions.length > 0) {
+        <div class="py-4">
+            <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+                <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 p-2">
+                    <thead
+                        class="text-xs text-gray-200 uppercase bg-gray-500  dark:bg-gray-700 dark:text-gray-400 text-center">
+                        <tr class="text-center">
+                            <th scope="col" class="px-6 py-3 font-medium">Promoción</th>
+                            <th scope="col" class="px-6 py-3 font-medium">Descripción</th>
+                            <th scope="col" class="px-6 py-3 font-medium">Imagen</th>
+                            <th scope="col" class="px-6 py-3 font-medium">Producto</th>
+                            <th scope="col" class="px-6 py-3 font-medium">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for(p of promotions; track p.id_promocion) {
+                        <tr class="bg-white border-b hover:bg-gray-50 text-xs">
+                            <td class="px-6 py-4 font-medium text-gray-900 text-left">
+                                {{p.nombrePromocion}}
+                            </td>
+                            <td class="px-6 py-4 text-gray-700 text-left">
+                                {{p.descripcion}}
+                            </td>
+                            <td class="px-6 py-4 text-center">
+                                @if(p.imgPromocion) {
+                                <img class="max-w-32 h-auto rounded-lg shadow-sm mx-auto"
+                                    [src]="urlBase + p.imgPromocion + '?alt=media'" [alt]="p.nombrePromocion"
+                                    loading="lazy">
+                                } @else {
+                                <img class="max-w-32 h-auto rounded-lg shadow-sm mx-auto opacity-50"
+                                    src="../../../../assets/img/imgDefault/sinProd.png" alt="Sin imagen">
+                                }
+                            </td>
+                            <td class="px-6 py-4 text-center text-gray-700">
+                                {{p.nombre_producto}}
+                            </td>
+                            <td class="px-6 py-4 text-center">
+                                <button type="button"
+                                (click)="openModal2('#deletePromotionModal', p)"
+                                    class="text-red-500 !text-md bg-white hover:bg-red-600 hover:text-white focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-3 py-2">
+                                    <i class="bi bi-trash2-fill"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        } @else {
+        <div class="border border-gray-200 rounded-lg mt-2 bg-gray-50 p-8">
+            <div class="text-center">
+                @if(loading) {
+                <p class="text-gray-500">Cargando promociones...</p>
+                } @else {
+                <img class="w-32 h-auto mx-auto mb-4 opacity-50" src="../../../../assets/img/imgDefault/sinProd.png"
+                    alt="Sin promociones">
+                <p class="text-gray-500">No hay promociones creadas</p>
+                }
+            </div>
+        </div>
+        }
+    </div>
+</div>
+
+<!-- Modal para crear promoción -->
+<div id="createPromotionModal" tabindex="-1"
+    class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full animate__animated animate__slideInRight">
+    <div class="relative p-4 w-full max-w-xl max-h-full">
+        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+            <!-- Header del modal -->
+            <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+                <h3 class="text-lg font-normal text-green-500 dark:text-gray-400">
+                    Crear Nueva Promoción
+                </h3>
+                <button type="button" (click)="closeModal(true, '#createPromotionModal')"
+                    class="end-2.5 white bg-gray-200 icoClose rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center">
+                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                        viewBox="0 0 14 14">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                    </svg>
+                    <span class="sr-only">Close modal</span>
+                </button>
+            </div>
+
+            <!-- Contenido del modal -->
+            <form [formGroup]="formCrearPromocion" >
+                <div class="p-4 space-y-4">
+                    <!-- Título -->
+                    <div>
+                        <label for="titulo-promocion" class="labelGeneral">
+                            <i class="fas fa-signature mr-2 text-gray-600"></i>
+                            Título <span class="text-red-500">*</span>
+                        </label>
+                        <input formControlName="nombrePromocion" type="text" id="titulo-promocion" class="inputGeneral3"
+                            placeholder="Nombre de la promoción" >
+                    </div>
+
+                    <!-- Descripción -->
+                    <div>
+                        <label for="descripcion-promocion" class="labelGeneral">
+                            <i class="far fa-newspaper mr-2 text-gray-600"></i>
+                            Descripción
+                        </label>
+                        <textarea id="descripcion-promocion" rows="3" class="inputGeneral3"
+                            placeholder="Descripción de la promoción" ></textarea>
+                    </div>
+
+                    <!-- Imagen -->
+                    <div>
+                        <label for="imagen-promocion" class="labelGeneral">
+                            <i class="fas fa-image mr-2 text-gray-600"></i>
+                            Imagen <span class="text-red-500">*</span>
+                        </label>
+                        <input type="file" id="imagen-promocion" #filesPromotion
+                        (change)="onSelectAnyImage($event)"
+                            class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none"
+                            accept="image/*">
+                        <p class="text-xs text-gray-500 mt-1">PNG, JPG o JPEG (800x400px recomendado)</p>
+                    </div>
+
+                    <!-- Grupos -->
+                    @if(groups && groups.length > 0) {
+                    <div>
+                        <label for="grupo-select" class="labelGeneral">
+                            <i class="far fa-images mr-2 text-gray-600"></i>
+                            Grupos
+                        </label>
+                        <select id="grupo-select" class="inputGeneral3" (change)="selectGroup2($event)">
+                            <option value="" disabled selected>Seleccione un grupo</option>
+                            @for(g of groups; track g.codigo) {
+                            <option [value]="g.codigo">{{g.nombre}}</option>
+                            }
+                        </select>
+                    </div>
+                    }
+
+                    <!-- Productos -->
+                    @if(products && products.length > 0) {
+                    <div>
+                        <label for="producto-select" class="labelGeneral">
+                            <i class="fas fa-gifts mr-2 text-gray-600"></i>
+                            Productos
+                        </label>
+                        <select id="producto-select" class="inputGeneral3" (change)="selectProduct($event)">
+                            <option value="0" selected>Sin producto específico</option>
+                            @for(p of products; track p.pro_cod) {
+                            <option [value]="p.pro_cod">{{p.pro_nom}}</option>
+                            }
+                        </select>
+                    </div>
+                    }
+
+                    <!-- Botones del modal -->
+                    <div class="grid grid-cols-2 gap-4 pt-4 border-t border-gray-200">
+                        <div class="col-span-1">
+                            <button type="button" (click)="closeModal(true, '#createPromotionModal')"
+                                class="bg-gray-500 text-white w-full px-5 py-2 rounded-md text-sm hover:bg-gray-600">
+                                Cancelar
+                            </button>
+                        </div>
+                        <div class="col-span-1">
+                            <button type="button" (click)="savePromotion(formCrearPromocion.value)"
+                                class="bg-green-500 hover:bg-green-600 text-white w-full px-5 py-2 rounded-md text-sm transition transform effectoZoomBoton"
+                                [disabled]="formCrearPromocion.invalid || loading">
+                                @if(loading) {
+                                <svg class="animate-spin w-4 h-4 mr-2 inline" fill="none" viewBox="0 0 24 24">
+                                    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"
+                                        class="opacity-25"></circle>
+                                    <path fill="currentColor" class="opacity-75"
+                                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                                    </path>
+                                </svg>
+                                Creando...
+                                } @else {
+                                <i class="bi bi-cloud-arrow-up-fill mr-2"></i>
+                                Crear Promoción
+                                }
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal de confirmación para eliminar -->
+<div id="deletePromotionModal" tabindex="-1"
+    class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-60 modal-top justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full animate__animated animate__slideInRight">
+    <div class="relative p-4 w-full max-w-md max-h-full">
+        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+            <!-- Header del modal -->
+            <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+                <h3 class="text-lg font-normal text-gray-500 dark:text-gray-400">
+                    Confirmar eliminación
+                </h3>
+                <button type="button"
+                    (click)="closeModal(true, '#deletePromotionModal')"
+                    class="end-2.5 white bg-gray-200 icoClose rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center">
+                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                        viewBox="0 0 14 14">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                    </svg>
+                    <span class="sr-only">Close modal</span>
+                </button>
+            </div>
+
+            <!-- Contenido del modal -->
+            <div class="p-4 md:p-5 text-center">
+                <svg class="mx-auto mb-4 text-gray-400 w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z">
+                    </path>
+                </svg>
+
+                <h3 class="mb-5 text-lg font-normal text-gray-500">
+                    ¿Seguro que desea eliminar esta promoción?
+                </h3>
+
+                <!-- Botones del modal -->
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="col-span-1">
+                        <button type="button"
+                            (click)="closeModal(true, '#deletePromotionModal')"
+                            class="bg-gray-500 text-white w-full px-5 py-2 rounded-md text-sm hover:bg-gray-600">
+                            Cancelar
+                        </button>
+                    </div>
+                    <div class="col-span-1">
+                        <button type="button"
+                        (click)="deletePromotionWeb(promotionSelect)"
+                            class="bg-red-600 hover:bg-red-700 text-white w-full px-5 py-2 rounded-md text-sm"
+                            [disabled]="loading">
+                            @if(loading) {
+                            <svg class="animate-spin w-4 h-4 mr-2 inline" fill="none" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"
+                                    class="opacity-25"></circle>
+                                <path fill="currentColor" class="opacity-75"
+                                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                                </path>
+                            </svg>
+                            Eliminando...
+                            } @else {
+                            Sí, eliminar
+                            }
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Loading -->
+<ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px', fullScreenBackdrop: true }" [template]="">
+</ngx-loading>

@@ -1,0 +1,5 @@
+ .modal-top {
+    z-index: 60 !important;
+    // background-color: red !important;
+    @apply bg-blue-900/50 dark:bg-gray-900/80 fixed inset-0  z-60
+  }

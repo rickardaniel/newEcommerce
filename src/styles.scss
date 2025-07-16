@@ -1,1 +1,572 @@
 /* You can add global styles to this file, and also import other style files */
+// @tailwind base;
+// @tailwind components;
+// @tailwind utilities;
+@import 'ngx-toastr/toastr';
+
+
+// // ===================================== MEDIA QUERYS =====================================
+
+// /* Mobile devices (smallest screens) */
+// @media (max-width: 320px) {
+//     /* Estilos específicos para pantallas de 320px o menos (muy pequeñas) */
+//   }
+
+//   /* Small mobile devices (slightly larger phones) */
+//   @media (min-width: 321px) and (max-width: 480px) {
+//     /* Estilos específicos para pantallas entre 321px y 480px */
+//     .imgCardGroup{
+//         height: 7.5em;
+//         width: 7.5em;
+//         object-fit: contain;
+//         border-radius: 50%;
+//     }
+//     .h6Category{
+//         font-size: 0.7rem;
+//     }
+//     .imgCardPS{
+//         height: 10em !important;
+//         width: 100%;
+//         object-fit: scale-down !important;
+//     }
+//     .fontCatalogo{
+//         font-size: 0.75rem;
+//     }
+//     .content {
+//         width: 22rem !important;
+//       }
+//   }
+
+//   /* Medium mobile devices (large phones, phablets) */
+//   @media (min-width: 481px) and (max-width: 767px) {
+//     /* Estilos específicos para pantallas entre 481px y 767px */
+//     .content {
+//         width: 22rem !important;
+//         // height: 40px;
+//         // box-shadow: 2px 4px 10px rgba(0, 0, 0, .2);
+//         // border-radius: 60px;
+//         // overflow: hidden;
+//       }
+
+//       .imgCardPS{
+//         height: 10em !important;
+//         width: 100%;
+//         object-fit: scale-down !important;
+//     }
+//     .h6Category{
+//         font-size: 0.7rem;
+//     }
+
+//   }
+
+//   /* Tablets */
+//   @media (min-width: 768px) and (max-width: 1024px) {
+//     /* Estilos específicos para pantallas entre 768px y 1024px (tabletas) */
+//     .imgCardPS{
+//         height: 13em !important;
+//         width: 100%;
+//         object-fit: scale-down !important;
+
+//     }
+
+//     .imgCardGroup{
+//         height: 7.5em;
+//         width: 7.5em;
+//         object-fit: contain;
+//         border-radius: 50%;
+//     }
+//     .h6Category{
+//         font-size: 0.7rem;
+//     }
+//     .fontCatalogo{
+//         font-size: 0.7rem;
+//     }
+//     .content {
+//         width: 28rem !important;
+//       }
+//       .imgC{
+//         width: 100vw;
+//         height: 50vh;
+//         border-radius: 12px;
+//         // object-fit: contain;
+//         object-fit:fill ;
+//     }
+//     .hoverMenu{
+//         font-size: 0.9rem !important;
+//     }
+//     .tabBar{
+//         font-size: 0.8rem !important;
+//     }
+
+//   }
+
+//   /* Small desktops and laptops */
+//   @media (min-width: 1025px) and (max-width: 1280px) {
+//     /* Estilos específicos para pantallas entre 1025px y 1280px */
+//     .imgCardPS{
+//         height: 12em !important;
+//         width: 100%;
+//         object-fit: scale-down !important;
+
+//     }
+
+//     .imgCardGroup{
+//         height: 7.5em;
+//         width: 7.5em;
+//         object-fit: contain;
+//         border-radius: 50%;
+//     }
+//     .h6Category{
+//         font-size: 0.7rem;
+//     }
+//     .fontCatalogo{
+//         font-size: 0.7rem;
+
+//     }
+//   }
+
+//   /* Medium desktops and laptops */
+//   @media (min-width: 1281px) and (max-width: 1440px) {
+//     /* Estilos específicos para pantallas entre 1281px y 1440px */
+//     .imgC{
+//         width: 100vw;
+//         height: 55vh;
+//         border-radius: 12px;
+//         // object-fit: contain;
+//         object-fit:fill ;
+//     }
+//     // img-Card
+//     .imgCardPS{
+//         height: 10em !important;
+//         width: 100%;
+//         object-fit: scale-down !important;
+
+//     }
+//     .colProductSold{
+//         height: 22em !important;
+//     }
+//     .imgCardGroup{
+//         height: 6.5em;
+//         width: 6.5em;
+//         object-fit: contain;
+//         border-radius: 50%;
+//     }
+//     .h6Category{
+//         font-size: 0.6rem;
+//     }
+//     .imgOferta{
+//         height: 20rem;
+//         object-fit: fill;
+//     }
+//     .content {
+//         width: 32rem !important;
+//       }
+//   }
+
+//   /* Large desktops and laptops */
+//   @media (min-width: 1441px) and (max-width: 1600px) {
+//     /* Estilos específicos para pantallas entre 1441px y 1600px */
+//     .content {
+//         width: 32rem !important;
+//       }
+//   }
+
+//   /* Extra large desktops and 4K monitors */
+//   @media (min-width: 1601px) and (max-width: 1920px) {
+//     /* Estilos específicos para pantallas entre 1601px y 1920px */
+
+//     // img-Carousel
+//     .imgC{
+//         width: 100vw;
+//         height: 55vh;
+//         border-radius: 12px;
+//         // object-fit: contain;
+//         object-fit:fill ;
+//     }
+//     // img-Card
+//     .imgCardPS{
+//         height: 16em !important;
+//         width: 100%;
+//         object-fit: scale-down !important;
+
+//     }
+//     .colProductSold{
+//         height: 32em !important;
+//     }
+//     .imgCardGroup{
+//         height: 7.5em;
+//         width: 7.5em;
+//         object-fit: contain;
+//         border-radius: 50%;
+//     }
+//     .h6Category{
+//         font-size: 0.7rem;
+//     }
+//     .imgOferta{
+//         height: 25rem;
+//         object-fit: fill;
+//         border-radius: 12px;
+//     }
+//     .content {
+//         width: 32rem !important;
+//       }
+//       .imgProdSelect{
+//         height: 450px;
+//         width: 100%;
+//         object-fit: scale-down;
+//       }
+//   }
+
+//   /* Ultra wide screens and 4K monitors */
+//   @media (min-width: 1921px) and (max-width: 2560px) {
+//     /* Estilos específicos para pantallas entre 1921px y 2560px */
+//   }
+
+//   /* Ultra HD (4K) and higher resolution */
+//   @media (min-width: 2561px) {
+//     /* Estilos específicos para pantallas de 2561px o más (pantallas Ultra HD, 4K, etc.) */
+//   }
+
+//   .imgLogo{
+//     opacity: 0.5;
+//   }
+
+//   .hoverImgDetail{
+//     @apply  hover:border-2  hover:border-gray-200 hover:shadow-2xl transition transform hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none 
+//   }
+
+//   .inputGeneral{
+//     @apply border placeholder-gray-400 focus:outline-none focus:border-black w-full px-3  py-2 mt-2 mr-0 mb-0 ml-0 text-base text-sm  block bg-white border-gray-300 rounded-md;
+//   }
+// .inputGeneral2{
+//     @apply border placeholder-gray-400 focus:outline-none focus:border-black w-full px-3  py-2 mt-2 mr-0 mb-0 ml-0 text-base text-sm  block bg-gray-100 border-gray-300 rounded-md;
+//   }
+
+//   .labelGeneral{
+//     @apply bg-white pt-0 pr-2 pb-0 pl-2 -mt-3 mr-0 mb-0 ml-2 font-medium text-gray-600 absolute  rounded-lg   xl:text-sm lg:text-sm md:text-sm text-xs;
+//   }
+//   .labelGeneral2{
+//     @apply bg-white pt-0 pr-2 pb-0 pl-2 -mt-1 mr-0 mb-0 ml-2 font-medium text-gray-600 absolute  rounded-lg     xl:text-sm lg:text-xs md:text-xs text-xs;
+//   }
+//   .inputInvalid{
+//     @apply bg-red-50 border border-red-500 text-red-900 placeholder-red-700 text-sm rounded-lg focus:ring-red-500     			focus:border-red-500 block w-full p-2.5 dark:bg-red-100 dark:border-red-400;
+//   }
+//   .inputInvalid2{
+//     @apply bg-red-50 border border-red-500 text-red-900 placeholder-red-700 text-sm rounded-lg focus:ring-red-500     			focus:border-red-500 block w-full pt-2.5 dark:bg-red-100 dark:border-red-400;
+
+//   }
+
+//   .spanInvalid{
+//     @apply mt-2 text-sm text-red-600 pl-2  dark:text-red-500;
+//   }
+//   .spanInvalid2{
+//     @apply mb-5 text-sm text-red-600 pl-2  dark:text-red-500;
+
+//   }
+
+/* You can add global styles to this file, and also import other style files */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+// @import 'ngx-toastr/toastr';
+// body{
+//     // font-family: 'Montserrat', sans-serif;
+//     font-family: 'Lexend';
+//     // scrollbar-width: none !important;
+
+// }
+
+
+.title {
+  font-family: 'Comfortaa', sans-serif;
+  color: #6954E8;
+  font-weight: bolder;
+  // font-size: 1em;
+}
+
+.colorPurple {
+  color: rgb(134 29 183);
+  font-family: 'Comfortaa', sans-serif;
+
+}
+
+.titleForm {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: bold;
+}
+
+.inputGeneral {
+  @apply border placeholder-gray-400 focus:outline-none focus:border-black w-full px-3 px-4 py-1.5 mt-2 mr-0 mb-0 ml-0 text-base text-sm block bg-white border-gray-300 rounded-md;
+}
+
+.labelGeneral {
+  @apply bg-white pt-0 pr-2 pb-0 pl-2 -mt-3 mr-0 mb-0 ml-2 font-medium text-gray-600 absolute titleForm rounded-lg xl:text-sm;
+}
+
+.inputInvalid {
+  @apply bg-red-50 border border-red-500 text-red-900 placeholder-red-700 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5 dark:bg-red-100 dark:border-red-400;
+}
+
+.spanInvalid {
+  @apply mt-2 text-sm text-red-600 pl-2 dark:text-red-500;
+}
+
+.labelGeneral3 {
+  @apply bg-white pt-0 pr-2 pb-0 pl-2 -mt-3 mr-0 mb-0 ml-2 font-medium text-gray-600 absolute titleForm rounded-lg text-xs;
+}
+.labelGeneralDanger {
+  @apply bg-white pt-0 pr-2 pb-0 pl-2 -mt-3 mr-0 mb-0 ml-2 font-medium text-red-600 absolute titleForm rounded-lg text-xs;
+}
+
+.inputCheckBox{
+  @apply w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600
+}
+
+.inputGeneral3 {
+  background-color: white !important;
+  font-size: 12px !important;
+  padding: 5px 5px !important;
+  @apply border placeholder-gray-400 focus:outline-none focus:border-black w-full block border-gray-300 rounded-md;
+}
+
+/* Estilos base que aplicarán a todas las pantallas */
+
+/* Estilos para pantallas pequeñas (teléfonos) */
+@media only screen and (max-width: 600px) {
+
+  /* Agrega tus estilos específicos para pantallas pequeñas aquí */
+  .imgLogo {
+    margin-top: 3em;
+    height: 120px;
+  }
+    .imgCardPS {
+    // height: 12em !important;
+    // width: 100%;
+    // object-fit: scale-down !important;
+     width: 100%;
+    object-fit: contain !important;
+    padding: 10px !important;
+    aspect-ratio: 1/1 !important;
+  }
+}
+
+/* Estilos para pantallas medianas (tabletas) */
+@media only screen and (min-width: 601px) and (max-width: 1024px) {
+
+  /* Agrega tus estilos específicos para pantallas medianas aquí */
+  .imgLogo {
+    // height: 180px;
+  }
+
+  .imgCardPS {
+    // height: 12em !important;
+    // width: 100%;
+    // object-fit: scale-down !important;
+     width: 100%;
+    object-fit: contain !important;
+    padding: 10px !important;
+    aspect-ratio: 1/1 !important;
+  }
+
+  .imgCardGroup {
+    height: 6.3em;
+    width: 6.3em;
+    object-fit: contain;
+    border-radius: 50%;
+  }
+
+}
+
+/* Estilos para pantallas grandes (computadoras portátiles y escritorios) */
+@media only screen and (min-width: 1025px) and (max-width: 1440px) {
+
+  /* Agrega tus estilos específicos para pantallas grandes aquí */
+  .imgLogo {
+    // margin-top: 3em;
+    height: auto;
+    width: 70%;
+  }
+
+  .imgCardPS {
+    height: 10em !important;
+    // width: 100%;
+    // object-fit: scale-down !important;
+     width: 100%;
+    object-fit: contain !important;
+    padding: 10px !important;
+    aspect-ratio: 1/1 !important;
+  }
+
+  .imgC {
+    width: 100vw;
+    height: 53vh;
+    border-radius: 12px;
+    // object-fit: contain;
+    object-fit: fill;
+    aspect-ratio: 1/1;
+  }
+
+  .imgCardGroup {
+    height: 7.5em;
+    width: 7.5em;
+    object-fit: contain;
+    border-radius: 50%;
+  }
+}
+
+/* Estilos para pantallas extra grandes (monitores grandes) */
+@media only screen and (min-width: 1441px) {
+
+  /* Agrega tus estilos específicos para pantallas extra grandes aquí */
+  .imgCardPS {
+    // height: 14.5em !important;
+    // width: 100%;
+    // object-fit: scale-down !important;
+     width: 100%;
+    object-fit: contain !important;
+    padding: 10px !important;
+    aspect-ratio: 1/1 !important;
+  }
+
+  .imgC {
+    width: 100vw;
+    height: 55vh;
+    border-radius: 12px;
+    // object-fit: contain;
+    object-fit: fill;
+  }
+
+  .imgCardGroup {
+    height: 7.5em;
+    width: 7.5em;
+    object-fit: contain;
+    border-radius: 50%;
+  }
+
+}
+
+/* Importing Bootstrap SCSS file. */
+.mainScreen {
+  height: auto;
+}
+
+
+
+/* Extra large desktops and 4K monitors */
+@media (min-width: 1601px) and (max-width: 1920px) {
+  /* Estilos específicos para pantallas entre 1601px y 1920px */
+
+  // img-Carousel
+  .imgC {
+    width: 100vw;
+    height: 55vh;
+    border-radius: 12px;
+    // object-fit: contain;
+    object-fit: fill;
+  }
+
+  // img-Card
+  .imgCardPS {
+    height: 18em !important;
+    width: 100%;
+    object-fit: contain !important;
+    padding: 10px !important;
+    aspect-ratio: 1/1 !important;
+
+
+  }
+
+  .colProductSold {
+    height: 32em !important;
+  }
+
+  .imgCardGroup {
+    height: 7.5em;
+    width: 7.5em;
+    object-fit: contain;
+    border-radius: 50%;
+  }
+
+  .h6Category {
+    font-size: 0.7rem;
+  }
+
+  .imgOferta {
+    height: 32rem;
+    width: 100%;
+    aspect-ratio: 1/1;
+    object-fit: fill;
+    border-radius: 12px;
+  }
+
+  // .content {
+  //     width: 32rem !important;
+  //   }
+  // .imgProdSelect {
+  //   height: 450px;
+  //   width: 100%;
+  //   object-fit: scale-down;
+  // }
+}
+
+//   /* Ultra wide screens and 4K monitors */
+//   @media (min-width: 1921px) and (max-width: 2560px) {
+//     /* Estilos específicos para pantallas entre 1921px y 2560px */
+//   }
+
+//   /* Ultra HD (4K) and higher resolution */
+//   @media (min-width: 2561px) {
+//     /* Estilos específicos para pantallas de 2561px o más (pantallas Ultra HD, 4K, etc.) */
+//   }
+
+.imgLogo {
+  opacity: 0.5;
+}
+
+.hoverImgDetail {
+  @apply hover:border-2 hover:border-gray-200 hover:shadow-2xl transition transform hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none
+}
+
+.inputGeneral {
+  @apply border placeholder-gray-400 focus:outline-none focus:border-black w-full px-3 py-2 mt-2 mr-0 mb-0 ml-0 text-base text-sm block bg-white border-gray-300 rounded-md;
+}
+
+.inputGeneral2 {
+  @apply border placeholder-gray-400 focus:outline-none focus:border-black w-full px-3 py-2 mt-2 mr-0 mb-0 ml-0 text-base text-sm block bg-gray-100 border-gray-300 rounded-md;
+}
+
+.inputGeneral3 {
+  @apply border placeholder-gray-400 focus:outline-none focus:border-black w-full px-3 py-1.5 mt-2 mr-0 mb-0 ml-0 text-base text-sm block bg-gray-100 border-gray-300 rounded-md;
+
+}
+
+.labelGeneral {
+  @apply bg-white pt-0 pr-2 pb-0 pl-2 -mt-3 mr-0 mb-0 ml-2 font-medium text-gray-600 absolute rounded-lg xl:text-sm lg:text-sm md:text-sm text-xs;
+}
+
+.labelGeneral2 {
+  @apply bg-white pt-0 pr-2 pb-0 pl-2 -mt-1 mr-0 mb-0 ml-2 font-medium text-gray-600 absolute rounded-lg xl:text-sm lg:text-xs md:text-xs text-xs;
+}
+
+.inputInvalid {
+  @apply bg-red-50 border border-red-500 text-red-900 placeholder-red-700 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5 dark:bg-red-100 dark:border-red-400;
+}
+
+.inputInvalid2 {
+  @apply bg-red-50 border border-red-500 text-red-900 placeholder-red-700 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full pt-2.5 dark:bg-red-100 dark:border-red-400;
+
+}
+
+.spanInvalid {
+  @apply mt-2 text-sm text-red-600 pl-2 dark:text-red-500;
+}
+
+.spanInvalid2 {
+  @apply mb-5 text-sm text-red-600 pl-2 dark:text-red-500;
+
+}
+
+.effectoZoomBoton {
+  @apply hover:shadow-2xl transition transform hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none
+}

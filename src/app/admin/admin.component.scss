@@ -1,0 +1,80 @@
+:root {
+    --dynamic-color: black; /* Valor por defecto */
+    --ligther-color0: black; /* Valor por defecto */
+    --ligther-color: black; /* Valor por defecto */
+    --ligther-color1: black; /* Valor por defecto */
+    --ligther-color2: black; /* Valor por defecto */
+  }
+
+a{
+    font-weight: bold;
+}
+
+.dropdown:focus-within .dropdown-menu {
+    opacity:1;
+    transform: translate(0) scale(1);
+    visibility: visible;
+  }
+
+.classSidebar{
+    // @apply bg-[var(--dynamic-color)];
+    background-color: var(--dynamic-color);
+    a{
+        // color: red !important;
+        font-weight: 200;
+    }
+  
+}
+
+.classActiveN{
+    // background-color: white;
+    // color: var(--dynamic-color);
+    color: white;
+    a{
+        @apply hover:bg-white  hover:text-[var(--dynamic-color)] hover:rounded-lg  hover:w-full   hover:font-bold  hover:rounded-lg   hover:p-2 hover:pl-2   hover:transform ease-in-out  hover:duration-300 hover:flex hover:flex-row hover:items-center hover:space-x-1 
+    }
+}
+.classActiveN1{
+    // background-color: white;
+    // color: var(--dynamic-color);
+    color: gray;
+}
+
+.classActive{
+    // background-color: rgb(182, 244, 255);
+    background-color: white !important;
+    color: var(--dynamic-color);
+    font-weight: 600 !important;
+    @apply hover:bg-white;
+
+}
+.iconHome{
+    background-color: var(--dynamic-color);
+    color: white
+}
+
+.classSuper{
+    // @apply from-purple-400 via-purple-500 to-purple-400;
+    @apply from-[var(--ligther-color)] via-[var(--ligther-color0)] to-[var(--ligther-color)]  text-[var(--dynamic-color)];
+}
+
+.nombreEmpresa{
+    color:var(--dynamic-color)
+}
+
+.classIMGBTN{
+    background-color: var(--ligther-color2);
+}
+
+.classClose{
+    background-color: var(--dynamic-color);
+    color: white;
+    @apply hover:bg-[var(--ligther-color2)]
+}
+.title{
+    color: var(--dynamic-color);
+}
+
+.fondo{
+    background-color: var(--dynamic-color);
+}

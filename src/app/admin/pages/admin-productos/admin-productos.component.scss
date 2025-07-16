@@ -1,0 +1,15 @@
+:root {
+    --dynamic-color: black; /* Valor por defecto */
+    --ligther-color0: black; /* Valor por defecto */
+    --ligther-color: black; /* Valor por defecto */
+    --ligther-color1: black; /* Valor por defecto */
+    --ligther-color2: black; /* Valor por defecto */
+  }
+label{
+    @apply text-xs text-gray-600 font-semibold
+}
+
+.labelStock{
+    background-color: var(--dynamic-color)
+}
+

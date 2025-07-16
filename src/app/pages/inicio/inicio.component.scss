@@ -1,0 +1,223 @@
+// ============  Nuevo estilo ===========
+:root {
+    --dynamic-color: black; /* Valor por defecto */
+    --color-font-portada: black; /* Valor por defecto */
+    --color-font-portada: black; /* Valor por defecto */
+    --color-letter-primary: black; /* Valor por defecto */
+    --color-letter-secondary: black; /* Valor por defecto */
+    --color-btn: yellow; /* Valor por defecto */
+    
+  }
+  
+  .mainScreen{
+    // min-width:  100vw !important;
+    width: auto;
+    // width: 100vw;
+    min-height: 100vh;
+    height: 100%;
+    font-family: 'Montserrat', sans-serif;
+    
+  }
+  .mainScreen2{
+    width: 100vw;
+    // min-height: 100vh;
+    // height: 100%;
+    font-family: 'Montserrat', sans-serif;
+    
+  }
+  
+  .centered-div{
+    color: gray ;
+    padding-top: 20%;
+  }
+  
+  .icoSM{
+    font-size: 1.5em;
+    margin-right: 0.25em;
+    color:var(--color-font-portada);
+    &:hover{
+      transform: scale(1.5); 
+      transition: transform .2s; 
+    }
+  }
+  
+  .btnIcoSM{
+    &:hover{
+      transform: scale(1.5); 
+      transition: transform .2s; 
+    }
+  }
+  
+  .btnEmpresaColor{
+    color: var(--color-btn);
+  }
+  
+  .nameEmpresa{
+    color: var(--dynamic-color);
+    font-weight: 600;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); /* Adjust values as needed */
+  
+  }
+  
+  .btnExplora{
+    // background-color: var(--dynamic-color);
+    color: white;
+    font-size: 12px;
+    // @apply from-cyan-500 to-blue-500
+  }
+  
+  .btnVerifica{
+    border: 1px solid var(--dynamic-color);
+    color: var(--dynamic-color);
+    font-size: 12px;
+  
+  }
+  .bgVerDetalle{
+    background-color: var(--dynamic-color);
+  }
+  
+  
+  #cardPor{
+  border-radius: 15px;
+    border-color: transparent;
+    &:hover {
+      box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+      height: auto;
+    }
+    
+  
+  }
+  .card-img-top{
+    border-top-left-radius: 15px !important;
+    border-top-right-radius: 15px !important ;
+    object-fit:cover;
+  }
+  
+  
+  hr {
+    height: 2px;
+    background-color: var(--dynamic-color);
+  }
+  
+  .nameEmpresa{
+    color: var(--dynamic-color);
+  }
+  
+  .card-img-top{
+    height: 12em;
+  }
+  .nuestroServicios{
+    // font-size: 2em;
+    text-align: right;
+  }
+  
+  .rowCard{
+    background-color: #e3e3e3;
+    // margin: 3em ;
+    // margin-left: 3.5em;
+    // margin-right: 3.5em;
+    border-radius: 18px;
+  }
+  
+  .divCF{
+    margin-left: 3em;
+    margin-right: 3em;
+  }
+  
+  .imgMV{
+    object-fit: cover;
+    height: 600px;
+    width: 95%;
+    padding: 5em;
+    border-radius: 14px;
+  
+    // border-radius: 14px;
+    // box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  
+  }
+  .imgV{
+    border-radius: 14px;
+    // width: 95%;
+    object-fit: scale-down;
+    width: 60%;
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  }
+  .imgMV2{
+    border-radius: 14px;
+    // width: 95%;
+    object-fit: scale-down;
+    width: 60%;
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+    margin-top: 7em;
+  }
+  
+  .spanMV{
+    // font-size: 2em;
+    // color: var(--dynamic-color);
+    font-weight: 500;
+    font-family: 'Montserrat';
+  
+    .parrafoMV{
+      margin-top: 4em;
+    }
+  }
+  
+  p{
+    font-family: 'Montserrat', sans-serif;
+  }
+  .colorLandScape{
+    color: var(--color-font-portada);
+  }
+  .textSecondary{
+    color: var(--color-letter-primary);
+  }
+  .nuestroServicios{
+    color: var(--color-letter-secondary);
+  }
+  .icoMV{
+    color: var(--dynamic-color);
+  }
+  .parrafoInfo{
+    color: var(--color-letter-primary);
+  }
+
+  .hoverCard{
+    @apply hover:bg-gray-50  hover:border-2  hover:border-[var(--dynamic-color)] hover:shadow-2xl transition transform hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none 
+  }
+  
+  .cardServices{
+    height: 22em !important;
+  }
+  .imgCardServices{
+    height: 12.3em !important;
+    width: 100%;
+    object-fit:contain !important;
+    border-radius: 5px;
+  }
+
+
+//     // @media (max-width: 1366px) {
+        @media (min-width: 1181px) and (max-width: 1366px) {
+        
+            .cardServices{
+                height: 20em !important;
+              }
+              .imgCardServices{
+                height: 11.3em !important;
+                width: 100%;
+                object-fit:cover !important;
+                border-radius: 5px;
+              }
+            
+        }
+  
+//   }
+    @media (min-width: 1701px) and (max-width: 1920px) {
+      iframe{
+        // height: 350px;
+        // width: 100%;
+      }
+
+    
+  }
+  

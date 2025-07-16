@@ -1,0 +1,509 @@
+
+
+// // // // ============  Nuevo estilo ===========
+// // :root {
+// //     --dynamic-color: black; /* Valor por defecto */
+// // }
+
+// // .glide__arrow{
+// //     border-radius: 50%;
+// //     color: var(--dynamic-color)
+// // }
+// // .colorSpanPrice{
+// //     color: var(--dynamic-color);
+// //     // color: red;
+// // }
+
+// // .imgCardGroup{
+// //     @apply hover:bg-gray-50  hover:border-2  hover:border-[var(--dynamic-color)] hover:shadow-2xl transition transform hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none ;
+// // }
+
+// // .hoverEffectCard{
+// //     @apply  border border-gray-200   hover:bg-gray-50  hover:border-2  hover:border-gray-200 hover:shadow-xl transition transform hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none 
+// //   }
+
+// // .imgLogo{
+// //     opacity: 0.5;
+// // }
+
+// // .badgeDesc{
+// //     background-color: #FFA500;
+// //     color: white;
+// //     font-size: 0.75rem;
+// // }
+// // .badgeStar{
+// //     background-color: white;
+// //     color: black;
+// //     font-size: 0.75rem; 
+// //     i{
+// //         color: #ffc107;
+// //     }
+    
+// // }
+
+// // .glide1__arrow{
+// //     border-radius: 50%;
+// //     // color: rgb(66, 194, 211);
+// //     // color: white;
+// //     // color: var(--dynamic-color);
+// //     color: white;
+// //     // background-color: #f3f4f6;
+// //     background-color:var(--dynamic-color);
+// //     // border: 1px solid silver;
+// //     margin: 2px 8px;
+// //     padding: 2px 7px;
+// //     // box-shadow: 1px 2px 1px 1px ;
+// //     // border-color: var(--dynamic-color) ;
+// //     // background-color: var(--dynamic-color);
+// // }
+
+
+// //   .animate-pulse {
+// //         animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+// //     }
+
+// //     @keyframes pulse {
+
+// //         0%,
+// //         100% {
+// //             opacity: 1;
+// //         }
+
+// //         50% {
+// //             opacity: .5;
+// //         }
+// //     }
+
+// //     .line-clamp-3 {
+// //         display: -webkit-box;
+// //         -webkit-line-clamp: 3;
+// //         -webkit-box-orient: vertical;
+// //         overflow: hidden;
+// //     }
+
+// //     .line-clamp-4 {
+// //         display: -webkit-box;
+// //         -webkit-line-clamp: 4;
+// //         -webkit-box-orient: vertical;
+// //         overflow: hidden;
+// //     }
+
+// //     /* Mantener tus clases CSS existentes */
+// //     .imgCardPS {
+// //         /* Mantener tus estilos existentes */
+// //     }
+
+// //     .imgLogo {
+// //         /* Mantener tus estilos existentes */
+// //     }
+
+// //     .spanColor {
+// //         /* Mantener tus estilos existentes */
+// //     }
+
+// //     /* Mejoras de accesibilidad */
+// //     .group:focus-within .opacity-0 {
+// //         opacity: 1;
+// //     }
+
+// //     /* Optimizaciones de rendimiento */
+// //     .card-mobile {
+// //         contain: layout style paint;
+// //     }
+
+// //     .card-desktop {
+// //         contain: layout style paint;
+// //     }
+
+// //     /* Animaciones suaves */
+// //     .transition-all {
+// //         transition: all 0.2s ease-in-out;
+// //     }
+
+// //     .transition-transform {
+// //         transition: transform 0.3s ease-in-out;
+// //     }
+
+// //     .transition-shadow {
+// //         transition: box-shadow 0.3s ease-in-out;
+// //     }
+
+// //     .transition-colors {
+// //         transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out;
+// //     }
+
+// //     /* Hover effects */
+// //     .hover\:scale-105:hover {
+// //         transform: scale(1.05);
+// //     }
+
+// //     .hover\:scale-110:hover {
+// //         transform: scale(1.10);
+// //     }
+
+// //     .active\:scale-95:active {
+// //         transform: scale(0.95);
+// //     }
+
+// //     /* Estados de carga */
+// //     .animate-spin {
+// //         animation: spin 1s linear infinite;
+// //     }
+
+// //     @keyframes spin {
+// //         from {
+// //             transform: rotate(0deg);
+// //         }
+
+// //         to {
+// //             transform: rotate(360deg);
+// //         }
+// //     }
+
+// //     /* Responsive adjustments */
+// //     @media (max-width: 768px) {
+// //         .card-mobile .p-4 {
+// //             padding: 0.75rem;
+// //         }
+
+// //         .card-mobile .text-lg {
+// //             font-size: 1rem;
+// //         }
+// //     }
+
+// //     /* Optimización para pantallas de alta densidad */
+// //     @media (-webkit-min-device-pixel-ratio: 2),
+// //     (min-resolution: 192dpi) {
+
+// //         .imgCardPS,
+// //         .imgLogo {
+// //             image-rendering: -webkit-optimize-contrast;
+// //             image-rendering: crisp-edges;
+// //         }
+// //     }
+
+// // Variables dinámicas
+// :root {
+//     --dynamic-color: black;
+// }
+
+// // Estilos principales
+// .glide__arrow {
+//     border-radius: 50%;
+//     color: var(--dynamic-color);
+// }
+
+// .colorSpanPrice {
+//     color: var(--dynamic-color);
+// }
+
+// .imgCardGroup {
+//     @apply hover:bg-gray-50 hover:border-2 hover:border-[var(--dynamic-color)] hover:shadow-2xl transition transform hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none;
+// }
+
+// .hoverEffectCard {
+//     @apply border border-gray-200 hover:bg-gray-50 hover:border-2 hover:border-gray-200 hover:shadow-xl transition transform hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none;
+// }
+
+// .imgLogo {
+//     opacity: 0.5;
+// }
+
+// // Badges
+// .badgeDesc {
+//     background-color: #FFA500;
+//     color: white;
+//     font-size: 0.75rem;
+// }
+
+// .badgeStar {
+//     background-color: white;
+//     color: black;
+//     font-size: 0.75rem;
+    
+//     i {
+//         color: #ffc107;
+//     }
+// }
+
+// // Líneas de texto truncadas
+// .line-clamp-2 {
+//     display: -webkit-box;
+//     -webkit-line-clamp: 2;
+//     -webkit-box-orient: vertical;
+//     overflow: hidden;
+// }
+
+// .line-clamp-3 {
+//     display: -webkit-box;
+//     -webkit-line-clamp: 3;
+//     -webkit-box-orient: vertical;
+//     overflow: hidden;
+// }
+
+// .line-clamp-4 {
+//     display: -webkit-box;
+//     -webkit-line-clamp: 4;
+//     -webkit-box-orient: vertical;
+//     overflow: hidden;
+// }
+
+// // Animaciones para lazy loading
+// .animate-pulse {
+//     animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+// }
+
+// @keyframes pulse {
+//     0%, 100% {
+//         opacity: 1;
+//     }
+//     50% {
+//         opacity: 0.5;
+//     }
+// }
+
+// // Transiciones suaves
+// .transition-all {
+//     transition: all 0.2s ease-in-out;
+// }
+
+// .transition-transform {
+//     transition: transform 0.3s ease-in-out;
+// }
+
+// .transition-shadow {
+//     transition: box-shadow 0.3s ease-in-out;
+// }
+
+// .transition-colors {
+//     transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out;
+// }
+
+// // Hover effects
+// .hover\:scale-105:hover {
+//     transform: scale(1.05);
+// }
+
+// // Optimización para pantallas de alta densidad
+// @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+//     .imgCardPS, .imgLogo {
+//         image-rendering: -webkit-optimize-contrast;
+//         image-rendering: crisp-edges;
+//     }
+// }
+
+// // Responsive adjustments
+// @media (max-width: 768px) {
+//     .card-mobile .p-4 {
+//         padding: 0.75rem;
+//     }
+// }
+
+
+// Variables dinámicas
+:root {
+    --dynamic-color: black;
+    --swiper-arrow-color: #eb2571; // Color azul para las flechas
+}
+
+// Estilos principales
+.glide__arrow {
+    border-radius: 50%;
+    color: var(--dynamic-color);
+}
+
+// Estilos personalizados para flechas del swiper
+::ng-deep {
+    .mySwiper {
+        --swiper-navigation-size: 24px;
+        --swiper-navigation-top-offset: 50%;
+        --swiper-navigation-sides-offset: 10px;
+        
+        .swiper-button-next,
+        .swiper-button-prev {
+            width: 50px !important;
+            height: 50px !important;
+            background: linear-gradient(135deg, #3B82F6 0%, #1D4ED8 100%) !important;
+            border-radius: 50% !important;
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4), 
+                        0 4px 12px rgba(59, 130, 246, 0.3) !important;
+            border: none !important;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+            backdrop-filter: blur(10px) !important;
+            z-index: 10 !important;
+            
+            &:after {
+                font-size: 18px !important;
+                font-weight: bold !important;
+                color: white !important;
+                text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1) !important;
+            }
+            
+            // Efectos hover
+            &:hover {
+                transform: translateY(-2px) scale(1.05) !important;
+                box-shadow: 0 12px 35px rgba(59, 130, 246, 0.5), 
+                           0 6px 16px rgba(59, 130, 246, 0.4) !important;
+                background: linear-gradient(135deg, #4F46E5 0%, #3730A3 100%) !important;
+            }
+            
+            // Efectos active
+            &:active {
+                transform: translateY(0) scale(0.98) !important;
+                box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4), 
+                           0 3px 8px rgba(59, 130, 246, 0.3) !important;
+            }
+            
+            // Estado disabled
+            &.swiper-button-disabled {
+                opacity: 0.5 !important;
+                cursor: not-allowed !important;
+                transform: none !important;
+                box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2) !important;
+                
+                &:hover {
+                    transform: none !important;
+                    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2) !important;
+                }
+            }
+        }
+        
+        // Posicionamiento específico
+        .swiper-button-next {
+            right: 15px !important;
+        }
+        
+        .swiper-button-prev {
+            left: 15px !important;
+        }
+    }
+    
+    // Responsive para móviles
+    @media (max-width: 768px) {
+        .mySwiper {
+            .swiper-button-next,
+            .swiper-button-prev {
+                width: 40px !important;
+                height: 40px !important;
+                
+                &:after {
+                    font-size: 14px !important;
+                }
+            }
+            
+            .swiper-button-next {
+                right: 10px !important;
+            }
+            
+            .swiper-button-prev {
+                left: 10px !important;
+            }
+        }
+    }
+}
+
+.colorSpanPrice {
+    // color: var(--dynamic-color);
+}
+
+.imgCardGroup {
+    @apply hover:bg-gray-50 hover:border-2 hover:border-[var(--dynamic-color)] hover:shadow-2xl transition transform hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none;
+}
+
+.hoverEffectCard {
+    @apply border border-gray-200 hover:bg-gray-50 hover:border-2 hover:border-gray-200 hover:shadow-xl transition transform hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none;
+}
+
+.imgLogo {
+    opacity: 0.5;
+}
+
+// Badges
+.badgeDesc {
+    background-color: #FFA500;
+    color: white;
+    font-size: 0.75rem;
+}
+
+.badgeStar {
+    background-color: white;
+    color: black;
+    font-size: 0.75rem;
+    
+    i {
+        color: #ffc107;
+    }
+}
+
+// Líneas de texto truncadas
+.line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.line-clamp-4 {
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+// Animaciones para lazy loading
+.animate-pulse {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+}
+
+// Transiciones suaves
+.transition-all {
+    transition: all 0.2s ease-in-out;
+}
+
+.transition-transform {
+    transition: transform 0.3s ease-in-out;
+}
+
+.transition-shadow {
+    transition: box-shadow 0.3s ease-in-out;
+}
+
+.transition-colors {
+    transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out;
+}
+
+// Hover effects
+.hover\:scale-105:hover {
+    transform: scale(1.05);
+}
+
+// Optimización para pantallas de alta densidad
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .imgCardPS, .imgLogo {
+        image-rendering: -webkit-optimize-contrast;
+        image-rendering: crisp-edges;
+    }
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+    .card-mobile .p-4 {
+        padding: 0.75rem;
+    }
+}

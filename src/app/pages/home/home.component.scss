@@ -1,0 +1,106 @@
+// // ============  Nuevo estilo ===========
+:root {
+    --dynamic-color: black; /* Valor por defecto */
+    --color-font-portada: black; /* Valor por defecto */
+    --color-font-portada: black; /* Valor por defecto */
+    --color-letter-primary: black; /* Valor por defecto */
+    --color-letter-secondary: black; /* Valor por defecto */
+    --color-btn: yellow; /* Valor por defecto */   
+  }
+// .groupHover{
+//     @apply text-gray-900   hover:bg-[var(--dynamic-color)] hover:text-gray-100 rounded-full group-[.active]:bg-gray-800 group-[.active]:text-white group-[.selected]:bg-gray-950 group-[.selected]:text-gray-100
+// }
+// .groupHover2{
+//     @apply  text-gray-900  hover:bg-[var(--dynamic-color)]  hover:text-gray-100 rounded-full group-[.active]:bg-gray-800 group-[.active]:text-white group-[.selected]:bg-gray-950 group-[.selected]:text-gray-100 
+// }
+
+.mainScreen{
+    // width: 100vw;
+    // height: 100vh;
+    height: 100%;
+    font-family: 'Montserrat';
+    // background-color: red;
+    // color: var(--dynamic-color);
+    // z-index: 999 !important;
+}
+
+.tabBar{
+    @apply inline-block px-4 py-1  my-2 hover:py-1 hover:bg-gray-100 hover:my-2 hover:font-normal hover:rounded-full hover:text-[var(--dynamic-color)] ;
+}
+
+.glide__arrow{
+    border-radius: 50%;
+}
+.imgLogo{
+    object-fit: scale-down !important;
+}
+// .imgCardGroup{
+//     @apply hover:bg-gray-50  hover:border-2  hover:border-[var(--dynamic-color)] hover:shadow-2xl transition transform hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none ;
+// }
+.icoInfo{
+    color: var(--dynamic-color);
+}
+.btnHome{
+    background-color: var(--dynamic-color);
+    color:white;
+}
+
+
+
+// // ============  Nuevo estilo ===========
+:root {
+    --dynamic-color: black; /* Valor por defecto */
+}
+
+.glide__arrow{
+    border-radius: 50%;
+    color: var(--dynamic-color)
+}
+.colorSpanPrice{
+    color: var(--dynamic-color);
+    // color: red;
+}
+
+.imgCardGroup{
+    @apply hover:bg-gray-50  hover:border-2  hover:shadow-2xl transition transform hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none ;
+}
+
+.hoverEffectCard{
+    @apply  border border-gray-200   hover:bg-gray-50  hover:border-2  hover:border-gray-200 hover:shadow-xl transition transform hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none 
+  }
+
+.imgLogo{
+    opacity: 0.5;
+}
+
+.badgeDesc{
+    background-color: #FFA500;
+    color: white;
+    font-size: 0.75rem;
+}
+.badgeStar{
+    background-color: white;
+    color: black;
+    font-size: 0.75rem; 
+    i{
+        color: #ffc107;
+    }
+    
+}
+
+.glide1__arrow{
+    border-radius: 50%;
+    // color: rgb(66, 194, 211);
+    // color: white;
+    // color: var(--dynamic-color);
+    color: white;
+    // background-color: #f3f4f6;
+    background-color:var(--dynamic-color);
+    // border: 1px solid silver;
+    margin: 2px 8px;
+    padding: 2px 7px;
+    // box-shadow: 1px 2px 1px 1px ;
+    // border-color: var(--dynamic-color) ;
+    // background-color: var(--dynamic-color);
+}
+

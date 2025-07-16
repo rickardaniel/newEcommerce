@@ -1,0 +1,189 @@
+
+:root {
+    --dynamic-color: black; /* Valor por defecto */
+    --font-color-letter: black; /* Valor por defecto */
+    --lighter-tone: hsl(0, 100%, 70%);
+
+  }
+  body{
+    font-family: 'Montserrat';
+  }
+  
+  
+  .icoFooter{
+    color: var(--font-color-letter);
+    font-size: 1.25em;
+    &:hover{
+      transform: scale(1.5); 
+      transition: transform .2s; 
+    }
+  }
+  #divFooter{
+    background-color: var(--font-color-letter);
+    color: white;
+  }
+    
+    #button-addon1 {
+      color: #ffc371;
+    }
+    .nameEmpresa{
+      color: var(--dynamic-color);
+      font-weight: 600;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); /* Adjust values as needed */
+    
+    }
+  
+    .pContacto{
+      font-size: 0.95em;
+    }
+    
+    .before-submit{
+      font-size: 12px;
+    }
+    
+    .form-control::placeholder {
+      font-size: 0.95rem;
+      color: #aaa;
+      font-style: italic;
+    }
+    
+    .form-control.shadow-0:focus {
+      box-shadow: none;
+    }
+    .suscribe{
+      // font-size: 1.65em;
+      text-align: center;
+      font-weight: 450;
+    }
+  
+    .subscription {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+    
+    .subscription .add-email{
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+      outline: none;
+      padding: 0 20px;
+    }
+    
+    .subscription .submit-email {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: calc(100% - 2px);
+      width: 100px;
+      border: none;
+      border-radius: 60px;
+      outline: none;
+      margin: 1px;
+      padding: 0 20px;
+      cursor: pointer;
+      background: var(--dynamic-color);
+      color: #FFFFFF;
+      transition: width .35s ease-in-out,
+        background .35s ease-in-out;
+    }
+    
+    .subscription.done .submit-email {
+      width: calc(100% - 2px);
+      background: #C0E02E;
+    }
+    
+    .subscription .submit-email .before-submit,
+    .subscription .submit-email .after-submit {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      text-align: center;
+      line-height: 38px;
+      transition: visibility .35s ease-in-out,
+        opacity .35s ease-in-out;
+    }
+    
+    .subscription.done .submit-email .before-submit,
+    .subscription:not(.done) .submit-email .after-submit {
+      visibility: hidden;
+      opacity: 0;
+    }
+    
+    .subscription .submit-email .after-submit {
+      transition-delay: .35s;
+    }
+    
+    .subscription:not(.done) .submit-email .before-submit,
+    .subscription.done .submit-email .after-submit {
+      visibility: visible;
+      opacity: 1;
+    }
+  
+    .content {
+      width: 50%;
+      height: 40px;
+      box-shadow: 2px 4px 10px rgba(0, 0, 0, .2);
+      border-radius: 60px;
+      overflow: hidden;
+    }
+  
+    .icoSM{
+        color: var(--dynamic-color);
+    }
+
+    .borderHr{
+        border:1px solid var(--dynamic-color);
+    }
+
+    .hoverMenu{
+        @apply   w-full px-3  px-4 py-1.5 mt-2 mr-0 mb-0 ml-0 text-base text-sm  block hover:bg-white hover:rounded-full hover:bg-gray-200   hover:font-semibold;
+    
+    }
+
+    .backSuspcribe{
+      background-color: var(--lighter-tone);
+    }
+  
+     
+//   // MEDIAS QUERYS
+//   @media (max-width: 767px) {
+    
+//     .content {
+//       width: 100%;
+     
+//     }
+   
+//   }
+  
+//   @media (min-width: 768px) and (max-width: 1024px) {
+   
+  
+//   }
+  
+//   @media (min-width: 1025px) and (max-width: 1180px) {
+  
+  
+//   }
+//     // @media (max-width: 1366px) {
+//   @media (min-width: 1181px) and (max-width: 1366px) {
+//        .suscribe{
+//         font-size: 1.45em;
+//         padding: 0em 4em;
+//        } 
+//   }
+  
+//   // @media (max-width: 1920px) {
+//     @media (min-width: 1367px) and (max-width: 1700px) {
+  
+  
+//   }
+//     @media (min-width: 1701px) and (max-width: 1920px) {
+  
+    
+//   }

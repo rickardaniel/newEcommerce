@@ -1,0 +1,46 @@
+// // ============  Nuevo estilo ===========
+:root {
+  --dynamic-color: black; /* Valor por defecto */
+  --lighter-thone: black; /* Valor por defecto */   
+}
+
+.mainScreen{
+    height: 100%;
+    font-family: 'Montserrat';
+}
+
+.zoom-container {
+    position: relative;
+  }
+  
+  .zoom {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    z-index: 10;
+  }
+  
+  .zoom img {
+    position: absolute;
+    width: auto;
+    height: auto;
+  }
+
+  .badgeStar{
+    background-color: #fde7b7;
+    color: black;
+    font-size: 0.75rem; 
+    i{
+        color: #ffc107;
+    }
+    
+}
+
+.spanPR{
+  color: var(--dynamic-color);
+}

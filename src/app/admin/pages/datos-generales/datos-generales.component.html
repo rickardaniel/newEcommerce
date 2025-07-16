@@ -1,0 +1,586 @@
+<div class=" pt-5">
+  <h2 class="mb-2 2xl:text-2xl text-lg font-bold text-gray-600">Portada - Pantalla Inicio</h2>
+
+  <div class="mt-5   grid grid-cols-6   2xl:mx-5  2xl:space-x-3 xl:space-x-2 lg:space-x-1 md:space-y-1 md:space-x-1 space-y-1  relative">
+    <div class="col-span-6">
+      <h4 class="mb-2 text-md font-semibold text-gray-600">1. Logos, portada y colores empresa</h4>
+      <div class=" grid grid-cols-5 bg-gray-100 p-1 rounded-md">
+        <div class="col-span-2">
+          <div class="flex justify-around">
+            <div class="grid grid-cols-1">
+              <div class="col-span-1 text-center">
+                <span class="">Logo 1</span>
+                <button
+                  (click)="openModal('#modalUpload')"
+                  class="ml-2 btnChangeIcon  border-2  rounded-full font-bold  text-xs px-2 py-1  shadow-lg hover:shadow-2xl transition transform effectoZoomBoton">
+                  Cambiar Logo <i class="bi bi-image"></i>
+                </button>
+              </div>
+              <div class="col-span-1 ">
+                <div class="flex" style="align-items: center; justify-content: center; ">
+                  @if(configuracion?.imgLogo == '1tOVYzM0Zk1puEtmGvykLkfvIbj0OtdM5'){
+                  <img class="" src="../../../../assets/img/imgDefault/sinProd.png"
+                    style="width: 60px; object-fit: scale-down; ">
+                  }@else {
+                  <img class="" [src]="urlBase+configuracion?.imgLogo+'?alt=media'"
+                    style="width: 75px; object-fit: scale-down; ">
+                  }
+                </div>
+              </div>
+              <div class="col-span-1">
+                <span class="text-danger  " style="font-size: 10px;">(Tamaño recomendado 480 * 150 px)</span>
+              </div>
+
+            </div>
+            <div>
+              <div class="grid grid-cols-1">
+                <div class="col-span-1 text-center">
+                  <span class="">Logo 2</span>
+                  @if(information?.logo_dos==null){
+                  <button
+                  (click)="openModal('#modalUploadL2')"
+                    class="ml-2 btnChangeIcon  border-2  rounded-full font-bold  text-xs px-2 py-1 shadow-lg effectoZoomBoton ">
+                    Cargar Logo <i class="bi bi-image"></i>
+                  </button>
+                  }@else {
+                    <button
+                    (click)="openModal('#modalUploadL2')"
+                      class="ml-2 btnChangeIcon  border-2  rounded-full font-bold  text-xs px-2 py-1 shadow-lg effectoZoomBoton ">
+                      Cambiar Logo <i class="bi bi-image"></i>
+                    </button>
+                  }
+                </div>
+                <div class="col-span-1 ">
+                  <div class="flex" style="align-items: center; justify-content: center; ">
+                    @if(information?.logo_dos == null){
+                    <img class="" src="../../../../assets/img/imgDefault/sinProd.png" style="width: 50px">
+                    }@else {
+                    <img class="" [src]="urlBase+information?.logo_dos+'?alt=media'" style="width: 75px; object-fit: scale-down; ">
+                    }
+                  </div>
+                </div>
+                <div class="col-span-1">
+                  <span class="text-danger  " style="font-size: 10px;">(Tamaño recomendado 480 * 150 px)</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <div class="col-span-1 ">
+          <div class="flex justify-around">
+            <div>
+              <div class="grid grid-cols-1">
+                <div class="col-span-1 text-center">
+                  <span class="font-semibold">Portada</span>
+                </div>
+                <div class="col-span-1 ">
+                  <div class="flex" style="align-items: center; justify-content: center; ">
+                    @if(information?.imgFooter == null){
+                    <img class="shadow-sm" [src]="urlBase+configuracion?.imgFooter+'?alt=media'"
+                      *ngIf="configuracion?.imgFooter" style="width: 100px ; height: auto;">
+                    }@else {
+                    <img class=" shadow-lg " src="../../../../assets/img/footer2.jpg"
+                      style="width: 100px ; height: auto;">
+                    }
+                    <i class="bi bi-pencil-fill ml-4 text-gray-600 px-2.5 py-1 icoEdit "></i>
+                  </div>
+
+                </div>
+                <div class="col-span-1">
+                  <span class="text-danger  " style="font-size: 10px;">(Tamaño recomendado de 1366 * 768 px)</span>
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+        <div class="col-span-2">
+          <div class="flex justify-around">
+            <div>
+              <span>Color de fondo</span>
+              <br>
+              <div class="flex justify-center">
+                <input type="color" name="colorPrincipal" class="rounded-md "
+                  [(ngModel)]="configuracion.colorPrincipal">
+              </div>
+
+            </div>
+            <div>
+              <span>Texto Principal</span>
+              <br>
+              <div class="flex justify-center">
+                <input type="color" name="colorPrincipal" class="" [(ngModel)]="configuracion.colorLetra">
+              </div>
+            </div>
+            <div>
+              <span>Texto Secundario</span>
+              <br>
+              <div class="flex justify-center">
+                <input type="color" name="colorPrincipal" class="" [(ngModel)]="configuracion.colorLetraSecundario">
+              </div>
+            </div>
+          </div>
+          <div class="absolute top-0 right-0" >
+            <div class="flex justify-center">
+              <button
+              (click)="updateColors(configuracion.colorPrincipal, configuracion.colorLetra,configuracion.colorLetraSecundario)"
+                class="btnSave px-3 py-2.5 rounded-full text-xs mt-4 shadow-lg effectoZoomBoton">
+                <i class="bi bi-pencil-fill"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="mt-6   grid grid-cols-6   2xl:mx-5   xl:space-x-2 lg:space-x-1 md:space-y-1 md:space-x-1 space-y-1  relative"> 
+      <div class="col-span-6">
+        <form [formGroup]="formPortada" >
+        <h4 class="mb-2 text-md font-semibold text-gray-600">2. Slogan, frase empresa, descripción empresa</h4>
+        <div class=" grid grid-cols-4 bg-gray-100 p-1 rounded-md p-5 ">
+          <div class="col-span-2 m-3">
+            <div class="grid grid-cols-3 ">
+              <div class="col-span-2">
+                <div class="pb-2">
+                  <label for="email" class="labelGeneral3">Slogan</label>
+                  <input formControlName="slogan"  type="text" class="inputGeneral3" placeholder="Ingrese slogan empresa" required />
+                </div>
+              </div>
+              <div class="col-span-1">
+                <span class="flex justify-center">Color</span>
+                <div class="flex justify-center">
+                  <input formControlName="color" type="color" name="colorPrincipal" class="" [(ngModel)]="configuracion.colorLetra">
+                </div>
+              </div>
+              <div class="col-span-3">
+                <div class="pb-2">
+                  <label for="email" class="labelGeneral3">Detalle</label>
+                  <textarea formControlName="detalle" type="text" class="inputGeneral3" placeholder="Ingrese detalle slogan empresa"></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-span-2 m-3">
+            <div class="grid grid-cols-2  ">
+              <div class="col-span-1">
+                <div class="pb-2">
+                  <label for="email" class="labelGeneral3">Frase Clave</label>
+                  <input formControlName="fraseClave" type="text" class="inputGeneral3" placeholder="Ingrese frase clave empresa" required />
+                </div>
+              </div>
+              <div class="col-span-1 ml-1">
+                <div class="pb-2">
+                  <label for="email" class="labelGeneral3">Video Promocional</label>
+                  <input formControlName="video" type="text" class="inputGeneral3" placeholder="Ingrese frase clave empresa" required />
+                </div>
+              </div>
+              <div class="col-span-2">
+                <div class="pb-2">
+                  <label for="email" class="labelGeneral3">Frase Empresa</label>
+                  <textarea formControlName="fraseEmpresa" type="text" class="inputGeneral3" placeholder="Ingrese frase empresa" required></textarea>
+                </div>
+              </div>
+
+            </div>
+          </div>
+          <div class="col-span-5 mx-3">
+            <div class="grid grid-cols-4 space-x-3  ">
+              <div class="col-span-2">
+                <div class="pb-2">
+                  <label for="email" class="labelGeneral3">Descripción Empresa</label>
+                  <textarea formControlName="descEmpresa" type="text" class="inputGeneral3" placeholder="Ingrese detalle  empresa"></textarea>
+                </div>
+              </div>
+              <div class="col-span-2">
+                <div class="pb-2">
+                  <label for="email" class="labelGeneral3">Detalle Frase Empresa</label>
+                  <textarea [maxlength]="350"   formControlName="detalleDesEmpresa" type="text" class="inputGeneral3" placeholder="Ingrese detalle  empresa"></textarea>
+                </div>
+              </div>
+              <div class="absolute  top-0 right-0 ">
+                <div class="mt-3">
+                  <div class="flex justify-center">
+                    <button
+                    (click)="updateDataPortada(information,formPortada.value )"
+                    class="btnSave px-3 py-2.5 rounded-full text-xs mt-4 shadow-lg effectoZoomBoton ">
+                    <i class="bi bi-pencil-fill"></i>
+                  </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+      </form>
+      </div>
+   
+  </div>
+
+  <div class="mt-6   grid grid-cols-6   2xl:mx-5   xl:space-x-2 lg:space-x-1 md:space-y-1 md:space-x-1 space-y-1 relative ">
+    <div class="col-span-6">
+      <h4 class="mb-2 text-md font-semibold text-gray-600">3. Información general de la empresa</h4>
+      <div class=" grid grid-cols-2 bg-gray-100 p-1 rounded-md p-2 ">
+        <div class="col-span-2">
+          <div class="grid grid-cols-3 space-x-2 ">
+            <div class="col-span-1">
+              <div class="pb-2">
+                <label for="email" class="labelGeneral3">Nombre Empresa</label>
+                <input type="text" class="inputGeneral3" placeholder="Ingrese el nombre de la empresa" [(ngModel)]="information.nombre" />
+              </div>
+            </div>
+
+            <div class="col-span-1">
+              <div class="pb-2 flex justify-center">
+                <label class="switch ">
+                  @if(information.esPuntoVenta == 1){
+                  <input type="checkbox" checked (change)="changeTipoNegocio($event,information)">
+                  }@else{
+                  <input type="checkbox" (change)="changeTipoNegocio($event,information)">
+                  }
+                  <span class="slider round"> </span>
+                </label>
+                @if(information.esPuntoVenta == 0){
+                <span class=" mt-2.5" style="padding-left: 0.5em;">
+                  No es punto de Venta
+                </span>
+                }@else {
+                <span class=" font-bold mt-2.5 " style="padding-left: 0.5em;">
+                  Es punto de Venta
+                </span>
+                }
+              </div>
+            </div>
+
+            <div class="col-span-1">
+              <div class="pb-2 flex justify-center">
+                <label class="switch ">
+                  @if(information.verPromos == 1){
+                  <input type="checkbox" checked (change)="changeVerPromociones($event,information)">
+                  }@else{
+                  <input type="checkbox" (change)="changeVerPromociones($event,information)">
+                  }
+                  <span class="slider round"> </span>
+                </label>
+                @if(information.verPromos == 0){
+                <span class=" mt-2.5 " style="padding-left: 0.5em;">
+                  Ver Promociones
+                </span>
+                }@else {
+                <span class=" font-bold mt-2.5 " style="padding-left: 0.5em;">
+                  No ver Promociones
+                </span>
+                }
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-span-2 mt-1">
+          <div class="grid grid-cols-5 space-x-2 ">
+            <div class="col-span-1">
+              <div class="pb-2">
+                <label for="email" class="labelGeneral3">Número cuenta</label>
+                <input type="text" class="inputGeneral3" placeholder="Ingrese número de cuenta" [(ngModel)]="information.numeroCuenta" />
+              </div>
+            </div>
+            <div class="col-span-1">
+              <div class="pb-2">
+                <label for="email" class="labelGeneral3">Entidad Bancaria</label>
+                <input type="text" class="inputGeneral3" placeholder="Ingrese  entidad bancaria"  [(ngModel)]="information.nombreBanco" />
+              </div>
+            </div>
+            <div class="col-span-1">
+              <div class="pb-2">
+                <label for="email" class="labelGeneral3">Títular de la cuenta</label>
+                <input type="text" class="inputGeneral3" placeholder="Ingrese el títular de la cuenta" [(ngModel)]="information.nombreCuenta" />
+              </div>
+            </div>
+            <div class="col-span-1">
+              <div class="pb-2">
+                <label for="email" class="labelGeneral3">CI/RUC cuenta</label>
+                <input type="text" class="inputGeneral3" placeholder="Ingrese la Identificación de la cuenta" [(ngModel)]="information.ruc_ci_cuenta" />
+              </div>
+            </div>
+            <div class="col-span-1">
+              <div class="pb-2">
+                <label for="email" class="labelGeneral3">Tipo Cuenta</label>
+                <input type="text" class="inputGeneral3" placeholder="Ingrese el tipo de cuenta" [(ngModel)]="information.tipo_cuenta" />
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="col-span-2 ">
+          <div class="grid grid-cols-2 bg-white rounded-md m-2  ">
+            <div class="col-span-1">
+              <div class="text-center font-semibold ">
+                <span >QR DE PAGOS</span>
+
+              </div>
+                <div class="card rounded-4 " style="height: 280px;width:100% " id="cardQR">
+                  <img class="" src="../../../../assets/img/qrExample copy.png" alt="" style="width: 100%; height: 100%; object-fit:scale-down;" >
+                </div>
+            </div>
+            <div class="col-span-1">
+              <h4 class="text-center mt-10" >Agrega tus QRs de PAGO</h4>
+              <small class="text-center mb-3 " style="display:flex; justify-content: center; " >(El tamaño recomendado de la imagen debe ser de : <strong> 300 * 400 px</strong> )</small>
+
+                <div class="col pb-2">  
+
+                  <div class="file-input-container" *ngIf="!information.imgQrP" >
+                    <input type="file" class="file-input" id="fileInput" (change)="onSelectQR1($event)">
+                    <label for="fileInput" class="file-input-label"> 
+                      <i class="bi bi-cloud-arrow-up-fill pr-2 icoColor" aria-hidden="true" ></i>
+                      Cargar imagen QR #1
+                    </label>
+                  </div>
+
+                  <div class="text-center pb-2 d-block" *ngIf="information.imgQrP">
+                    <div class="col-12 mb-2">
+                      <span  for=""class="mb-2" >{{information.imgQrP}}</span>
+                      <span  title="VER QR" class="bg-green-400 px-1 py-0.5 mb-2 ml-1"  style="border-radius: 4px;" >
+                        <i class="bi bi-eye-fill text-white cursor-pointer " aria-hidden="true" (click)="verComprobante(information.imgQrP)"></i>
+                      </span>
+                      <span  title="ELIMINAR QR"  class="bg-red-500 px-1 py-0.5 mb-2 ml-1"  style="border-radius: 4px;" >
+                        <i class="bi bi-trash3 text-white cursor-pointer" aria-hidden="true" (click)="onRemoveQR1(information.imgQrP)"></i>
+                      </span>                               
+                    </div>
+                  </div> 
+               
+                </div>
+                <div class="col pb-2">
+
+                  <div class="file-input-container" *ngIf="!information.imgQrS " >
+                    <input type="file" class="file-input" id="fileInput" (change)="onSelectQR2($event)">
+                    <label for="fileInput" class="file-input-label"> 
+                      <i class="bi bi-cloud-arrow-up-fill pr-2 icoColor" aria-hidden="true"></i>
+                      Cargar imagen QR #2
+                    </label>
+                  </div>
+                  <div class="text-center pb-2 d-block" *ngIf="information.imgQrS">
+                    <div class="col-12 mb-2">
+                      <span  for=""class="mb-2" >{{information.imgQrS}}</span>
+                      <span  title="VER QR" class="bg-green-400 px-1 py-0.5 mb-2 ml-1"  style="border-radius: 4px;" >
+                        <i class="bi bi-eye-fill text-white cursor-pointer" aria-hidden="true" (click)="verComprobante(information.imgQrS)"></i>
+                      </span>
+                      <span  title="ELIMINAR QR"  class="bg-red-500 px-1 py-0.5 mb-2 ml-1"  style="border-radius: 4px;" >
+                        <i class="bi bi-trash3 text-white cursor-pointer" aria-hidden="true" (click)="onRemoveQR2(information.imgQrS)"></i>
+                      </span>                               
+                    </div>
+                  </div> 
+                </div>
+                <div class="col pb-2">
+                  <div class="file-input-container" *ngIf="!information.imgQrT" >
+                    <input type="file" class="file-input" id="fileInput" (change)="onSelectQR3($event)">
+                    <label for="fileInput" class="file-input-label"> 
+                      <i class="bi bi-cloud-arrow-up-fill pr-2 icoColor" aria-hidden="true"></i>
+                      Cargar imagen QR #3
+                    </label>
+                  </div>
+                  <div class="text-center pb-2 d-block" *ngIf="information.imgQrT ">
+                    <div class="col-12 mb-2">
+                      <span  for=""class="mb-2" >{{information.imgQrT}}</span>
+                      <span  title="VER QR" class="bg-success px-1 py-0.5 mb-2 ml-1"  style="border-radius: 4px;" >
+                        <i class="fa fa-eye text-white cursor-pointer" aria-hidden="true" (click)="verComprobante(information.imgQrT)"></i>
+                      </span>
+                      <span  title="ELIMINAR QR"  class="bg-danger px-1 mb-2  ml-1"  style="border-radius: 4px;" >
+                        <i class="bi bi-trash3 text-white cursor-pointer" aria-hidden="true" (click)="onRemoveQR3(information.imgQrT)"></i>
+                      </span>                               
+                    </div>
+                  </div> 
+                </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-span-2 mt-3">
+          <div class="grid grid-cols-3 space-x-2 ">
+            <div class="col-span-1">
+              <div class="pb-2">
+                <label for="email" class="labelGeneral3">Dirreción</label>
+                <input [(ngModel)]="information.direccion" type="text" class="inputGeneral3" placeholder="Ingrese dirección empresa">
+              </div>
+            </div>
+            <div class="col-span-1">
+              <div class="pb-2">
+                <label for="email" class="labelGeneral3">Email</label>
+                <input [(ngModel)]="information.email" type="text" class="inputGeneral3" placeholder="Ingrese email empresa">
+              </div>
+            </div>
+            <div class="col-span-1">
+              <div class="pb-2">
+                <label for="email" class="labelGeneral3">Teléfono</label>
+                <input [(ngModel)]="information.telefonos" type="text" class="inputGeneral3" placeholder="Ingrese teléfono empresa">
+              </div>
+            </div>
+
+          </div>
+          <div class="grid grid-cols-3 space-x-2 ">
+            <div class="col-span-1">
+              <div class="pb-2">
+                <label for="email" class="labelGeneral3">WhatsApp</label>
+                <input [(ngModel)]="information.whatsapp" type="text" class="inputGeneral3" placeholder="Ingrese whatsApp empresa">
+              </div>
+            </div>
+            <div class="col-span-1">
+              <div class="pb-2">
+                <label for="email" class="labelGeneral3">Facebook</label>
+                <input  [(ngModel)]="information.facebook" type="text" class="inputGeneral3" placeholder="Ingrese facebook empresa">
+              </div>
+            </div>
+            <div class="col-span-1">
+              <div class="pb-2">
+                <label for="email" class="labelGeneral3">Instagram</label>
+                <input [(ngModel)]="information.instagram" type="text" class="inputGeneral3" placeholder="Ingrese instagram empresa">
+              </div>
+            </div>
+          </div>
+          <div class="grid grid-cols-3 space-x-2 ">
+            <div class="col-span-1">
+              <div class="pb-2">
+                <label for="email" class="labelGeneral3">Youtube</label>
+                <input [(ngModel)]="information.youtube" type="text" class="inputGeneral3" placeholder="Ingrese Youtube empresa">
+              </div>
+            </div>
+            <div class="col-span-1">
+              <div class="pb-2">
+                <label for="email" class="labelGeneral3">Twitter</label>
+                <input [(ngModel)]="information.twitter" type="text" class="inputGeneral3" placeholder="Ingrese Twitter empresa">
+              </div>
+            </div>
+            <div class="col-span-1">
+              <div class="pb-2">
+                <label for="email" class="labelGeneral3">TikTok</label>
+                <input [(ngModel)]="information.tiktok" type="text" class="inputGeneral3" placeholder="Ingrese TikTok empresa">
+              </div>
+            </div>
+          </div>
+          <div class="grid grid-cols-3 space-x-2 ">
+            <div class="col-span-1">
+              <div class="pb-2">
+                <label for="email" class="labelGeneral3">Messenger</label>
+                <input [(ngModel)]="information.messenger" type="text" class="inputGeneral3" placeholder="Ingrese messenger empresa">
+              </div>
+            </div>
+            <div class="col-span-1">
+              <div class="pb-2">
+                <label for="email" class="labelGeneral3">Blog</label>
+                <input [(ngModel)]="information.blog" type="text" class="inputGeneral3" placeholder="Ingrese Blog empresa">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="absolute  top-0 right-0 ">
+          <div class="mt-3">
+            <div class="flex justify-center">
+              <button
+              (click)="updateInformation(information)"
+              class="btnSave px-3 py-2.5 rounded-full text-xs mt-4 shadow-lg  effectoZoomBoton">
+              <i class="bi bi-pencil-fill"></i>
+            </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading  -->
+
+  <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px', fullScreenBackdrop: true }" [template]="">
+  </ngx-loading>
+  
+<!-- MODAL UPLOAD LOGO -->
+
+  <div id="modalUpload" tabindex="-1"
+  class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+  <div class="relative p-4 w-full max-w-md max-h-full">
+    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+      <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+
+        <h3 class=" text-lg font-normal text-gray-500 dark:text-gray-400">Seleccionar imagen</h3>
+        <button type="button" class="end-2.5 white bg-gray-200 icoClose rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center " (click)="closeModal(true, '#modalUpload')">
+            <svg class="w-3 h-3 " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+            </svg>
+            <span class="sr-only">Close modal</span>
+        </button>
+    </div>
+  
+        <div class="p-4 md:p-5 text-center">
+            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor" class="bi bi-image mx-auto mb-4 text-gray-400" viewBox="0 0 16 16">
+              <path d="M6.002 5.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0"/>
+              <path d="M2.002 1a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2zm12 1a1 1 0 0 1 1 1v6.5l-3.777-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12V3a1 1 0 0 1 1-1z"/>
+            </svg>
+            <input (change)="onSelectAnyImage($event)"  class="block w-full mb-5 text-xs text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="small_size" type="file">        
+        </div>
+    </div>
+  </div>
+  </div>
+
+<!-- MODAL UPLOAD LOGO 2 -->
+
+  <div id="modalUploadL2" tabindex="-1"
+  class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+  <div class="relative p-4 w-full max-w-md max-h-full">
+    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+      <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+
+        <h3 class=" text-lg font-normal text-gray-500 dark:text-gray-400">Seleccionar imagen</h3>
+        <button type="button" class="end-2.5 white bg-gray-200 icoClose rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center " (click)="closeModal(true, '#modalUploadL2')">
+            <svg class="w-3 h-3 " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+            </svg>
+            <span class="sr-only">Close modal</span>
+        </button>
+    </div>
+  
+        <div class="p-4 md:p-5 text-center">
+            <form [formGroup]="formLogoDos">
+
+            <div class="grid grid-cols-1 divSelect">
+              <div class="col-span-1">
+                <div class="file-input-container"  >
+                  <input type="file" class="file-input" id="fileInput" (change)="onSelecLogo2($event)">
+                  <label for="fileInput" class="file-input-label"> 
+                    <i class="fbi bi-cloud-arrow-up-fill pr-2 icoColor" aria-hidden="true" ></i>
+                    Cargar imagen Logo 2
+                  </label>
+                </div>
+                <span *ngIf="flagFileLogo2"  for=""class="mb-2 text-center " >{{information.imgQrP}}</span>
+    
+              </div>
+              <div class="col-span-1 mt-5">
+                  <div class="pb-2">
+                    <label for="email" class="labelGeneral">Ingrese URL </label>
+                    <input  formControlName="url"  type="text" class="inputGeneral2" placeholder="Ingrese link de redireccion"  />
+                </div>         
+              </div>
+            </div>
+
+            <div >
+                <button  type="button" 
+                (click)="closeModal(true, '#modalUploadL2')"
+                          class=" mt-5 text-white bg-gray-400 hover:bg-gray-500 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-7 py-2 hover:text-white focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">
+                          Cerrar <i class="bi bi-x-lg"></i>
+                </button>          
+                <button  type="button" 
+                          [disabled]="!flagFileLogo2" (click)="saveLogo2(formLogoDos)"
+                          class=" mt-5 text-white bg-green-500 hover:bg-green-500 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2 hover:text-white focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">
+                          Guardar <i class="bi bi-floppy2-fill"></i>
+                </button>          
+            </div>
+            </form>
+        </div>
+    </div>
+  </div>
+  </div>

@@ -1,0 +1,92 @@
+// ============  Nuevo estilo ===========
+:root {
+    --dynamic-color: black; /* Valor por defecto */
+    --color-font-portada: black; /* Valor por defecto */
+    --color-font-portada: black; /* Valor por defecto */
+    --color-letter-primary: black; /* Valor por defecto */
+    --color-letter-secondary: black; /* Valor por defecto */
+    --color-btn: yellow; /* Valor por defecto */
+    
+  }
+
+  // Estilos adicionales para la vista horizontal del catálogo
+.horizontal-catalog {
+    .category-button {
+        transition: all 0.2s ease;
+        
+        &:hover {
+            background-color: var(--dynamic-color);
+            color: white;
+            transform: translateY(-1px);
+        }
+    }
+    
+    .category-dropdown {
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        
+        .dropdown-item {
+            transition: background-color 0.15s ease;
+            
+            &:hover {
+                background-color: #f9fafb;
+                color: var(--dynamic-color);
+            }
+        }
+    }
+}
+
+// Scroll personalizado para la vista horizontal
+.category-scroll {
+    &::-webkit-scrollbar {
+        height: 4px;
+    }
+    
+    &::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 2px;
+    }
+    
+    &::-webkit-scrollbar-thumb {
+        background: #c1c1c1;
+        border-radius: 2px;
+        
+        &:hover {
+            background: #a8a8a8;
+        }
+    }
+}
+
+// Responsividad para las tarjetas de productos
+.product-grid {
+    @media (max-width: 640px) {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.75rem;
+    }
+    
+    @media (min-width: 641px) and (max-width: 768px) {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1rem;
+    }
+}
+
+// Animaciones para los dropdowns
+.group:hover .category-dropdown {
+    animation: fadeInDown 0.2s ease-out;
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+.bgSpan{
+  background-color: var(--dynamic-color);
+  color:white
+}
