@@ -109,7 +109,7 @@
                 </div>
                 <div class="flex justify-between  w-full ">
                     <div class="flex items-center">
-                        <button type="button" onclick="decrementQuantity('product-1')"
+                        <button type="button" (click)="addOrQuitProduct('quit', d)"
                             class="flex items-center justify-center w-6 h-6 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-full hover:bg-gray-100 hover:text-gray-700 focus:ring-4 focus:ring-gray-200 transition-colors">
                             <i class="fas fa-minus text-xs"></i>
                         </button>
@@ -118,14 +118,14 @@
                             class="mx-2 w-12 text-center text-sm font-medium text-gray-900 bg-transparent border-0 focus:ring-0 focus:outline-none"
                             readonly>
 
-                        <button type="button" onclick="incrementQuantity('product-1')"
+                        <button type="button"  (click)="addOrQuitProduct('add', d)" 
                             class="flex items-center justify-center w-6 h-6 text-sm font-medium text-white bg-red-500 border rounded-full hover:bg-red-600 focus:ring-4 focus:ring-red-200 transition-colors">
                             <i class="fas fa-plus text-xs"></i>
                         </button>
                     </div>
 
                     <div class="flex  ">
-                        <button type="button" onclick="removeProduct('product-1')"
+                        <button type="button" (click)="deleteProduct(d,'#deleteProduct'+d.id_producto)" 
                             class="text-red-500 hover:text-red-700 hover:bg-red-50 p-2 rounded-full transition-colors "
                             title="Eliminar producto">
                             <i class="far fa-trash-alt text-lg"></i>
@@ -137,65 +137,38 @@
         </div>
     </div>
 
+    
 
-    <!-- <a
-    class="flex flex-col items-center bg-white  2xl:h-[6.5rem] xl:h-[5.85rem] border border-gray-200 rounded-lg shadow-sm md:flex-row md:max-w-xl hover:bg-gray-100 hover:shadow-lg ">
-    @if(d?.imagenPrincipal === '1bW4FHKxVF0tHzYbiYTu1iEh4BaSYbRm2') {
-    <img [loading]="isLazyLoaded ? 'lazy' : 'eager'" [decoding]="isLazyLoaded ? 'async' : 'auto'"
-        class="object-scale-down 2xl:h-[6.5rem] xl:h-[5.85rem]  2xl:w-[6.5rem] xl:w-[6rem]  md:h-auto md:rounded-none md:rounded-s-lg"
-        [src]="urlFirebae + logo + '?alt=media'" [alt]="d?.pro_nom || 'Producto'" [srcset]="generateSrcSet()"
-        [sizes]="getSizes()" (load)="onImageLoad($event)" (error)="onImageError($event)" />
-    } @else {
-    <img [loading]="isLazyLoaded ? 'lazy' : 'eager'" [decoding]="isLazyLoaded ? 'async' : 'auto'"
-        class="object-cover 2xl:h-[6.5rem] xl:h-[5.85rem]  2xl:w-[8.5rem] xl:w-[9rem] md:h-auto md:rounded-none md:rounded-s-lg"
-        [src]="optimizedImageSrc" [alt]="d?.pro_nom || 'Producto'" [srcset]="generateSrcSet()" [sizes]="getSizes()"
-        (load)="onImageLoad($event)" (error)="onImageError($event)">
-    }
-    @if (!imageLoadedState && !imageErrorState && isLazyLoaded) {
-    <div class="absolute inset-0 bg-gray-100 flex items-center justify-center">
-        <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-orange-400"></div>
-    </div>
-    }
 
-    <div class="flex flex-col pt-2 justify-between px-3 leading-normal  w-full">
+<div id="deleteProduct{{d.id_producto}}" tabindex="-1" class="hidden overflow-y-auto overflow-x-hidden bg-gray-200  fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+    <div class="relative p-4 w-full max-w-md max-h-full">
+        <div class="relative bg-white rounded-lg shadow-sm dark:bg-gray-700">
 
-        <p class="text-xs font-normal tracking-tight text-gray-500 line-clamp-3 hover:text-gray-700 transition-colors"
-            [title]="d?.pro_nom">
-            {{ d?.pro_nom }}
-        </p>
-        <div class="mb-0">
-            <p
-                class="text-sm font-semibold tracking-tight text-gray-700 line-clamp-3 hover:text-gray-700 transition-colors">
-                $ {{ d.precioReal | number:'1.2-2' }}
-            </p>
-        </div>
-        <div class="flex justify-between  w-full ">
-            <div class="flex items-center">
-                <button type="button" onclick="decrementQuantity('product-1')"
-                    class="flex items-center justify-center w-6 h-6 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-full hover:bg-gray-100 hover:text-gray-700 focus:ring-4 focus:ring-gray-200 transition-colors">
-                    <i class="fas fa-minus text-xs"></i>
+            <div class="p-4 md:p-5 text-center">
+                <svg class="mx-auto mb-4 text-gray-400 w-12 h-12 dark:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+                </svg>
+                <h3 class="mb-5 text-sm font-normal text-gray-500 dark:text-gray-400">¿Estás seguro que quieres eliminar <strong>{{d?.nombre_producto}} </strong> de tu carrito?</h3>
+                <button (click)="delete(d.id_carrito)" type="button" class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
+                   Si
                 </button>
-
-                <input type="number" id="quantity-product-1" [value]="d.quantity" min="1" max="99"
-                    class="mx-2 w-12 text-center text-sm font-medium text-gray-900 bg-transparent border-0 focus:ring-0 focus:outline-none"
-                    readonly>
-
-                <button type="button" onclick="incrementQuantity('product-1')"
-                    class="flex items-center justify-center w-6 h-6 text-sm font-medium text-white bg-red-500 border rounded-full hover:bg-red-600 focus:ring-4 focus:ring-red-200 transition-colors">
-                    <i class="fas fa-plus text-xs"></i>
-                </button>
-            </div>
-
-            <div class="flex  ">
-                <button type="button" onclick="removeProduct('product-1')"
-                    class="text-red-500 hover:text-red-700 hover:bg-red-50 p-2 rounded-full transition-colors "
-                    title="Eliminar producto">
-                    <i class="far fa-trash-alt text-lg"></i>
-                </button>
+                <button (click)="closeModal('#deleteProduct'+d.id_producto)"  type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">No</button>
             </div>
         </div>
     </div>
-</a> -->
+</div>
+
+
+    
+
+
+
+
+
+    
+
+
+   
 
     <style>
         .animate-pulse {

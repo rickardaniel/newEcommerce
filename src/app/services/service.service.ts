@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { firstValueFrom, lastValueFrom, map, Observable, startWith, Subject, take, timeout } from 'rxjs';
+import { catchError, EMPTY, firstValueFrom, lastValueFrom, map, Observable, of, startWith, Subject, take, timeout } from 'rxjs';
 import { environment } from '../environments/environment';
 import { userNames } from '../interface/client';
 // import { Products } from '../interface/products';
@@ -84,7 +84,7 @@ export class ServiceService {
 
   async getSubgruposService(url_billing, idgrupo) {
     let url = url_billing + "get_subgrupos?idgrupo=" + idgrupo;
-    console.log('URL ----->', url);
+    // console.log('URL ----->', url);
     
     return this.http.get(url);
   }
@@ -270,6 +270,72 @@ export class ServiceService {
   }
 
   // AQUI AGREGAR ATRIBUTOSSSS Y EMPEZAR NUEVAMENTE
+async getproductsCartNew(data) {
+    console.log("llega cuanta veces");
+    data.id_empresa = this.id_empresa;
+    let url = this.apiLoxafree + "carrito/getProductsClient/";
+    
+    return new Promise(async (resolve, reject) => {
+      try {
+        let response:any;
+         response = await lastValueFrom(
+          this.http.post(url, data).pipe(
+            catchError(error => {
+              resolve(error);
+              return EMPTY;
+            })
+          )
+        );
+
+        let car = [];
+        let prod = [];
+        let config;
+        let url_billing;
+
+        if (response.rta == true) {
+          await this.getConfiguracion().then((resconfig: any) => {
+            config = resconfig[0];
+          });
+          
+          url_billing = this.urlBilling;
+          console.log('data === >', response);
+          
+          for (let p of response.data) {
+            await this.getProductosCodigoService(url_billing, p.id_producto, config).then(async (resprod: any) => {
+              console.log('SE IMPRIME EN EL SERVICIO  getproductsCart');         
+              if (resprod.rta == true) {
+                for (let precio of resprod.data[0].precios) {
+                  if (precio.id_tipo == p.tipo_precio) {
+                    resprod.data[0].ivaval = precio.ivaval;
+                    resprod.data[0].precio_sin_iva = parseFloat(precio.valor);
+                  }
+                }
+                resprod.data[0].quantity = p.cantidad;
+                resprod.data[0].precioReal = p.precio;
+                resprod.data[0].id_carrito = p.id;
+                resprod.data[0].tipoPrecio = p.tipo_precio;
+                resprod.data[0].guarnicion_descripcion = p.otro;
+                prod.push(resprod.data[0]);
+                car.push(p);
+              }
+            });
+          }
+        }
+
+        const result = {
+          rta: car.length > 0,
+          data: car,
+          products: prod
+        };
+        
+        this.saveToLocalStorage('data', result);
+        resolve(result);
+      } catch (error) {
+        resolve(error);
+      }
+    });
+  }
+
   async getproductsCart(data) {
     console.log("llega cuanta veces");
     data.id_empresa = this.id_empresa;
@@ -287,9 +353,10 @@ export class ServiceService {
             await this.getConfiguracion().then((resconfig: any) => {
               config = resconfig[0];
             });
-            await this.getUrlEmpresa().then((url) => {
-              url_billing = url;
-            });
+            // await this.getUrlEmpresa().then((url) => {
+            //   url_billing = url;
+            // });
+            url_billing = this.urlBilling;
             console.log('data === >',data);
             let p = data.data.length-1;
             console.log('p  ---> ',p);
@@ -331,6 +398,8 @@ export class ServiceService {
           });
     });
   }
+
+
   async getproductsCart2(data) {
     console.log("llega cuanta veces", data);
     data.id_empresa = this.id_empresa;
@@ -350,9 +419,11 @@ export class ServiceService {
             await this.getConfiguracion().then((resconfig: any) => {
               config = resconfig[0];
             });
-            await this.getUrlEmpresa().then((url) => {
-              url_billing = url;
-            });
+            // await this.getUrlEmpresa().then((url) => {
+            //   url_billing = url;
+            // });
+
+            url_billing = this.urlBilling;
 
             console.log('data === >',data);
             let p = data.data.length-1;
@@ -605,19 +676,28 @@ export class ServiceService {
     });
   }
 
-  async deleteProductCart(id) {
-    let url = this.apiLoxafree + "carrito/deleteProductCar/" + id;
-    return new Promise((resolve, reject) => {
-      this.http.delete(url)
-        .subscribe((data: any) => {
-          resolve(data);
+  // async deleteProductCart(id) {
+  //   let url = this.apiLoxafree + "carrito/deleteProductCar/" + id;
+  //   return new Promise((resolve, reject) => {
+  //     this.http.delete(url)
+  //       .subscribe((data: any) => {
+  //         resolve(data);
           
-        },
-          error => {
-            resolve(error)
-          });
+  //       },
+  //         error => {
+  //           resolve(error)
+  //         });
+  //   });
+  // }
+  async deleteProductCart(id: string): Promise<any> {
+    const url = this.apiLoxafree + "carrito/deleteProductCar/" + id;
+    return new Promise((resolve, reject) => {
+      this.http.delete(url).subscribe({
+        next: (data: any) => resolve(data),
+        error: (error) => resolve(error) // Consider using reject(error) instead?
+      });
     });
-  }
+}
 
   async loginAdministrator(login) {
     let url = this.apiLoxafree + "administracions/" + this.id_empresa;
@@ -2214,17 +2294,33 @@ async  getProductosPromocionService(url_billing: string, configuracion: any): Pr
     });
   }
 
-  async getCustomerDataByCedula(url_billing, cedula) {
-    let url = url_billing + "cliente_ci?identificacion=" + cedula;
-    return new Promise((resolve) => {
-      this.http.get(url).subscribe((data: any) => {
-        resolve(data);
-      },
-        error => {
-          resolve(error)
-        });
-    });
-  }
+  // async getCustomerDataByCedula(url_billing, cedula) {
+  //   let url = url_billing + "cliente_ci?identificacion=" + cedula;
+  //   return new Promise((resolve) => {
+  //     this.http.get(url).subscribe((data: any) => {
+  //       resolve(data);
+  //     },
+  //       error => {
+  //         resolve(error)
+  //       });
+  //   });
+  // }
+
+  getCustomerDataByCedula(url_billing: string, cedula: string): Observable<any> {
+  const url = url_billing + 'cliente_ci?identificacion=' + cedula;
+  
+  return this.http.get(url).pipe(
+    // El operador 'catchError' maneja los errores de la petición.
+    // En caso de error, devuelve un Observable con el error.
+    catchError(error => {
+      // Puedes registrar el error en la consola para depuración
+      console.error('Error en la petición HTTP:', error);
+      // Devuelve un Observable que emite el error.
+      // Usa 'of(error)' para crear un Observable que emite el valor y se completa.
+      return of(error); 
+    })
+  );
+}
 
   // Obtener datos de cualquier tabla
   async getDataAnyTabe(url_billing, data) {
@@ -3194,97 +3290,96 @@ async  getProductosPromocionService(url_billing: string, configuracion: any): Pr
   //   // });
   // }
 
-  // async saveUserLocalStorage(user, loginStorage, rol) {
-  //   let nameAll = user.nombres + ' ' + user.apellidos;
-  //   user.rol = rol;
-  //   if (nameAll) {
-  //     if (nameAll.length <= 30) {
-  //       user.nameUser = nameAll;
-  //     } else {
-  //       user.nameUser = nameAll.slice(0, 30);
-  //     }
-  //   } else {
-  //     user.nameUser = 'DEFAULT NAME';
-  //   }
-  //   return new Promise(async (resolve) => {
-  //     await this.localStorage.setItem(loginStorage, user).subscribe(async (auth) => {
-  //       let data = {
-  //         rta: auth,
-  //         data: user,
-  //       }
-  //       this.userLogin = {
-  //         name: user.nameUser,
-  //         imagen: user.imagen,
-  //         login: true,
-  //         rol: user.rol,
-  //         user: user
-  //       }
-  //       this.usr$.next(this.userLogin);
-  //       localStorage.setItem(loginStorage, JSON.stringify(this.userLogin) )
-  //       resolve(data);
-  //     }, error => {
-  //       let data = {
-  //         rta: false,
-  //         data: error,
-  //       }
-  //       resolve(data);
-  //     });
-  //   });
-  // }
+  async saveUserLocalStorage(user, loginStorage, rol) {
+    let nameAll = user.nombres + ' ' + user.apellidos;
+    user.rol = rol;
+    if (nameAll) {
+      if (nameAll.length <= 30) {
+        user.nameUser = nameAll;
+      } else {
+        user.nameUser = nameAll.slice(0, 30);
+      }
+    } else {
+      user.nameUser = 'DEFAULT NAME';
+    }
+    return new Promise(async (resolve) => {
+      await this.localStorage.set(loginStorage, user).subscribe(async (auth) => {
+        let data = {
+          rta: auth,
+          data: user,
+        }
+        this.userLogin = {
+          name: user.nameUser,
+          imagen: user.imagen,
+          login: true,
+          rol: user.rol,
+          user: user
+        }
+        this.usr$.next(this.userLogin);
+        localStorage.setItem(loginStorage, JSON.stringify(this.userLogin) )
+        resolve(data);
+      }, error => {
+        let data = {
+          rta: false,
+          data: error,
+        }
+        resolve(data);
+      });
+    });
+  }
 
   // ---------------------------------------- NUEVO PWA ---------------------------------------------------------
 // --------------------------------------------------------------------------------------------------------------
 
-  async saveUserLocalStorage(user: any, loginStorage: string, rol: string) {
-    // Validaciones de entrada
-    if (!user || !loginStorage || !rol) {
-        return {
-            rta: false,
-            data: 'Invalid parameters: user, loginStorage, and rol are required'
-        };
-    }
+//   async saveUserLocalStorage(user: any, loginStorage: string, rol: string) {
+//     // Validaciones de entrada
+//     if (!user || !loginStorage || !rol) {
+//         return {
+//             rta: false,
+//             data: 'Invalid parameters: user, loginStorage, and rol are required'
+//         };
+//     }
 
-    try {
-        // Preparar nombre completo con validación
-        const fullName = `${user.nombres || ''} ${user.apellidos || ''}`.trim();
-        user.rol = rol;
-        user.nameUser = this.formatUserName(fullName);
+//     try {
+//         // Preparar nombre completo con validación
+//         const fullName = `${user.nombres || ''} ${user.apellidos || ''}`.trim();
+//         user.rol = rol;
+//         user.nameUser = this.formatUserName(fullName);
 
-        // Guardar en storage principal
-        await this.localStorage.set(loginStorage, user);
+//         // Guardar en storage principal
+//         await this.localStorage.set(loginStorage, user);
         
-        // Crear objeto de sesión
-        this.userLogin = {
-            name: user.nameUser,
-            imagen: user.imagen || null,
-            login: true,
-            rol: user.rol,
-            user: user
-        };
+//         // Crear objeto de sesión
+//         this.userLogin = {
+//             name: user.nameUser,
+//             imagen: user.imagen || null,
+//             login: true,
+//             rol: user.rol,
+//             user: user
+//         };
 
-        // Actualizar estado reactivo
-        this.usr$.next(this.userLogin);
-        
-        // Backup en localStorage nativo para persistencia adicional
-        localStorage.setItem(`${loginStorage}_backup`, JSON.stringify(this.userLogin));
 
-        return {
-            rta: true,
-            data: user
-        };
+        
+//         // Backup en localStorage nativo para persistencia adicional
+//         localStorage.setItem(`${loginStorage}_backup`, JSON.stringify(this.userLogin));
 
-    } catch (error) {
-        console.error('Error saving user data:', error);
+//         return {
+//             rta: true,
+//             data: user
+//         };
+
+//     } catch (error) {
+//         console.error('Error saving user data:', error);
         
-        // Intentar limpiar estado en caso de error
-        this.clearUserSession();
+//         // Intentar limpiar estado en caso de error
+//         this.clearUserSession();
         
-        return {
-            rta: false,
-            data: error instanceof Error ? error.message : 'Unknown error occurred'
-        };
-    }
-}
+//         return {
+//             rta: false,
+//             data: error instanceof Error ? error.message : 'Unknown error occurred'
+//         };
+//     }
+// }
 
 private formatUserName(fullName: string): string {
     if (!fullName || fullName.trim() === '') {

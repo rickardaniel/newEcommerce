@@ -18,7 +18,7 @@ export class CatalogoComponent implements OnChanges, AfterViewInit {
   idShop = environment.idShop;
   public empresa: any;
   information: any = [];
-  configuracion: any = [];
+  // configuracion: any = [];
   //Flag Loader
   flagLoader = false;
   //Variables para grupos
@@ -28,6 +28,7 @@ export class CatalogoComponent implements OnChanges, AfterViewInit {
   @Output() return = new EventEmitter<any>();
   @Output() sendGrupSubgrupo = new EventEmitter<any>();
   @Input('flagRender') flagRender: any;
+  @Input('configuracion') configuracion: any;
   // @Input('configuracion') configuracion: any;
   public subgrupos: [];
   classSelected = false;

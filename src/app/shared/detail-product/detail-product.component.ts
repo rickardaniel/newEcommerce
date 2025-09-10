@@ -14,7 +14,7 @@ import { ServiceService } from '../../services/service.service';
 })
 export class DetailProductComponent implements OnChanges {
   @Input('product')product:any;
-  productSelect:any;
+  productSelect:any=[];
   arrayFotos:any=[];
   imgDefault:any;
   urlFB = environment.firebaseUrl;
@@ -88,23 +88,36 @@ async  ngOnChanges(changes: SimpleChanges) {
     ]
     this.imgDefault = imgOne;
 
-    let productDetail =  this.productSelect
+    let productDetail :any;
+     productDetail = this.productSelect
     console.log('LOG PRD', productDetail);
     
-    await this.stablishDescription(productDetail.product).then((resdet: any) => {
-      productDetail!.product!.desc_product_detail = resdet.desc_product_detail;
-      productDetail!.product!.desc_product_detail_aux = resdet.desc_product_detail_aux;
-      productDetail!.product!.show_more_detail = resdet.show_more;
-      // productDetail!.product!.show_more_detail = resdet.show_more;
-    });
-    let product = productDetail!.product;
+    // await this.stablishDescription(productDetail.product).then((resdet: any) => {
+    //   productDetail.product.desc_product_detail = resdet.desc_product_detail;
+    //   productDetail.product.desc_product_detail_aux = resdet.desc_product_detail_aux;
+    //   productDetail.product.show_more_detail = resdet.show_more;
+    //   // productDetail!.product!.show_more_detail = resdet.show_more;
+    // });
+    try {
+  productDetail.product = productDetail.product || {};
+  const resdet = await this.stablishDescription(productDetail.product);
+  
+  Object.assign(productDetail.product, {
+    desc_product_detail: resdet.desc_product_detail,
+    desc_product_detail_aux: resdet.desc_product_detail_aux,
+    show_more_detail: resdet.show_more
+  });
+} catch (error) {
+  console.error('Error setting product description:', error);
+}
+    let product = productDetail?.product;
     console.log('productDetail ===> ', productDetail);
     
     
    this.productSelectDefault=product;
    console.log("PRODUCT", this.productSelectDefault);
     let checkReferidos = true;
-    if(this.configuration.tipo_web==2){
+    if(this.configuration?.tipo_web==2){
 
 
       console.log('ENTTRA DEVE EBTRAR');
@@ -130,16 +143,18 @@ async  ngOnChanges(changes: SimpleChanges) {
     }
     let url = this.urlBilling;
 
+    console.log(' ========================================================================= ',product );
+    
     // Agreagar solo 2 productos mas vendidos para mostrar si no hay referidos
     if (!product.referidos) {
-      if (productDetail.productsSold.length > 0) {
+      if (productDetail?.productsSold.length > 0) {
         let aleatorio = [];
         for (let i = 0; i < 2; i++) {
           // Generar valor alearotio para no repetir
-          let a = Math.floor(Math.random() * productDetail.productsSold.length);
+          let a = Math.floor(Math.random() * productDetail?.productsSold.length);
           while (aleatorio.indexOf(a) == -1) {
             // Agregar posicion aleaoria
-            this.configurationVariables.productsSold.push(productDetail.productsSold[a]);
+            this.configurationVariables.productsSold.push(productDetail?.productsSold[a]);
             aleatorio.push(a);
           }
         }
@@ -219,7 +234,7 @@ async  ngOnChanges(changes: SimpleChanges) {
     }
   }
 
-    async stablishDescription(p) {
+    async stablishDescription(p:any) {
     let num =  255;
     let resp = {
       desc_product_detail: '',

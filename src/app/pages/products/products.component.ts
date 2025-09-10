@@ -159,7 +159,7 @@ export class ProductsComponent implements OnInit, OnChanges {
 
             setTimeout(() => {
               this.flagLoader=true;
-              console.log('this configuration', this.configuracion);
+              // console.log('this configuration', this.configuracion);
               console.log('params1',params['value']);
               console.log('params2',params['value2']);
               this.webService.getProductosService(url, params['value'], params['value2'], this.configuracion).then(async (resprod: any) => {
@@ -173,7 +173,7 @@ export class ProductsComponent implements OnInit, OnChanges {
                       this.productsTemp = resPrice;
                       this.productsTemp2 = resPrice;
                       this.flagLoader=false;
-                      console.log("seleccionado", this.products);
+                      // console.log("seleccionado", this.products);
                     });
                   }
 
@@ -184,7 +184,7 @@ export class ProductsComponent implements OnInit, OnChanges {
                         this.productsTemp = resTalla;
                         this.productsTemp2 = resTalla;
                         this.flagLoader=false;
-                        console.log("search", this.products);
+                        // console.log("search", this.products);
                       });
                     });
                   }
@@ -422,7 +422,7 @@ export class ProductsComponent implements OnInit, OnChanges {
   async getGroupsCatalogue(event) {
     this.groups = event;
     this.allGrupos = event;
-    console.log('TODOS LOS GRUPOS', this.groups);
+    // console.log('TODOS LOS GRUPOS', this.groups);
 
   }
 
@@ -437,7 +437,6 @@ export class ProductsComponent implements OnInit, OnChanges {
     document.documentElement.style.setProperty('--color-letter-secondary', colorLetraSecundario);
     document.documentElement.style.setProperty('--dynamic-color', color);
     document.documentElement.style.setProperty('--color-letter-primary', colorLetra);
-    console.log('LLEGA LA CONFIGURACION DESDE CATALOGO', this.configuracion);
   }
 
 
@@ -476,6 +475,7 @@ export class ProductsComponent implements OnInit, OnChanges {
   }
 
   viewModalProduct(event) {
+    this.flagLoader=true;
     console.log('llega EVENT 2 ===>', event);
     let send = {
       product: event,
@@ -487,7 +487,11 @@ export class ProductsComponent implements OnInit, OnChanges {
     }
     this.productSelect = send;
     console.log('send', this.productSelect);
-    this.openModal('#modalProduct');
+    setTimeout(() => {
+      this.flagLoader=false;
+        this.openModal('#modalProduct');
+    }, 500);
+  
   }
 
   getNameGrupoSubg(event) {

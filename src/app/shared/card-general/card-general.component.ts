@@ -1,122 +1,3 @@
-// import { CommonModule } from '@angular/common';
-// import { Component, EventEmitter, Input, Output, TemplateRef } from '@angular/core';
-// import { environment } from '../../environments/environment';
-// import { UtilsService } from '../../services/utils.service';
-// import { ServiceService } from '../../services/service.service';
-// import { Router } from '@angular/router';
-
-// @Component({
-//   selector: 'app-card-general',
-//   standalone: true,
-//   imports: [CommonModule],
-//   templateUrl: './card-general.component.html',
-//   styleUrl: './card-general.component.scss'
-// })
-// export class CardGeneralComponent {
-//   @Input('prod') d:any;
-//   @Input('logo') logo:any;
-//   @Input('color') color:any;
-//   @Input('configuration') configuracion:any;
-//   @Output() viewModalR = new EventEmitter<any>();
-
-//   //Data Producto Detail
-//   public configurationVariables = {
-//     tipo_precio: 'pA', // No se esta usando
-//     mostrar_precio: 1,
-//     show_attributes_prod: false,
-//   }
-//   public login: any = {};
-//   public productsSold: any = {};
-
-//   productSelect:any;
-//   urlFB = environment.firebaseUrl;
-//   constructor
-//   (
-//     private util: UtilsService,
-//     private webService: ServiceService,
-//     private router: Router,
-
-//   )
-//   {
-//   }  
-//  async ngOnInit(){
-//     console.log('color ---- > ', this.color);
-
-//     // document.documentElement.style.setProperty('--dynamic-color', this.util.hexToRgba(this.color, 0.6) );
-//     document.documentElement.style.setProperty('--dynamic-color', this.color );
-//     // await this.webService.isAuthenticatedClient(this.configuracion.loginStorage).then(async (reslogin: any) => {
-//     //   this.login = reslogin;
-//     // });
-//      this.login = this.webService.getFromLocalStorage(this.configuracion.loginStorage);
-//   }
-//   clampText(text){
-//     return this.util.truncateString2(text,42);
-//   }
-
-//   calculateDescount(cantR, cantD){
-//     let percent = (parseFloat(cantD)*100)/parseFloat(cantR);
-//     let desc =  100 - percent;
-//     desc = Number(desc.toFixed(1))
-//     return desc
-//    }
-
-
-//    getProductById(product){
-//     console.log('ENTRA ', product);
-//     let send = {
-//       product: product,
-//       configuracion: this.configuracion,
-//       show_price: this.configurationVariables.mostrar_precio,
-//       show_attributes_product: this.configurationVariables.show_attributes_prod,
-//       login: this.login,
-//       productsSold: this.productsSold
-//     }
-//     this.webService.setProductSelectedDetail(send);
-
-//     let ruta = 'producto/:idProduct'
-//     ruta = ruta.replace(':idProduct', product.id_producto.toString())
-//     // window.open(`/#/reportes/ordenes/detalle_orden/${idOrden}/${tipo}`, '_blank')
-//     this.router.navigateByUrl(ruta).then();
-
-//    }
-
-//    open(name){
-//     console.log('CLICK');
-
-//     this.openModal(name);
-
-//    }
-
-//    openModal(name:string){
-
-//     let modal = this.util.createModal(name);
-//     modal.show();
-//     }
-
-//     closeModal(flag, name){
-//       let modal = this.util.createModal(name);
-
-//       if(flag){
-//         modal.hide(); 
-//       }else{
-//         modal.hide(); 
-
-//       }
-//     }
-
-//     seeDetail(product){
-//       console.log("Doy click hijo, AR",product);
-//       this.productSelect= product;
-//       this.productSelect.product = product;
-
-//       this.viewModalR.emit(product);
-//       // this.openModal('#modalProduct2');
-
-//     }
-
-// }
-
-
 import { CommonModule } from '@angular/common';
 import {
   Component,
@@ -195,7 +76,8 @@ export class CardGeneralComponent implements OnInit, OnDestroy, OnChanges {
   tipoNegocio: any;
   tipoDefault = 0;
   urlBilling = environment.urlBilling;
-
+  flagLoader = false;
+  arrayProduct: any = [];
   constructor(
     private util: UtilsService,
     private webService: ServiceService,
@@ -206,17 +88,17 @@ export class CardGeneralComponent implements OnInit, OnDestroy, OnChanges {
 
   ) { }
   ngOnChanges(changes: SimpleChanges): void {
-    console.log('changes.', changes);
+    // console.log('changes.', changes);
     // console.log('information.', this.information);
     this.tipoNegocio = this.information.esPuntoVenta;
   }
 
   async ngOnInit() {
-    console.log('color ---- > ', this.color);
+    // console.log('color ---- > ', this.color);
     document.documentElement.style.setProperty('--dynamic-color', this.color);
-    console.log('this.configuracion', this.configuracion);
+    // console.log('this.configuracion', this.configuracion);
     this.login = JSON.parse(localStorage.getItem(this.configuracion?.loginStorage));
-    console.log('this.login', (this.login));
+    // console.log('this.login', (this.login));
 
   }
 
@@ -374,6 +256,8 @@ export class CardGeneralComponent implements OnInit, OnDestroy, OnChanges {
    * Click en el botón de agregar al carrito
    */
   async onAddToCart(event: Event): Promise<void> {
+    console.log('Entra aqui', event);
+
     event.stopPropagation();
 
     if (this.d?.stockactual <= 0 || this.addToCartLoading) return;
@@ -641,67 +525,67 @@ export class CardGeneralComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   async addProductShoppingCart(product, client) {
-    console.log('ENTRA PARA AGREGAR', client);
-    let counter = 0;
-    // let urlBilling = `https://sofpymes.com/${environment.empresa}/common/movil/`;
-    this.loadingAll = true;
-    if (product.precioReal > 0) {
-      this.loadingAll = true;
-      await this.webService.addProductCartSecond(product, client, this.configuracion, this.urlBilling).then(async (res: any) => {
-        console.log('respuesta agrega primero ==> ', res);
+    this.flagLoader = true;
 
-        if (res.rta == true) {
-          this.alert.alertSuccess(res.mensaje, 'ssss');
-          if (localStorage.getItem('carCount')) {
-            counter = parseFloat(localStorage.getItem('carCount'));
-          }
-          counter += 1;
-          // localStorage.setItem('carCount', JSON.stringify(counter));
-          this.webService.saveToLocalStorage('carCount', counter);
-          let arrayProduct = [];
-          // if (localStorage.getItem('products')) {
-          //   arrayProduct = JSON.parse(localStorage.getItem('products'));
-          // }
+    const productos = await this.verificarCarrito(client);
+    console.log("Productos del carrito:", productos);
 
+    if (productos.length > 0) {
+      const productoExiste = this.existeProductoEnCarrito(productos, product.id_producto); // true
+      console.log('productoExiste', productoExiste);
+      if (productoExiste) {
+        this.alert.alertWarning('Producto ya se encuentra en el carrito', '')
+      } else {
+        console.log('ENTRA PARA AGREGAR', client);
+        let counter = 0;
+        if (product.precioReal > 0) {
+          await this.webService.addProductCartSecond(product, client, this.configuracion, this.urlBilling).then(async (res: any) => {
+            console.log('respuesta agrega primero ==> ', res);
 
-          this.carBehavior.products$.subscribe((product: Product[]) => {
-            console.log('this.arrayOrden', product);
-            arrayProduct = product;
-          })
+            if (res.rta == true) {
+              this.alert.alertSuccess(res.mensaje, '');
+              if (localStorage.getItem('carCount')) {
+                counter = parseFloat(localStorage.getItem('carCount'));
+              }
+              counter += 1;
+              this.webService.saveToLocalStorage('carCount', counter);
+            } else {
+              this.alert.alertWarning(res.mensaje, '');
+            }
 
-          if (arrayProduct.length == 0) {
-            // arrayProduct = this.util.addOrUpdateProduct(arrayProduct, product)
-            arrayProduct.push(product);
-            console.log('Array Product', arrayProduct);
-            this.carBehavior.productBehaviorSubject(arrayProduct);
-
-          } else {
-            console.log('caso 2 ==> es mayor');
-            // arrayProduct = this.util.addOrUpdateProduct(arrayProduct, product)
-            // console.log('Array Product', arrayProduct);
-            // let res = arrayProduct.find(prod => prod.id_producto === product.id_producto);
-            // console.log('RES', res);
-            // res.quantity+=1;
-
-            // this.carBehavior.productBehaviorSubject(arrayProduct);
-            arrayProduct.push(product)
-
-          }
-
-
-          this.webService.saveToLocalStorage('products', arrayProduct)
+          });
+          this.flagLoader = false;
         } else {
-          this.alert.alertWarning(res.mensaje, '');
+          this.alert.alertWarning('No se puede agregar el producto, precio no válido', '');
+          this.flagLoader = false;
         }
-      });
-      this.loadingAll = false;
-
+      }
 
     } else {
-      this.alert.alertWarning('No se puede agregar el producto, precio no válido', '');
-      this.loadingAll = false;
-    }
+      console.log('ENTRA PARA AGREGAR', client);
+      let counter = 0;
+      if (product.precioReal > 0) {
+        await this.webService.addProductCartSecond(product, client, this.configuracion, this.urlBilling).then(async (res: any) => {
+          console.log('respuesta agrega primero ==> ', res);
 
+          if (res.rta == true) {
+            this.alert.alertSuccess(res.mensaje, '');
+            if (localStorage.getItem('carCount')) {
+              counter = parseFloat(localStorage.getItem('carCount'));
+            }
+            counter += 1;
+            this.webService.saveToLocalStorage('carCount', counter);
+          } else {
+            this.alert.alertWarning(res.mensaje, '');
+          }
+
+        });
+        this.flagLoader = false;
+      } else {
+        this.alert.alertWarning('No se puede agregar el producto, precio no válido', '');
+        this.flagLoader = false;
+      }
+    }
   }
 
   async loginClient() {
@@ -723,6 +607,44 @@ export class CardGeneralComponent implements OnInit, OnDestroy, OnChanges {
     // });
   }
 
+
+
+  async verificarCarrito(client): Promise<any[]> {
+    console.log('llega client', client);
+
+    if (client) {
+      await this.webService.getproductsCart({
+        id_cliente: client.PersonaComercio_cedulaRuc,
+        bodega: this.configuracion.id_bodega
+      }).then((rescart: any) => {
+        console.log('RESSSSS ', rescart);
+        this.arrayProduct = rescart.products;
+
+        if (this.arrayProduct.length > 0) {
+          const productosAgrupados = this.arrayProduct.reduce((acumulador, productoActual) => {
+            const grupoExistente = acumulador.find(p => p.id_producto === productoActual.id_producto);
+
+            if (grupoExistente) {
+              grupoExistente.quantity += productoActual.quantity;
+            } else {
+              acumulador.push({ ...productoActual });
+            }
+            return acumulador;
+          }, []);
+
+          this.arrayProduct = productosAgrupados;
+          console.log('Array Product', this.arrayProduct);
+        }
+      });
+    }
+
+    // Retornamos el array de productos
+    return this.arrayProduct;
+  }
+
+  existeProductoEnCarrito(productos: any[], idProducto: number): boolean {
+    return productos.some(producto => producto.id_producto === idProducto);
+  }
 
 
 

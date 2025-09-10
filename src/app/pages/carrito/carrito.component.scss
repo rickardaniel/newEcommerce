@@ -1,0 +1,8 @@
+.classActiveDomicilio{
+  @apply  inline-flex items-center justify-between w-full p-2 rounded-lg cursor-pointer border-cyan-400  hover:text-gray-600 hover:bg-gray-100 shadow-md  ;
+    .icoCircle{
+        color: #F05252;
+    }
+  // @apply  inline-flex items-center justify-between w-full p-2 text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 dark:peer-checked:text-blue-500 peer-checked:border-green-500 peer-checked:text-green-500 peer-checked:bg-green-50 hover:text-gray-600 hover:bg-gray-100 
+
+}

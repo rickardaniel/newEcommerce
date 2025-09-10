@@ -4,8 +4,18 @@ import { HomeComponent } from './pages/home/home.component';
 import { ProductsComponent } from './pages/products/products.component';
 import { inject } from '@angular/core';
 import { ServiceService } from './services/service.service';
+import { redirectGuard } from './guards/redirect.guard';
+import { guardsGuard } from './guards/guard.guard';
+import { CarritoComponent } from './pages/carrito/carrito.component';
 
 export const routes: Routes = [
+//        {
+//     path: '',
+//     canActivate: [redirectGuard],
+//     // component: ProductsComponent
+
+//     // loadChildren: () => import('./path/to/your-module.module').then(m => m.YourModuleModule)
+//   },
      {
           path: '', component: InicioComponent
      },
@@ -16,6 +26,10 @@ export const routes: Routes = [
      {
           path: 'products',
           component: ProductsComponent
+     },
+     {
+          path: 'carrito',
+          component: CarritoComponent
      },
      {
           path: 'product/:type/:value/:value2',
@@ -180,6 +194,6 @@ export const routes: Routes = [
 
 
 
-          ],
+          ],canActivate: [guardsGuard]
      },
 ];

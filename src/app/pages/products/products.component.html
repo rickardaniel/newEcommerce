@@ -84,7 +84,7 @@
 </div>
 
 
-
+ @if(!isEmpty(productSelect)) {
 <div id="modalProduct" tabindex="-1"
     class="fixed  z-50 hidden w-full p-4  overflow-x-hidden overflow-y-auto lg:inset-0 h-[calc(100%-1rem)] max-h-full">
     <div class="relative p-4 w-full ">
@@ -98,10 +98,11 @@
                         d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
                 </svg>
                 <span class="sr-only">Close modal</span>
-            </button>
-            <app-detail-product [product]="productSelect"></app-detail-product>
+            </button>          
+            <app-detail-product [product]="productSelect"></app-detail-product>     
         </div>
     </div>
 </div>
+ }
 
 <ngx-loading [show]="flagLoader"></ngx-loading>

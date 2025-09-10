@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { AfterViewInit, Component } from '@angular/core';
+import { AfterViewInit, Component, effect } from '@angular/core';
 import { HeaderComponent } from '../../shared/header/header.component';
 import { ServiceService } from '../../services/service.service';
 import { environment } from '../../environments/environment';
@@ -15,6 +15,7 @@ import { DetailProductComponent } from "../../shared/detail-product/detail-produ
 import Glide from '@glidejs/glide';
 import { OffertsComponent } from '../../shared/all-cards/offerts/offerts.component';
 import { StylesService } from '../../services/styles.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-home',
@@ -63,6 +64,7 @@ export class HomeComponent implements AfterViewInit {
 
   modal: any;
 
+  isAuthenticated = this.auth.isAuthenticated;
 
 
 
@@ -70,8 +72,22 @@ export class HomeComponent implements AfterViewInit {
     private webService: ServiceService,
     private util: UtilsService,
     private stylesService: StylesService, // Agregar esta línea
+    private auth: AuthService,
 
   ) {
+
+    effect(() => {
+      console.log('Header detectó cambio en autenticación:', this.isAuthenticated());
+      // Aquí puedes ejecutar lógica adicional cuando cambia el estado
+      const user = this.auth.getCurrentUserValue();
+      console.log('Datos de usuario actualizados:', user);
+      if (user) {
+        this.login = user;
+      } else {
+        this.getConfiguracion();
+      }
+    });
+
   }
 
 
@@ -126,18 +142,23 @@ export class HomeComponent implements AfterViewInit {
         this.configuracion = resp[0];
         console.log('AQUI ES EL PRIMER PASO EN HOME', this.configuracion);
 
-        this.webService.isAuthenticatedClient(this.configuracion.loginStorage).then((resauth: any) => {
-          console.log('PRIMERA VEZ QUE LOGUEO',resauth );
-          
-          this.login = resauth;
-          console.log('login ---> ', this.login);
 
-          if (resauth.rta == true) {
-            this.configurationVariables.mostrar_precio = 1;
-          } else {
-            this.configurationVariables.mostrar_precio = this.configuracion.mostrar_precio;
-          }
-        });
+                let user = JSON.parse(localStorage.getItem(this.configuracion.loginStorage));
+        console.log('user ===> ', user);
+        
+        this.login = user;
+        // this.webService.isAuthenticatedClient(this.configuracion.loginStorage).then((resauth: any) => {
+        //   console.log('PRIMERA VEZ QUE LOGUEO',resauth );
+
+        //   this.login = resauth;
+        //   console.log('login ---> ', this.login);
+
+        //   if (resauth.rta == true) {
+        //     this.configurationVariables.mostrar_precio = 1;
+        //   } else {
+        //     this.configurationVariables.mostrar_precio = this.configuracion.mostrar_precio;
+        //   }
+        // });
 
         this.configurationVariables.show_attributes_prod = this.webService.showAtttibutesProducts(this.configuracion);
 
@@ -394,82 +415,13 @@ export class HomeComponent implements AfterViewInit {
       }
     }
 
-
-
     this.flagLoader = false;
 
     return products;
 
   }
 
-  // tipoWeb = 1 => Tienda normal 
-  // tipoWeb = 2 => Tienda por tallas 
-  // tipoWeb = 3 => Tienda con 2 BD   ** Supendido por el momento **
-  // tipoWeb = 4 => Tienda Internet
-  // async getProductospromocion() {
-  //   let products;
-  //   this.flagLoader = true;
-  //   if (this.configuracion.tipo_web == 1) {
-  //     console.log("Tienda normal");
-  //     await this.webService.getProductosPromocionService(this.urlBilling, this.configuracion).then(async (resProdProm: any) => {
-  //       if (resProdProm.rta == true) {
-  //         await this.webService.obtainAndCalculatePriceProduct(resProdProm.data, this.configuracion, this.login).then(async (resPrice) => {
-  //           products = resPrice;
-  //         });
-  //       } else {
-  //         products = [];
-  //         // this.toaster.warning('Actualmente, la tienda no posee productos de promoción.', '', { timeOut: 3000, positionClass: 'toast-bottom-full-width', closeButton: true, progressBar: true });
-  //       }
-  //     });
-  //   }
-  //   if (this.configuracion.tipo_web == 2) {
-  //     console.log("Tienda por tallas");
-  //     await this.webService.getProductosPromocionService(this.urlBilling, this.configuracion).then(async (resProdProm: any) => {
-  //       if (resProdProm.rta == true) {
-  //         await this.webService.obtainAndCalculatePriceProduct(resProdProm.data, this.configuracion, this.login).then(async (resPrice) => {
-  //           await this.webService.createTallasProduct(resPrice).then(async (resTalla) => {
-  //             products = resTalla;
-  //           });
-  //         });
-  //       } else {
-  //         products = [];
-  //       }
-  //     });
-  //   }
 
-  //   if (this.configuracion.tipo_web == 3) {
-  //     console.log("Tienda con 2 BD, codigo se encuentra en proceso");
-  //      products = []
-  //     //  products = []
-  //   }
-
-  //   if (this.configuracion.tipo_web == 4) {
-  //     console.log("Tienda Internet");
-  //      products = []
-  //   }
-
-  //   // Cuando hay 3 resultados, dejar todo el nombre
-  //   console.log('PRODUCTS ====> ', products);
-
-  //      if(!products){
-  //     products = []
-
-  //   }
-
-  //   if (products.length <= 3) {
-  //     for (let p of products) {
-  //       p.nombre_producto = p.pro_nom;
-  //     }
-  //   }else{
-  //     for (let p of products) {
-  //       p.nombre_producto = p.pro_nom;
-  //     }
-  //   }
-
-  //   // console.log("Productos Promocion", products);
-  //   this.flagLoader = false;
-  //   return products;
-  // }
   async getProductospromocion() {
     let products = []; // Inicializar como array vacío
     this.flagLoader = true;
@@ -595,8 +547,12 @@ export class HomeComponent implements AfterViewInit {
   }
 
 
+  // isEmpty(obj: any): boolean {
+  //   return Object.keys(obj).length === 0;
+  // }
+
   isEmpty(obj: any): boolean {
-    return Object.keys(obj).length === 0;
+    return obj == null || (typeof obj === 'object' && Object.keys(obj).length === 0);
   }
 
   scrollToElement($element: any): void {

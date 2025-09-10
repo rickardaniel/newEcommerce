@@ -6,6 +6,7 @@ import { AlertService } from '../../services/alert.service';
 import { ServiceService } from '../../services/service.service';
 import { environment } from '../../environments/environment';
 import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login-register',
@@ -29,7 +30,8 @@ export class LoginRegisterComponent implements OnInit, OnChanges {
     private util: UtilsService,
     private alert: AlertService,
     private webService: ServiceService,
-    private router : Router
+    private router : Router,
+    private auth: AuthService
 
     // private util: UtilsService,
   )
@@ -201,62 +203,97 @@ export class LoginRegisterComponent implements OnInit, OnChanges {
 
     }
  async loginClient(url_billing, configuracion, login, type) {
-    console.log('entra aquí --> ',login);
-    console.log('entra configuracion --> ',configuracion);
-    console.log('entra url_billing --> ',url_billing);
-    
     if (login.usuario && login.clave) {
       if (type == 'login') {
         this.alert.alertWarning('Espere un momento ...', '');
 
       }
-      await this.webService.loginCliente(url_billing, login, 'login').then(async (resclient: any) => {
-        console.log('==============================', resclient );
-        let user :any;
-        if (!resclient.error) {
-          user= resclient.data[0];
-          if (resclient.rta == true) {
-            // await this.webService.saveUserLocalStorage(resclient.data[0], configuracion.loginStorage, "Client").then(async (resauth: any) => {
+      // await this.webService.loginCliente(url_billing, login, 'login').then(async (resclient: any) => {
+      //   console.log('==============================', resclient );
+      //   let user :any;
+      //   if (!resclient.error) {
+      //     user= resclient.data[0];
+      //     if (resclient.rta == true) {
+      //       // await this.webService.saveUserLocalStorage(resclient.data[0], configuracion.loginStorage, "Client").then(async (resauth: any) => {
 
-            let nameAll = user.nombres + ' ' + user.apellidos;
-            user.rol = 'Client';
-            if (nameAll) {
-              if (nameAll.length <= 30) {
-                user.nameUser = nameAll;
-              } else {
-                user.nameUser = nameAll.slice(0, 30);
+      //       let nameAll = user.nombres + ' ' + user.apellidos;
+      //       user.rol = 'Client';
+      //       if (nameAll) {
+      //         if (nameAll.length <= 30) {
+      //           user.nameUser = nameAll;
+      //         } else {
+      //           user.nameUser = nameAll.slice(0, 30);
+      //         }
+      //       } else {
+      //         user.nameUser = 'DEFAULT NAME';
+      //       }
+
+      //       let login = {
+      //         name: user.nameUser,
+      //         imagen: user.imagen,
+      //         login: true,
+      //         rol: user.rol,
+      //         user: user
+      //       }
+      //       this.webService.saveToLocalStorage(configuracion.loginStorage, login )
+
+      //         await this.webService.getproductsCart({ id_cliente: user.PersonaComercio_cedulaRuc }).then(async (resprod: any) => {
+      //           if (resprod.rta == true) {
+      //             let observable = {
+      //               number: resprod.data.length,
+      //               total: await this.webService.calculateTotalCartProducts(resprod.data)
+      //             }
+      //             this.webService.shopcart$.next(observable);
+      //           }
+      //         });
+      //         localStorage.setItem('isLoged','true');
+      //         await this.webService.refreshPage(configuracion);
+      //         this.alert.alertSuccess('Bienvenid@, ' + resclient.data[0].nombres, '');
+      //         this.closeModal(true, '#modalLogin')
+
+      //       // });
+
+      //     } else {
+      //       if (resclient.code == 406) {
+      //         this.alert.alertWarning('Contraseña incorrecta, Intente nuevamente o Proceda a recuperarla',  '');
+
+      //         // this.dismissModal('Recover');
+      //         // this.modalService.dismissAll('Recover');
+
+      //       } else {
+      //         this.alert.alertWarning('Usuario no encontrado, Registrelo.', '');
+
+      //         // this.modalService.dismissAll('Registrar');
+      //         // this.returnMsjForm.emit('registrar');
+      //       }
+      //     }
+      //   } else {
+      //     this.alert.alertWarning('Ha ocurrido un error, Intente nuevamente', '');
+
+      //   }
+      // });
+      
+      this.auth.login(login).subscribe({
+        next:(resp:any)=>{
+          console.log('respuesta login', resp);
+          if(resp.code==200){
+                      let user = resp.data[0];
+          this.auth.setAuthData(user, configuracion.loginStorage, 'Client');
+          this.webService.getproductsCartNew({ id_cliente: user.PersonaComercio_cedulaRuc }).then(async (resprod: any) => {
+            if (resprod.rta == true) {
+              let observable = {
+                number: resprod.data.length,
+                total: await this.webService.calculateTotalCartProducts(resprod.data)
               }
-            } else {
-              user.nameUser = 'DEFAULT NAME';
+              this.webService.shopcart$.next(observable);
             }
-
-            let login = {
-              name: user.nameUser,
-              imagen: user.imagen,
-              login: true,
-              rol: user.rol,
-              user: user
-            }
-            this.webService.saveToLocalStorage(configuracion.loginStorage, login )
-
-              await this.webService.getproductsCart({ id_cliente: user.PersonaComercio_cedulaRuc }).then(async (resprod: any) => {
-                if (resprod.rta == true) {
-                  let observable = {
-                    number: resprod.data.length,
-                    total: await this.webService.calculateTotalCartProducts(resprod.data)
-                  }
-                  this.webService.shopcart$.next(observable);
-                }
-              });
-              localStorage.setItem('isLoged','true');
-              await this.webService.refreshPage(configuracion);
-              this.alert.alertSuccess('Bienvenid@, ' + resclient.data[0].nombres, '');
-              this.closeModal(true, '#modalLogin')
-
-            // });
-
-          } else {
-            if (resclient.code == 406) {
+          });
+          localStorage.setItem('isLoged', 'true');
+          // this.webService.refreshPage(configuracion);
+          this.alert.alertSuccess('Bienvenid@, ' + user.nombres, '');
+          this.closeModal(true, '#modalLogin')
+          }else{
+             if (resp.code == 406) {
               this.alert.alertWarning('Contraseña incorrecta, Intente nuevamente o Proceda a recuperarla',  '');
 
               // this.dismissModal('Recover');
@@ -269,11 +306,16 @@ export class LoginRegisterComponent implements OnInit, OnChanges {
               // this.returnMsjForm.emit('registrar');
             }
           }
-        } else {
-          this.alert.alertWarning('Ha ocurrido un error, Intente nuevamente', '');
+
+
+          // });
+        },error(err){
+
+        }, complete(){
 
         }
-      });
+      })
+      
     } else {
       this.alert.alertWarning('Ingrese sus credenciales', '');
 
@@ -303,7 +345,7 @@ export class LoginRegisterComponent implements OnInit, OnChanges {
       if (this.existCliente == true) {
         // this.modalService.dismissAll(data);
         console.log('login', login);       
-        await this.loginClient(url, this.configuracion, login, 'login');
+        // await this.loginClient(url, this.configuracion, login, 'login');
       } else {
         console.log("validar");
         await this.validateClientExist(url, login.usuario);
@@ -328,9 +370,11 @@ export class LoginRegisterComponent implements OnInit, OnChanges {
 
   async validateClientExist(url, cedula) {
     // this.loadingAll = true;
-    await this.webService.getCustomerDataByCedula(url, cedula).then(async (resvalidate: any) => {
-      if (!resvalidate.error) {
-        if (resvalidate.length > 0) {
+    await this.webService.getCustomerDataByCedula(url, cedula).subscribe(async (resvalidate: any) => {
+      console.log(' VALIDAR ', resvalidate );
+      
+      // if (!resvalidate.error) {
+        if (resvalidate) {
           this.existCliente = true;
           let login :any;
             login={
@@ -350,11 +394,11 @@ export class LoginRegisterComponent implements OnInit, OnChanges {
           this.alert.alertWarning('Usuario no encontrado, Registrelo.','');
           this.action='registrar';
         }
-      } else {
-        this.closeModal(true,'#modalLogin' )
-        this.alert.alertWarning('Ha ocurrido un error, intente nuevamente','');
+      // } else {
+      //   this.closeModal(true,'#modalLogin' )
+      //   this.alert.alertWarning('Ha ocurrido un error, intente nuevamente','');
 
-      }
+      // }
     });
     // this.loadingAll = false;
   }
