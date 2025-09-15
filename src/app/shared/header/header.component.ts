@@ -358,6 +358,7 @@ export class HeaderComponent implements OnChanges {
     this.loading = true;
     this.flagLoader = true;
     console.log('-----> ', this.clientLogin);
+    console.log('-----> ', this.clienteLogin2);
     if (this.clienteLogin2) {
       await this.webService.getproductsCart({ id_cliente: this.clienteLogin2.user.PersonaComercio_cedulaRuc, bodega: this.configuracion.id_bodega }).then(async (rescart: any) => {
         console.log('RESSSSS ', rescart);
